@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.inspirecoding.supershopper.ui.splash.SplashFragment"
+        android:label="splash_fragment"
+        tools:layout="@layout/splash_fragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"  />
+        <action
+            android:id="@+id/action_splashFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_shoppingListsFragment"
+            app:destination="@id/shoppingListsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.inspirecoding.supershopper.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"  />
+        <action
+            android:id="@+id/action_loginFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordDialog"
+            app:destination="@id/forgotPasswordDialog" />
+        <action
+            android:id="@+id/action_loginFragment_to_shoppingListsFragment"
+            app:destination="@id/shoppingListsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.inspirecoding.supershopper.ui.register.RegisterFragment"
+        android:label="register_fragment"
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true"  />
+        <action
+            android:id="@+id/action_registerFragment_to_termsAndConditionsFragment"
+            app:destination="@id/termsAndConditionsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
+        <action
+            android:id="@+id/action_registerFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
+        <action
+            android:id="@+id/action_registerFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_shoppingListsFragment"
+            app:destination="@id/shoppingListsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsAndConditionsFragment"
+        android:name="com.inspirecoding.supershopper.ui.terms.TermsAndConditionsFragment"
+        android:label="terms_and_conditions_fragment"
+        tools:layout="@layout/terms_and_conditions_fragment" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.inspirecoding.supershopper.ui.privacypolicy.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" />
+    <dialog
+        android:id="@+id/errorBottomDialogFragment"
+        android:name="com.inspirecoding.supershopper.ui.errordialog.ErrorBottomDialogFragment"
+        android:label="error_bottom_dialog_fragment"
+        tools:layout="@layout/error_bottom_dialog_fragment" >
+        <argument
+            android:name="errorMessage"
+            app:argType="string"/>
+    </dialog>
+    <dialog
+        android:id="@+id/forgotPasswordDialog"
+        android:name="com.inspirecoding.supershopper.ui.forgotpassword.ForgotPasswordDialog"
+        android:label="forgot_password_dialog"
+        tools:layout="@layout/forgot_password_dialog" >
+        <action
+            android:id="@+id/action_forgotPasswordDialog_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/shoppingListsFragment"
+        android:name="com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragment"
+        android:label="shopping_lists_fragment"
+        tools:layout="@layout/shopping_lists_fragment" >
+        <argument
+            android:name="user"
+            app:argType="com.inspirecoding.supershopper.data.User"/>
+        <action
+            android:id="@+id/action_shoppingListsFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/shoppingListsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

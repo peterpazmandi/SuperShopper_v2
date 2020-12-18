@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -11,7 +12,6 @@ import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.Status
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -21,6 +21,9 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
+    // CONST
+    private val TAG = this.javaClass.simpleName
+
     val user = state.getLiveData<User>("user")
 
     private val _shoppingListsFragmentsEventChannel = Channel<ShoppingListsFragmentsEvent>()
@@ -29,26 +32,22 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     private val _currentUser = MutableLiveData<User>()
     val currentUser = state.getLiveData<User>("user")
 
-    private val _shoppingLists = MutableLiveData<Resource<ShoppingList>>()
-    val shoppingLists : LiveData<Resource<ShoppingList>> = _shoppingLists
+    private val _shoppingLists = MutableLiveData<Resource<List<ShoppingList>>>()
+    val shoppingLists : LiveData<Resource<List<ShoppingList>>> = _shoppingLists
 
-    fun signOut() {
-        viewModelScope.launch {
-            userRepository.signOut()
-            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSplashFragment)
-        }
-    }
 
     fun getCurrentUserShoppingListsRealTime(currentUser: User) {
         viewModelScope.launch {
-            shoppingListRepository.getCurrentUserShoppingListsRealTime(currentUser).collect { result ->
+            shoppingListRepository.getCurrentUserShoppingListsRealTime(currentUser, viewModelScope).collect { result ->
+                Log.d(TAG, "$result")
+                val shoppingLists = mutableListOf<ShoppingList>()
                 when(result.status)
                 {
                     Status.LOADING -> {
                         _shoppingLists.postValue(Resource.Loading(true))
                     }
                     Status.SUCCESS -> {
-                        result._data?.map { _shoppingList ->
+                        result.data?.map { _shoppingList ->
                             _shoppingList.friendsSharedWith.map { friendId ->
                                 userRepository.getUserFromFirestore(friendId).collect { userResult ->
                                     when(userResult.status)
@@ -57,9 +56,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                                             _shoppingLists.postValue(Resource.Loading(true))
                                         }
                                         Status.SUCCESS -> {
-                                            userResult._data?.let {
+                                            userResult.data?.let {
                                                 _shoppingList.usersSharedWith.add(it)
-                                                _shoppingLists.postValue(Resource.Success(_shoppingList))
                                             }
                                         }
                                         Status.ERROR -> {
@@ -70,7 +68,10 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                                     }
                                 }
                             }
+                            shoppingLists.add(_shoppingList)
                         }
+                        Log.d(TAG, "$shoppingLists")
+                        _shoppingLists.postValue(Resource.Success(shoppingLists))
                     }
                     Status.ERROR -> {
                         result.message?.let {
@@ -83,10 +84,30 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     }
 
 
-    sealed class ShoppingListsFragmentsEvent {
-        object NavigateToSplashFragment : ShoppingListsFragmentsEvent()
+
+
+
+    /** Events **/
+    fun signOut() {
+        viewModelScope.launch {
+            userRepository.signOut()
+            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSplashFragment)
+        }
+    }
+    fun onShowErrorMessage(message: String) {
+        viewModelScope.launch {
+            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.ShowErrorMessage(message))
+        }
     }
 
 
+
+
+
+
+    sealed class ShoppingListsFragmentsEvent {
+        object NavigateToSplashFragment : ShoppingListsFragmentsEvent()
+        data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
+    }
 
 }

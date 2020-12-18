@@ -8,7 +8,7 @@ object ObjectFactory {
     fun createUserObject(firebaseUser: FirebaseUser, username: String, profilePicture: String = ""): User {
         val currentUser = User(
             id =  firebaseUser.uid,
-            username = username,
+            name = username,
             profilePicture = profilePicture
         )
 

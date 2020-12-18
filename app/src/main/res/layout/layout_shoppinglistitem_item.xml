@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/blue"
@@ -21,6 +23,7 @@
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
@@ -34,9 +37,12 @@
         android:id="@+id/iv_profilePhoto_1"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:alpha="0"
         android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
@@ -47,8 +53,10 @@
         android:layout_height="24dp"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:alpha="0"
         android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_1"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
@@ -59,8 +67,10 @@
         android:layout_height="24dp"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:alpha="0"
         android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_2"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
@@ -71,6 +81,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:alpha="0"
         android:background="@drawable/shape_roundedallcorners_blue"
         android:fontFamily="@font/roboto_regular"
@@ -79,6 +90,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_3"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         tools:text="+4" />
@@ -86,10 +98,12 @@
 
     <ProgressBar
         android:id="@+id/pb_itemProgress"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_circle"
+        android:layout_marginEnd="@dimen/margin_medium"
         android:indeterminate="false"
         android:max="100"
         android:progress="65"
@@ -97,19 +111,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_totalAndOpenItemsCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textSize_small"
+        android:elevation="1dp"
         android:fontFamily="@font/roboto_regular"
         android:textColor="@color/dark_blue"
-        android:elevation="1dp"
-        tools:text="15/16"
-        app:layout_constraintTop_toTopOf="@id/pb_itemProgress"
+        android:textSize="@dimen/textSize_small"
         app:layout_constraintBottom_toBottomOf="@id/pb_itemProgress"
+        app:layout_constraintEnd_toEndOf="@id/pb_itemProgress"
         app:layout_constraintStart_toStartOf="@id/pb_itemProgress"
-        app:layout_constraintEnd_toEndOf="@id/pb_itemProgress" />
+        app:layout_constraintTop_toTopOf="@id/pb_itemProgress"
+        tools:text="15/16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,20 +50,21 @@ class BaseListAdapter (
 
 
     private fun getItemForViewType(viewType: Int): BaseItem<*> {
-        val lastItemForVeiwTypeLookup = lastItemForViewTypeLookup
-        if(lastItemForVeiwTypeLookup != null &&
-                lastItemForVeiwTypeLookup.layoutId == viewType
+        val lastItemForViewTypeLookup = lastItemForViewTypeLookup
+        if (lastItemForViewTypeLookup != null
+            && lastItemForViewTypeLookup.layoutId == viewType
         ) {
-            return lastItemForVeiwTypeLookup
+            // We expect this to be a hit 100% of the time
+            return lastItemForViewTypeLookup
         }
 
-        for(i in 0 until itemCount) {
+        // To be extra safe in case RecyclerView implementation details change...
+        for (i in 0 until itemCount) {
             val item: BaseItem<*> = getItem(i)
             if (item.layoutId == viewType) {
                 return item
             }
         }
-
         throw IllegalStateException("Could not find model for view type: $viewType")
     }
 

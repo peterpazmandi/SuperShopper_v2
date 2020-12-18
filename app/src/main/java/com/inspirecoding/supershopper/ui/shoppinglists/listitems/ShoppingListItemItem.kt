@@ -1,19 +1,25 @@
 package com.inspirecoding.supershopper.ui.shoppinglists.listitems
 
+import android.util.Log
 import android.view.View
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import android.widget.ImageView
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.LayoutShoppinglistitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.getDueDateInString
 import com.inspirecoding.supershopper.utils.makeItVisible
+import com.squareup.picasso.Picasso
+
 
 data class ShoppingListItemItem(val shoppingList: ShoppingList): BaseItem<LayoutShoppinglistitemItemBinding> {
 
+    // CONST
+    private val TAG = this.javaClass.simpleName
+
     override val layoutId = R.layout.layout_shoppinglistitem_item
-    override val uniqueId = shoppingList
+    override val uniqueId = shoppingList.dueDate.time
 
     override fun initializeViewBinding(view: View) = LayoutShoppinglistitemItemBinding.bind(view)
 
@@ -35,43 +41,46 @@ data class ShoppingListItemItem(val shoppingList: ShoppingList): BaseItem<Layout
     private fun setProfileImages(
         binding: LayoutShoppinglistitemItemBinding
     ) {
-        val freindsListSize = shoppingList.friendsSharedWith.size
-        if(freindsListSize == 1) {
-            binding.ivProfilePhoto1.makeItVisible()
+        val friendsListSize = shoppingList.usersSharedWith.size
 
-            val user = shoppingList.usersSharedWith[0]
-            Glide.with(binding.root)
-                .load(user.profilePicture)
-                .centerCrop()
-                .placeholder(R.drawable.ic_default_profile_picture)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivProfilePhoto1)
-        }
-        if(freindsListSize == 2) {
-            binding.ivProfilePhoto2.makeItVisible()
+        for (i in 0 until friendsListSize) {
+            if(i == 0) {
+                binding.ivProfilePhoto1.makeItVisible()
 
-            val user = shoppingList.usersSharedWith[1]
-            Glide.with(binding.root)
-                .load(user.profilePicture)
-                .centerCrop()
-                .placeholder(R.drawable.ic_default_profile_picture)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivProfilePhoto2)
-        }
-        if(freindsListSize == 3) {
-            binding.ivProfilePhoto3.makeItVisible()
+                val user = shoppingList.usersSharedWith[0]
+                setProfilePictures(user, binding.ivProfilePhoto1)
+            }
+            if(i == 1) {
+                binding.ivProfilePhoto2.makeItVisible()
 
-            val user = shoppingList.usersSharedWith[2]
-            Glide.with(binding.root)
-                .load(user.profilePicture)
-                .centerCrop()
-                .placeholder(R.drawable.ic_default_profile_picture)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivProfilePhoto3)
+                val user = shoppingList.usersSharedWith[1]
+                setProfilePictures(user, binding.ivProfilePhoto2)
+            }
+            if(i == 2) {
+                binding.ivProfilePhoto3.makeItVisible()
+
+                val user = shoppingList.usersSharedWith[2]
+                setProfilePictures(user, binding.ivProfilePhoto3)
+            }
+            if(i > 2) {
+                binding.tvShoppingListSharedWithMore.makeItVisible()
+                binding.tvShoppingListSharedWithMore.text = "+${friendsListSize - 3}"
+                break
+            }
         }
-        if(freindsListSize > 3) {
-            binding.tvShoppingListSharedWithMore.makeItVisible()
-            binding.tvShoppingListSharedWithMore.text = "+${freindsListSize - 3}"
+    }
+    private fun setProfilePictures(user: User?, imageView: ImageView) {
+        user?.let {
+            if(user.profilePicture.isNotEmpty()) {
+                Picasso
+                    .get()
+                    .load(user.profilePicture)
+                    .fit()
+                    .placeholder(R.drawable.ic_default_profile_picture)
+                    .into(imageView)
+            } else {
+                imageView.setImageResource(R.drawable.ic_default_profile_picture)
+            }
         }
     }
 

@@ -152,5 +152,8 @@
             app:destination="@id/splashFragment"
             app:popUpTo="@id/shoppingListsFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_shoppingListsFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
     </fragment>
 </navigation>

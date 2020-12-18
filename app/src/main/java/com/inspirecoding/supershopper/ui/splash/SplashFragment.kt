@@ -2,7 +2,6 @@ package com.inspirecoding.supershopper.ui.splash
 
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,12 +10,9 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.SplashFragmentBinding
-import com.inspirecoding.supershopper.ui.register.RegisterFragmentDirections
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint

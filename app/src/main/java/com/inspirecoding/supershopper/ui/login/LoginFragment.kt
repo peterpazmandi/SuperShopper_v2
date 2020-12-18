@@ -86,7 +86,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                     }
                     Status.SUCCESS -> {
                         binding.progressBar.makeItInVisible()
-                        userResource._data?.let { _user ->
+                        userResource.data?.let { _user ->
                             viewModel.onSuccessfulLogin(_user)
                         }
                     }

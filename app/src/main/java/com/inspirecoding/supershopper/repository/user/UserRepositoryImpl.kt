@@ -1,4 +1,4 @@
-package com.inspirecoding.supershopper.repository.auth
+package com.inspirecoding.supershopper.repository.user
 
 import android.app.Activity
 import android.content.Context
@@ -33,9 +33,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
     @ApplicationContext private val applicationContext: Context
-) : AuthRepository {
+) : UserRepository {
 
     //CONST
     private val TAG = this.javaClass.simpleName

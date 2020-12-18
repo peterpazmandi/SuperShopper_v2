@@ -9,14 +9,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.data.User
-import com.inspirecoding.supershopper.repository.auth.AuthRepository
+import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.ValidateMethods
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class RegisterViewModel @ViewModelInject constructor(
-    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
@@ -26,7 +26,7 @@ class RegisterViewModel @ViewModelInject constructor(
     private val _registrationEventChannel = Channel<RegistrationEvent>()
     val registrationEventChannel = _registrationEventChannel.receiveAsFlow()
 
-    val userResource = authRepository.userResource
+    val userResource = userRepository.userResource
 
     var username = state.get<String>(USERNAME) ?: ""
         set(value) {
@@ -64,7 +64,7 @@ class RegisterViewModel @ViewModelInject constructor(
 
     fun registerUser() {
         viewModelScope.launch {
-            authRepository.registerUserFromAuthWithEmailAndPassword(
+            userRepository.registerUserFromAuthWithEmailAndPassword(
                 username, email, password
             )
         }
@@ -73,19 +73,19 @@ class RegisterViewModel @ViewModelInject constructor(
     /** Facebook **/
     fun signInWithFacebook(fragment: Fragment) {
         viewModelScope.launch {
-            authRepository.signInWithFacebook(fragment)
+            userRepository.signInWithFacebook(fragment)
         }
     }
 
     /** Google **/
     fun signInWithGoogle(activity: Activity) {
         viewModelScope.launch {
-            authRepository.signInWithGoogle(activity)
+            userRepository.signInWithGoogle(activity)
         }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        authRepository.onActivityResult(requestCode, resultCode, data, viewModelScope)
+        userRepository.onActivityResult(requestCode, resultCode, data, viewModelScope)
     }
 
 

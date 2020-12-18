@@ -6,25 +6,24 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.data.User
-import com.inspirecoding.supershopper.repository.auth.AuthRepository
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
+import com.inspirecoding.supershopper.repository.user.UserRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(
-    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
 
     private val _splashEventChannel = Channel<SplashEvent>()
     val splashEventChannel = _splashEventChannel.receiveAsFlow()
 
-    val userResource = authRepository.userResource
+    val userResource = userRepository.userResource
 
     fun checkUserLoggedIn() {
         viewModelScope.launch {
-            authRepository.checkUserLoggedIn(this)
+            userRepository.checkUserLoggedIn(this)
         }
     }
 

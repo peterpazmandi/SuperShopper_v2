@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/textSize_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Tomorrow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="@dimen/textSize_large"
+        app:layout_constraintEnd_toStartOf="@id/pb_itemProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        tools:text="First shopping list" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profilePhoto_1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:alpha="0"
+        android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profilePhoto_2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:alpha="0"
+        android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profilePhoto_3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:alpha="0"
+        android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_shoppingList_sharedWith_more"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:alpha="0"
+        android:background="@drawable/shape_roundedallcorners_blue"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:padding="0dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_normal"
+        app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_3"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        tools:text="+4" />
+
+
+    <ProgressBar
+        android:id="@+id/pb_itemProgress"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_circle"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="65"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_totalAndOpenItemsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize_small"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/dark_blue"
+        android:elevation="1dp"
+        tools:text="15/16"
+        app:layout_constraintTop_toTopOf="@id/pb_itemProgress"
+        app:layout_constraintBottom_toBottomOf="@id/pb_itemProgress"
+        app:layout_constraintStart_toStartOf="@id/pb_itemProgress"
+        app:layout_constraintEnd_toEndOf="@id/pb_itemProgress" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,18 +3,15 @@ package com.inspirecoding.supershopper.ui.forgotpassword
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.inspirecoding.supershopper.repository.auth.AuthRepository
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
+import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.ValidateMethods
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.annotation.Resource
 
 class ForgotPasswordDialogViewModel @ViewModelInject constructor(
-    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
 
@@ -41,7 +38,7 @@ class ForgotPasswordDialogViewModel @ViewModelInject constructor(
 
     fun resetEmail() {
         viewModelScope.launch {
-            authRepository.sendPasswordResetEmail(email).collect { _result ->
+            userRepository.sendPasswordResetEmail(email).collect { _result ->
                 when(_result)
                 {
                     is com.inspirecoding.supershopper.data.Resource.Success -> {

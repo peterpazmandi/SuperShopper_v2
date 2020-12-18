@@ -1,18 +1,26 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.databinding.ShoppingListsFragmentBinding
+import com.inspirecoding.supershopper.ui.shoppinglists.listitems.DateItem
+import com.inspirecoding.supershopper.ui.shoppinglists.listitems.ShoppingListItemItem
+import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.getMonthLongName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
+
+    private val TAG = this.javaClass.simpleName
 
     private val viewModel by viewModels<ShoppingListsViewModel>()
     private lateinit var binding : ShoppingListsFragmentBinding
@@ -23,12 +31,12 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
         setupCurrentUserObserver()
 
-        binding.textView.setOnClickListener {
-            viewModel.signOut()
-        }
-
 
         setupEvents()
+
+        viewModel.shoppingLists.observe(viewLifecycleOwner, {
+            Log.d(TAG, "$it")
+        })
     }
 
     private fun setupEvents() {
@@ -46,9 +54,38 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
     private fun setupCurrentUserObserver() {
         viewModel.currentUser.observe(viewLifecycleOwner, { _currentUser ->
-            binding.textView.text = _currentUser.username
+            viewModel.getCurrentUserShoppingListsRealTime(_currentUser)
         })
     }
+
+    private fun createShoppingListWithHeader(listOfShoppingLists: List<ShoppingList>) : MutableList<BaseItem<*>> {
+
+        val listOfShoppingListsWithHeaders = mutableListOf<BaseItem<*>>()
+
+        var currentHeader = ""
+
+        listOfShoppingLists.forEach {  shoppingList ->
+            val currentMonth = shoppingList.dueDate.getMonthLongName()
+            if(currentHeader != currentMonth) {
+                listOfShoppingListsWithHeaders.add(DateItem(shoppingList.dueDate))
+                currentHeader = currentMonth
+            } else {
+                listOfShoppingListsWithHeaders.add(ShoppingListItemItem(shoppingList))
+            }
+        }
+        return listOfShoppingListsWithHeaders
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /** Navigation methods **/

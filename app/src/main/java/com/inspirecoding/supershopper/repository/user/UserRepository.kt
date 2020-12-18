@@ -1,18 +1,16 @@
-package com.inspirecoding.supershopper.repository.auth
+package com.inspirecoding.supershopper.repository.user
 
 import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 
-interface AuthRepository {
+interface UserRepository {
 
     val userResource: Flow<Resource<User>>
 

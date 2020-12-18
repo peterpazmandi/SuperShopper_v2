@@ -1,7 +1,7 @@
 package com.inspirecoding.supershopper.di
 
-import com.inspirecoding.supershopper.repository.auth.AuthRepository
-import com.inspirecoding.supershopper.repository.auth.AuthRepositoryImpl
+import com.inspirecoding.supershopper.repository.user.UserRepository
+import com.inspirecoding.supershopper.repository.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ abstract class UserRepositoryModule {
     @Binds
     @Singleton
     abstract fun providesUserRepository (
-        userRepositoryImpl: AuthRepositoryImpl
-    ) : AuthRepository
+        userRepositoryImpl: UserRepositoryImpl
+    ) : UserRepository
 
 }

@@ -4,14 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
-import com.inspirecoding.supershopper.repository.auth.AuthRepository
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
+import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.ValidateMethods
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -19,13 +15,13 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel @ViewModelInject constructor(
-    private val authRepository: AuthRepository
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     private val _loginEventChannel = Channel<LoginEvent>()
     val loginEventChannel = _loginEventChannel.receiveAsFlow()
 
-    val userResource = authRepository.userResource
+    val userResource = userRepository.userResource
 
     var email = ""
         set(value) {
@@ -59,7 +55,7 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun loginUser() {
         viewModelScope.launch {
-            authRepository.logInUserFromAuthWithEmailAndPassword(
+            userRepository.logInUserFromAuthWithEmailAndPassword(
                 email, password
             )
         }
@@ -68,18 +64,18 @@ class LoginViewModel @ViewModelInject constructor(
     /** Facebook **/
     fun signInWithFacebook(fragment: Fragment) {
         viewModelScope.launch {
-            authRepository.signInWithFacebook(fragment)
+            userRepository.signInWithFacebook(fragment)
         }
     }
     /** Google **/
     fun signInWithGoogle(activity: Activity) {
         viewModelScope.launch {
-            authRepository.signInWithGoogle(activity)
+            userRepository.signInWithGoogle(activity)
         }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        authRepository.onActivityResult(requestCode, resultCode, data, viewModelScope)
+        userRepository.onActivityResult(requestCode, resultCode, data, viewModelScope)
     }
 
 

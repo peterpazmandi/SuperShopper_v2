@@ -241,9 +241,11 @@ class UserRepositoryImpl @Inject constructor(
             }
         }
     }.catch { exception ->
+
         exception.message?.let {
             emit(Resource.Error(it))
         }
+
     }.flowOn(IO)
 
     override suspend fun signOut() {
@@ -261,13 +263,16 @@ class UserRepositoryImpl @Inject constructor(
         exception.message?.let { message ->
             emit(Resource.Error(message))
         }
+
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getUserFromFirestore(userId: String) = flow<Resource<User>> {
 
+        Log.d(TAG, userId)
         val documentSnapshot = usersCollectionReference.document(userId).get().await()
         val user = documentSnapshot.toObject(User::class.java)
         user?.let { _user ->
+            Log.d(TAG, "$_user")
             emit(Resource.Success(_user))
         }
 
@@ -276,6 +281,7 @@ class UserRepositoryImpl @Inject constructor(
         exception.message?.let { message ->
             emit(Resource.Error(message))
         }
+
     }.flowOn(Dispatchers.IO)
 
 

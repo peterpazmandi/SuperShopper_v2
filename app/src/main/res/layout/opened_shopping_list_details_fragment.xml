@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".ui.openedshoppinglist.details.OpenedShoppingListDetailsFragment">
+
+    <View
+        android:id="@+id/whiteBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/rv_members"
+        app:layout_constraintTop_toTopOf="@id/tv_dueDateText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_dueDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingTop="@dimen/margin_medium"
+        android:text="@string/due_date"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_dueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dueDateText"
+        tools:text="08 May 2020" />
+
+    <View
+        android:id="@+id/horizontalLine_1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="#E5E5E5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dueDate" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_createdByText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/created_by"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalLine_1" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_createdByProfilePhoto"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_createdByText"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_createdBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_createdByProfilePhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_createdByProfilePhoto"
+        app:layout_constraintTop_toTopOf="@id/iv_createdByProfilePhoto"
+        tools:text="Péter Pázmándi" />
+
+    <View
+        android:id="@+id/horizontalLine_2"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:background="#E5E5E5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_createdBy" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_membersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/members"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalLine_2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/margin_medium"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tv_membersText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_deleteLeave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:alpha="0"
+        android:drawableStart="@drawable/ic_trash"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/delete_shopping_list"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:alpha="1"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

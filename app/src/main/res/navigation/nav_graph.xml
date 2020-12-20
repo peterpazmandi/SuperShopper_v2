@@ -155,5 +155,42 @@
         <action
             android:id="@+id/action_shoppingListsFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
+        <action
+            android:id="@+id/action_shoppingListsFragment_to_openedShoppingListFragment"
+            app:destination="@id/openedShoppingListFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/openedShoppingListFragment"
+        android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragment"
+        android:label="opened_shopping_list_fragment"
+        tools:layout="@layout/opened_shopping_list_fragment" >
+        <argument
+            android:name="openedShoppingList"
+            app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
+        <argument
+            android:name="user"
+            app:argType="com.inspirecoding.supershopper.data.User"/>
+    </fragment>
+    <fragment
+        android:id="@+id/openedShoppingListItemsFragment"
+        android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsFragment"
+        android:label="opened_shopping_list_items_fragment"
+        tools:layout="@layout/opened_shopping_list_items_fragment" >
+        <action
+            android:id="@+id/action_openedShoppingListItemsFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/openedShoppingListDetailsFragment"
+        android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.details.OpenedShoppingListDetailsFragment"
+        android:label="opened_shopping_list_details_fragment"
+        tools:layout="@layout/opened_shopping_list_details_fragment" >
+        <action
+            android:id="@+id/action_openedShoppingListDetailsFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
     </fragment>
 </navigation>

@@ -1,7 +1,11 @@
 package com.inspirecoding.supershopper.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+
+@Parcelize
 data class ShoppingList(
     var shoppingListId: String = "",
     val name: String = "",
@@ -9,11 +13,11 @@ data class ShoppingList(
     var timeStamp: Long = 0,
     var shoppingListStatus: String = "",
     val friendsSharedWith: MutableList<String> = mutableListOf<String>(),
+    val usersSharedWith: MutableList<User> = mutableListOf(),
     var listOfItems: MutableList<ListItem> = mutableListOf<ListItem>(),
     val status: String = "",
     val comment: String = ""
-) {
-    val usersSharedWith: MutableList<User> = mutableListOf()
+): Parcelable {
 
     fun calculateProgress(): Int {
         val itemsCount = listOfItems.size

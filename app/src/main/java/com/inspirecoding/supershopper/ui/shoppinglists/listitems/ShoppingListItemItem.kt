@@ -9,6 +9,7 @@ import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.LayoutShoppinglistitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.getDueDateInString
+import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import com.squareup.picasso.Picasso
 
@@ -25,17 +26,30 @@ data class ShoppingListItemItem(val shoppingList: ShoppingList): BaseItem<Layout
 
     override fun bind(
         binding: LayoutShoppinglistitemItemBinding,
-        itemClickCallBack: ((BaseItem<LayoutShoppinglistitemItemBinding>) -> Unit)?
+        itemClickCallBack: ((View, BaseItem<LayoutShoppinglistitemItemBinding>) -> Unit)?
     ) {
         val context = binding.root.context
 
+        binding.root.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
+
         binding.tvDate.text = context.getDueDateInString(shoppingList.dueDate)
+
         binding.tvName.text = shoppingList.name
 
         setProfileImages(binding)
 
         binding.pbItemProgress.progress = shoppingList.calculateProgress()
         binding.tvTotalAndOpenItemsCount.text = shoppingList.getTotalAndOpenItemsCount()
+
+        if(shoppingList.calculateProgress() == 100) {
+            binding.ivDoneMark.makeItVisible()
+            binding.tvTotalAndOpenItemsCount.makeItInVisible()
+        } else {
+            binding.ivDoneMark.makeItInVisible()
+            binding.tvTotalAndOpenItemsCount.makeItVisible()
+        }
     }
 
     private fun setProfileImages(

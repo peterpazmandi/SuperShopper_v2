@@ -1,13 +1,11 @@
 package com.inspirecoding.supershopper.ui.shoppinglists.listitems
 
-import android.util.Log
 import android.view.View
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.databinding.LayoutDateItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.getMonthLongName
-import java.util.*
 
 data class DateItem(val shoppingList: ShoppingList): BaseItem<LayoutDateItemBinding> {
 
@@ -22,7 +20,7 @@ data class DateItem(val shoppingList: ShoppingList): BaseItem<LayoutDateItemBind
 
     override fun bind(
         binding: LayoutDateItemBinding,
-        itemClickCallBack: ((BaseItem<LayoutDateItemBinding>) -> Unit)?
+        itemClickCallBack: ((View, BaseItem<LayoutDateItemBinding>) -> Unit)?
     ) {
         binding.tvDate.text = shoppingList.dueDate.getMonthLongName()
     }

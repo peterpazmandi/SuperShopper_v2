@@ -23,14 +23,15 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     // CONST
     private val TAG = this.javaClass.simpleName
+    companion object {
+        const val  ARG_KEY_USER = "user"
+    }
 
-    val user = state.getLiveData<User>("user")
+    val user = state.getLiveData<User>(ARG_KEY_USER)
+    val currentUser = state.getLiveData<User>(ARG_KEY_USER)
 
     private val _shoppingListsFragmentsEventChannel = Channel<ShoppingListsFragmentsEvent>()
     val shoppingListsFragmentsEventChannel = _shoppingListsFragmentsEventChannel.receiveAsFlow()
-
-    private val _currentUser = MutableLiveData<User>()
-    val currentUser = state.getLiveData<User>("user")
 
     private val _shoppingLists = MutableLiveData<Resource<List<ShoppingList>>>()
     val shoppingLists : LiveData<Resource<List<ShoppingList>>> = _shoppingLists
@@ -70,7 +71,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                             }
                             shoppingLists.add(_shoppingList)
                         }
-                        Log.d(TAG, "$shoppingLists")
+
                         _shoppingLists.postValue(Resource.Success(shoppingLists))
                     }
                     Status.ERROR -> {
@@ -94,6 +95,11 @@ class ShoppingListsViewModel @ViewModelInject constructor(
             _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSplashFragment)
         }
     }
+    fun onOpenSelectedShoppingList(shoppingList: ShoppingList) {
+        viewModelScope.launch {
+            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.OpenSelectedShoppingList(shoppingList))
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.ShowErrorMessage(message))
@@ -107,6 +113,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     sealed class ShoppingListsFragmentsEvent {
         object NavigateToSplashFragment : ShoppingListsFragmentsEvent()
+        data class OpenSelectedShoppingList(val shoppingList: ShoppingList) : ShoppingListsFragmentsEvent()
         data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
     }
 

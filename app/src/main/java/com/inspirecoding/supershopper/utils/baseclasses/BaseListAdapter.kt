@@ -1,6 +1,7 @@
 package com.inspirecoding.supershopper.utils.baseclasses
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
@@ -16,7 +17,7 @@ import java.lang.IllegalStateException
  * @param itemClickCallback An optional callback for clicks on an item
  * */
 class BaseListAdapter (
-    private val itemClickCallback: ((BaseItem<*>) -> Unit)?
+    private val itemClickCallback: ((View, BaseItem<*>) -> Unit)?
 ) : ListAdapter<BaseItem<*>, BaseViewHolder<*>>(
 
     AsyncDifferConfig.Builder(object : DiffUtil.ItemCallback<BaseItem<*>>() {
@@ -47,6 +48,9 @@ class BaseListAdapter (
         getItem(position).bind(holder, itemClickCallback)
     }
 
+//    override fun submitList(list: MutableList<BaseItem<*>>?) {
+//        super.submitList(list?.let { ArrayList(it) })
+//    }
 
 
     private fun getItemForViewType(viewType: Int): BaseItem<*> {

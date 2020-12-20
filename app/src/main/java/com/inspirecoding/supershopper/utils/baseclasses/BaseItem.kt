@@ -17,12 +17,12 @@ interface BaseItem<T: ViewBinding> {
     /**
      * @param itemClickCallback Optional click callback for clicks on the whole item
      * */
-    fun bind(holder: BaseViewHolder<*>, itemClickCallBack: ((BaseItem<T>) -> Unit)?) {
+    fun bind(holder: BaseViewHolder<*>, itemClickCallBack: ((View, BaseItem<T>) -> Unit)?) {
         val specificHolder = holder as BaseViewHolder<T>
         bind(specificHolder.binding, itemClickCallBack)
     }
 
-    fun bind(binding: T, itemClickCallBack: ((BaseItem<T>) -> Unit)?)
+    fun bind(binding: T, itemClickCallBack: ((View, BaseItem<T>) -> Unit)?)
 
     override fun equals(other: Any?): Boolean
 

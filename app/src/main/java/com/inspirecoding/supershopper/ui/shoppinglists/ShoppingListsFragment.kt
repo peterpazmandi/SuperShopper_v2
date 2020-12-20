@@ -53,7 +53,6 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                     binding.progressBar.makeItInVisible()
 
                     result.data?.let {
-                        Log.d(TAG, "${it}")
                         val list = createShoppingListWithHeader(it)
                         setUiIfListEmpty(list.size == 0)
                         adapter.submitList(list)
@@ -90,13 +89,15 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
     }
 
     private fun setupRecyclerView() {
-        adapter = BaseListAdapter {
-
+        adapter = BaseListAdapter { view, selectedItem ->
+            (selectedItem as ShoppingListItemItem).let { shoppingListItem ->
+                val shoppingList = shoppingListItem.shoppingList
+                viewModel.onOpenSelectedShoppingList(shoppingList)
+            }
         }
         binding.rvShoppingLists.setHasFixedSize(true)
         binding.rvShoppingLists.setItemViewCacheSize(20)
-//        binding.rvShoppingLists.setDrawingCacheEnabled(true)
-//        binding.rvShoppingLists.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH)
+
         binding.rvShoppingLists.adapter = adapter
     }
 
@@ -106,10 +107,13 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                 when(event)
                 {
                     ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSplashFragment -> {
-                        navigateToShoppingListsFragment()
+                        navigateToSplashFragment()
                     }
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
+                    }
+                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.OpenSelectedShoppingList -> {
+                        navigateToOpenShoppingListsFragment(event.shoppingList)
                     }
                 }
             }
@@ -166,8 +170,14 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
 
     /** Navigation methods **/
-    private fun navigateToShoppingListsFragment() {
+    private fun navigateToSplashFragment() {
         findNavController().navigate(R.id.action_shoppingListsFragment_to_splashFragment)
+    }
+    private fun navigateToOpenShoppingListsFragment(shoppingList: ShoppingList) {
+        viewModel.currentUser.value?.let { currentUser ->
+            val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToOpenedShoppingListFragment(shoppingList, currentUser)
+            findNavController().navigate(action)
+        }
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
         val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToErrorBottomDialogFragment(errorMessage)

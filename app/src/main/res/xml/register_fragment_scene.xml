@@ -58,7 +58,7 @@
             app:layout_constraintVertical_bias="0.15" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_emailAddress"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_username">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_password"
@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_emailAddress" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
     </ConstraintSet>
 
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_username">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_password"
@@ -128,7 +128,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_emailAddress">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
     </ConstraintSet>
 
@@ -146,7 +146,7 @@
             app:layout_constraintVertical_bias="0.15" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_emailAddress"
@@ -172,7 +172,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_emailAddress">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
     </ConstraintSet>
 
@@ -190,7 +190,7 @@
             app:layout_constraintVertical_bias="0.15" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_emailAddress"
@@ -203,7 +203,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_username">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/dark_gray"/>
+                app:customColorValue="@color/dark_gray_1"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_password"

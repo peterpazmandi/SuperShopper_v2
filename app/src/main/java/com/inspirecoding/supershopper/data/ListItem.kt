@@ -1,5 +1,9 @@
 package com.inspirecoding.supershopper.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class ListItem(
     val id: String = "",
     var item: String = "",
@@ -10,4 +14,4 @@ data class ListItem(
     val icon: String = "",
     val categoryId: Int = -1,
     val comment: String = ""
-)
+) : Parcelable

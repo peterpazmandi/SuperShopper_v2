@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.repository.shoppinglist
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -16,19 +17,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository {
 
     // CONST
     private val TAG = this.javaClass.simpleName
     private val SHOPPINGLIST_COLLECTION_NAME = "shoppingList"
     private val FRIENDSSHAREDWITH = "friendsSharedWith"
+    private val SHOPPINGLISTID = "shoppingListId"
     private val DUEDATE = "dueDate"
+    private val LISTOFITEMS = "listOfItems"
 
     // COLLECTIONS
     private val shoppingListsCollectionReference = FirebaseFirestore.getInstance().collection(SHOPPINGLIST_COLLECTION_NAME)
 
-    @ExperimentalCoroutinesApi
-    override suspend fun getCurrentUserShoppingListsRealTime(currentUser: User, coroutineScope: CoroutineScope) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
+    override suspend fun getCurrentUserShoppingListsRealTime(
+        currentUser: User, coroutineScope: CoroutineScope
+    ) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
 
         offer(Resource.Loading(true))
 
@@ -58,9 +63,44 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         }
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun getShoppingListRealTime(
+        shoppingListId: String, coroutineScope: CoroutineScope
+    ): Flow<Resource<ShoppingList>> = callbackFlow {
+
+        offer(Resource.Loading(true))
+
+        val subscription = shoppingListsCollectionReference.document(shoppingListId)
+            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                Log.d(TAG, "$documentSnapshot")
+                coroutineScope.launch {
+                    val shoppingList = documentSnapshot?.let { it.toObject(ShoppingList::class.java) }
+                    shoppingList?.let {
+                        Log.d(TAG, "$it")
+                        offer(Resource.Success(it))
+                    }
+                }
+            }
 
 
+        awaitClose { subscription.remove() }
 
+    }.catch { exception ->
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
 
+    override suspend fun updateShoppingListItems(shoppingListId: String, listOfItems: List<ListItem>) = flow<Resource<Nothing>> {
 
+        shoppingListsCollectionReference
+            .document(shoppingListId)
+            .update(LISTOFITEMS, listOfItems)
+            .await()
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
 }

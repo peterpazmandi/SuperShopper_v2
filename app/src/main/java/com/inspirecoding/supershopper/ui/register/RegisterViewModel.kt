@@ -92,7 +92,7 @@ class RegisterViewModel @ViewModelInject constructor(
     /** Events **/
     fun onTermsAndConditionSelected() {
         viewModelScope.launch {
-            _registrationEventChannel.send(RegistrationEvent.NavigateToTermsAndConditionFragment)
+            _registrationEventChannel.send(RegistrationEvent.NavigateToTermsAndConditionsFragment)
         }
     }
 
@@ -123,7 +123,7 @@ class RegisterViewModel @ViewModelInject constructor(
 
     sealed class RegistrationEvent {
         object NavigateToLoginFragment : RegistrationEvent()
-        object NavigateToTermsAndConditionFragment : RegistrationEvent()
+        object NavigateToTermsAndConditionsFragment : RegistrationEvent()
         object NavigateToPrivacyPolicyFragment : RegistrationEvent()
         data class ShowErrorMessage(val message: String) : RegistrationEvent()
         data class RegistrationCompletedEvent(val user: User) : RegistrationEvent()

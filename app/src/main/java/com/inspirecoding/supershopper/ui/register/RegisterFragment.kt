@@ -79,7 +79,7 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
                     RegisterViewModel.RegistrationEvent.NavigateToLoginFragment -> {
                         navigateToLoginFragment()
                     }
-                    RegisterViewModel.RegistrationEvent.NavigateToTermsAndConditionFragment -> {
+                    RegisterViewModel.RegistrationEvent.NavigateToTermsAndConditionsFragment -> {
                         navigateToTermsAndConditionFragment()
                     }
                     RegisterViewModel.RegistrationEvent.NavigateToPrivacyPolicyFragment -> {

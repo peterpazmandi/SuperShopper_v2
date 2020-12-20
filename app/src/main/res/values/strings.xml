@@ -150,5 +150,48 @@
     <string name="members">Members</string>
     <string name="delete_shopping_list">Delete shopping list</string>
     <string name="leave_shopping_list">Leave shopping list</string>
+    <string name="categories">Categories</string>
+    <string name="notifications">Notifications</string>
+    <string name="share_the_app">Share the app</string>
+    <string name="rate_the_app">Rate the app</string>
+    <string name="theme">Theme</string>
+    <string name="documents">Documents</string>
+    <string name="night_mode">Night mode</string>
+
+    <!-- Categories -->
+    <string name="alcoholic_drinks">Alcoholic drinks</string>
+    <string name="baby_products">Baby products</string>
+    <string name="bakery">Bakery</string>
+    <string name="beverages">Beverages</string>
+    <string name="canned_foods">Canned foods</string>
+    <string name="car_care_products">Car care products</string>
+    <string name="clothes">Clothes</string>
+    <string name="coffee_tea_and_hot_chocolate">Coffee, tea and hot chocolate</string>
+    <string name="cosmetics">Cosmetics</string>
+    <string name="dairy_products">Dairy products</string>
+    <string name="diet_foods">Diet foods</string>
+    <string name="electronics_devices">Electronics, devices</string>
+    <string name="fish_and_seafood">Fish and seafood</string>
+    <string name="frozen">Frozen</string>
+    <string name="grains_and_pasta">Grains and pasta</string>
+    <string name="home_and_kitchen">Home and kitchen</string>
+    <string name="home_baking">Home baking</string>
+    <string name="house_cleaning_products">House cleaning products</string>
+    <string name="meat_pourly_and_sausages">Meat, pourly and sausages</string>
+    <string name="newspapers">Newspapers</string>
+    <string name="office_supplies">Office supplies</string>
+    <string name="oils">Oils</string>
+    <string name="other">Other</string>
+    <string name="personal_hygiene">Personal hygiene</string>
+    <string name="pet_care">Pet care</string>
+    <string name="pharmacy">Pharmacy</string>
+    <string name="preserves">Preserves</string>
+    <string name="ready_meals">Ready meals</string>
+    <string name="snacks">Snacks</string>
+    <string name="condiments">Condiments</string>
+    <string name="sauces">Sauces</string>
+    <string name="spices">Spices</string>
+
+
 
 </resources>

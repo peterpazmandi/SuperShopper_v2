@@ -153,7 +153,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
 
     /** Navigation methods **/
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
-//        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToErrorBottomDialogFragment(errorMessage)
-//        findNavController().navigate(action)
+        val action = OpenedShoppingListItemsFragmentDirections.actionOpenedShoppingListItemsFragmentToErrorBottomDialogFragment(errorMessage)
+        findNavController().navigate(action)
     }
 }

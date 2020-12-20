@@ -5,12 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListDetailsFragmentBinding
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.details.membersitem.MembersItem
+import com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsFragmentDirections
 import com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsViewModel
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
@@ -57,7 +59,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
                 }
                 Status.ERROR -> {
                     binding.progressBar.makeItInVisible()
-
+                    result.message?.let {
+                        viewModel.onShowErrorMessage(it)
+                    }
                 }
             }
         })
@@ -130,7 +134,7 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
 
     /** Navigation methods **/
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
-//        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToErrorBottomDialogFragment(errorMessage)
-//        findNavController().navigate(action)
+        val action = OpenedShoppingListDetailsFragmentDirections.actionOpenedShoppingListDetailsFragmentToErrorBottomDialogFragment(errorMessage)
+        findNavController().navigate(action)
     }
 }

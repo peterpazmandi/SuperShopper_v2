@@ -100,10 +100,12 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_component_version"
 
 
-    /** Glide **/
-    implementation "com.github.bumptech.glide:glide:$glide_version"
     /** Picasso **/
     implementation "com.squareup.picasso:picasso:$picasso"
 
 
+    /** Room **/
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 }

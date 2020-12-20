@@ -31,9 +31,6 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
 
     val openedShoppingList = state.getLiveData<ShoppingList>(ARG_KEY_OPENEDSHOPPINGLIST)
 
-//    private val _shoppingList = MutableLiveData<Resource<ShoppingList>>()
-//    val shoppingList: LiveData<Resource<ShoppingList>> = _shoppingList
-
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
 
 

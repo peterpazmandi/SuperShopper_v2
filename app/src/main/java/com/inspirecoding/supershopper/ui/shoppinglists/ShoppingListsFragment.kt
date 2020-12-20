@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -21,6 +19,7 @@ import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.getMonthLongName
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -150,11 +149,12 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
     private fun setupLoggedInUsersProfile(user: User) {
 
         binding.tvUsername.text = user.name
-        Glide.with(binding.root)
+
+        Picasso
+            .get()
             .load(user.profilePicture)
-            .centerCrop()
+            .fit()
             .placeholder(R.drawable.ic_default_profile_picture)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.ivProfilePhoto)
 
     }

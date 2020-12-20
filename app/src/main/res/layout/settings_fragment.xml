@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/ic_back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_shoppingListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/settings"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintStart_toEndOf="@id/iv_backButton"
+        app:layout_constraintTop_toTopOf="@id/iv_backButton" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="@drawable/shape_roundedtopcorners_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_backButton" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_xxlarge"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/categories"
+                android:textAlignment="center"
+                android:drawableStart="@drawable/ic_category"
+                android:drawablePadding="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:id="@+id/horizontalLine_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_categories" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/notifications"
+                android:textAlignment="center"
+                android:drawableStart="@drawable/ic_notifications"
+                android:drawablePadding="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_categories" />
+            <View
+                android:id="@+id/horizontalLine_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_notification" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_shareTheApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/share_the_app"
+                android:textAlignment="center"
+                android:drawableStart="@drawable/ic_share"
+                android:drawablePadding="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_notification" />
+            <View
+                android:id="@+id/horizontalLine_shareTheApp"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_shareTheApp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rateTheApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/rate_the_app"
+                android:textAlignment="center"
+                android:drawableStart="@drawable/ic_star"
+                android:drawablePadding="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_shareTheApp" />
+            <View
+                android:id="@+id/horizontalLine_rateTheApp"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_rateTheApp" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_themeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_xxxlarge"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/theme"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_rateTheApp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nightMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/night_mode"
+                android:textAlignment="center"
+                android:drawableStart="@drawable/ic_night_mode"
+                android:drawablePadding="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_themeText" />
+            <View
+                android:id="@+id/horizontalLine_nightMode"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_nightMode" />
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium"
+                app:layout_constraintTop_toTopOf="@id/tv_nightMode"
+                app:layout_constraintBottom_toBottomOf="@id/tv_nightMode"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_documentsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_xxxlarge"
+                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/documents"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_nightMode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_termsAndConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/terms_anp_conditions"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_documentsText" />
+            <View
+                android:id="@+id/horizontalLine_termsAndConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_termsAndConditions" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_privacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_medium"
+                android:text="@string/privacy_policy"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_termsAndConditions" />
+            <View
+                android:id="@+id/horizontalLine_privacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_privacyPolicy" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

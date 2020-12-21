@@ -164,7 +164,11 @@
             app:popExitAnim="@anim/slide_out_from_right" />
         <action
             android:id="@+id/action_shoppingListsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListFragment"
@@ -206,13 +210,25 @@
             app:destination="@id/errorBottomDialogFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_termsAndConditionsFragment"
-            app:destination="@id/termsAndConditionsFragment" />
+            app:destination="@id/termsAndConditionsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
         <action
             android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
-            app:destination="@id/privacyPolicyFragment" />
+            app:destination="@id/privacyPolicyFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
         <action
             android:id="@+id/action_settingsFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"

@@ -23,6 +23,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.utils.ObjectFactory.createUserObject
+import com.inspirecoding.supershopper.utils.Status
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -112,10 +113,9 @@ class UserRepositoryImpl @Inject constructor(
         try {
             coroutineScope.launch {
                 val firebaseUser = firebaseAuth.currentUser
-                println("CurrentUser -> ${firebaseAuth.currentUser?.uid}")
+
                 if(firebaseUser != null) {
                     getUserFromFirestore(firebaseUser.uid).collect {  _user ->
-                        println("CurrentUser -> ${_user}")
                         _userResource.send(_user)
                     }
                 } else {
@@ -155,9 +155,29 @@ class UserRepositoryImpl @Inject constructor(
                     val firebaseUser = authResult.user
 
                     if(firebaseUser?.displayName != null) {
-                        val user = createUserObject(firebaseUser, firebaseUser.displayName as String)
-                        createUserInFirestore(user).collect { _user ->
-                            _userResource.send(_user)
+                        getUserFromFirestore(firebaseUser.uid).collect { result ->
+                            when(result.status)
+                            {
+                                Status.LOADING -> {
+                                    _userResource.send(Resource.Loading(true))
+                                }
+                                Status.SUCCESS -> {
+                                    if (result.data != null) {
+                                        _userResource.send(result)
+                                    } else {
+                                        val user = createUserObject(firebaseUser, firebaseUser.displayName as String)
+                                        createUserInFirestore(user).collect { _result ->
+                                            _userResource.send(_result)
+                                        }
+
+                                    }
+                                }
+                                Status.ERROR -> {
+                                    result.message?.let { message ->
+                                        _userResource.send(Resource.Error(message))
+                                    }
+                                }
+                            }
                         }
                     } else {
                         _userResource.send(Resource.Error(applicationContext.getString(R.string.error_during_registration_please_try_again_later)))
@@ -204,9 +224,29 @@ class UserRepositoryImpl @Inject constructor(
             val firebaseUser = authResult.user
 
             if(firebaseUser?.displayName != null) {
-                val user = createUserObject(firebaseUser, firebaseUser.displayName as String)
-                createUserInFirestore(user).collect { _user ->
-                    _userResource.send(_user)
+                getUserFromFirestore(firebaseUser.uid).collect { result ->
+                    when(result.status)
+                    {
+                        Status.LOADING -> {
+                            _userResource.send(Resource.Loading(true))
+                        }
+                        Status.SUCCESS -> {
+                            if (result.data != null) {
+                                _userResource.send(result)
+                            } else {
+                                val user = createUserObject(firebaseUser, firebaseUser.displayName as String)
+                                createUserInFirestore(user).collect { _result ->
+                                    _userResource.send(_result)
+                                }
+
+                            }
+                        }
+                        Status.ERROR -> {
+                            result.message?.let { message ->
+                                _userResource.send(Resource.Error(message))
+                            }
+                        }
+                    }
                 }
             } else {
                 _userResource.send(Resource.Error(applicationContext.getString(R.string.error_during_registration_please_try_again_later)))
@@ -268,13 +308,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserFromFirestore(userId: String) = flow<Resource<User>> {
 
-        Log.d(TAG, userId)
         val documentSnapshot = usersCollectionReference.document(userId).get().await()
         val user = documentSnapshot.toObject(User::class.java)
-        user?.let { _user ->
-            Log.d(TAG, "$_user")
-            emit(Resource.Success(_user))
-        }
+
+        emit(Resource.Success(user))
 
     }.catch {  exception ->
 

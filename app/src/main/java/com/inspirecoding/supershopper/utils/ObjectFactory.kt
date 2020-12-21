@@ -5,13 +5,13 @@ import com.inspirecoding.supershopper.data.User
 
 object ObjectFactory {
 
-    fun createUserObject(firebaseUser: FirebaseUser, username: String, profilePicture: String = ""): User {
-        val currentUser = User(
-            id =  firebaseUser.uid,
-            name = username,
-            profilePicture = profilePicture
-        )
-
-        return currentUser
-    }
+    fun createUserObject(
+        firebaseUser: FirebaseUser,
+        username: String,
+        profilePicture: String = ""
+    ) = User(
+        id =  firebaseUser.uid,
+        name = username,
+        profilePicture = profilePicture
+    )
 }

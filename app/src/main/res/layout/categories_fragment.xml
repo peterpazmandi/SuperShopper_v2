@@ -30,6 +30,20 @@
         app:layout_constraintTop_toTopOf="@id/iv_backButton" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_undo"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:alpha="0"
+        android:src="@drawable/ic_undo"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintEnd_toStartOf="@id/iv_createNew"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_createNew"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -47,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_medium"
-        android:background="@drawable/shape_roundedtopcorners_gray"
+        android:background="@drawable/shape_roundedtopcorners_white"
         android:clipToPadding="false"
         android:paddingStart="@dimen/margin_medium"
         android:paddingTop="@dimen/margin_medium"

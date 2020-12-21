@@ -39,9 +39,16 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
         setupCurrentUserObserver()
         setupRecyclerView()
-
         setupEvents()
+        setupShoppingListObserver()
 
+        binding.fabSettings.setOnClickListener {
+            viewModel.onOpenSettings()
+        }
+
+    }
+
+    private fun setupShoppingListObserver() {
         viewModel.shoppingLists.observe(viewLifecycleOwner, { result ->
             when(result.status)
             {
@@ -105,8 +112,8 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
             viewModel.shoppingListsFragmentsEventChannel.collect { event ->
                 when(event)
                 {
-                    ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSplashFragment -> {
-                        navigateToSplashFragment()
+                    ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSettingsFragment -> {
+                        navigateToSettingsFragment()
                     }
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
@@ -150,12 +157,14 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
         binding.tvUsername.text = user.name
 
-        Picasso
-            .get()
-            .load(user.profilePicture)
-            .fit()
-            .placeholder(R.drawable.ic_default_profile_picture)
-            .into(binding.ivProfilePhoto)
+        if(user.profilePicture.isNotEmpty()) {
+            Picasso
+                .get()
+                .load(user.profilePicture)
+                .fit()
+                .placeholder(R.drawable.ic_default_profile_picture)
+                .into(binding.ivProfilePhoto)
+        }
 
     }
 
@@ -170,8 +179,8 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
 
     /** Navigation methods **/
-    private fun navigateToSplashFragment() {
-        findNavController().navigate(R.id.action_shoppingListsFragment_to_splashFragment)
+    private fun navigateToSettingsFragment() {
+        findNavController().navigate(R.id.action_shoppingListsFragment_to_settingsFragment)
     }
     private fun navigateToOpenShoppingListsFragment(shoppingList: ShoppingList) {
         viewModel.currentUser.value?.let { currentUser ->

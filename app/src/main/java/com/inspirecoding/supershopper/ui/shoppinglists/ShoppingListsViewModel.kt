@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.repository.local.ShopperRepository
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.Status
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class ShoppingListsViewModel @ViewModelInject constructor(
+    private val shopperRepository: ShopperRepository,
     private val userRepository: UserRepository,
     private val shoppingListRepository: ShoppingListRepository,
     @Assisted private val state: SavedStateHandle
@@ -89,10 +91,9 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
 
     /** Events **/
-    fun signOut() {
+    fun onOpenSettings() {
         viewModelScope.launch {
-            userRepository.signOut()
-            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSplashFragment)
+            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSettingsFragment)
         }
     }
     fun onOpenSelectedShoppingList(shoppingList: ShoppingList) {
@@ -112,7 +113,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
 
     sealed class ShoppingListsFragmentsEvent {
-        object NavigateToSplashFragment : ShoppingListsFragmentsEvent()
+        object NavigateToSettingsFragment : ShoppingListsFragmentsEvent()
         data class OpenSelectedShoppingList(val shoppingList: ShoppingList) : ShoppingListsFragmentsEvent()
         data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
     }

@@ -10,6 +10,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.SplashFragmentBinding
+import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,16 +48,16 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
     private fun processUserLoggedInResult() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.userResource.collect { userResource ->
-                when(userResource)
+                when(userResource.status)
                 {
-                    is Resource.Success ->  {
+                    Status.SUCCESS ->  {
                         handleUserLoggedInResult(userResource.data)
                         binding.progressBar.makeItInVisible()
                     }
-                    is Resource.Loading ->  {
+                    Status.LOADING ->  {
                         binding.progressBar.makeItVisible()
                     }
-                    is Resource.Error ->  {
+                    Status.ERROR ->  {
                         userResource.message?.let {
                             viewModel.onShowErrorMessage(it)
                         }

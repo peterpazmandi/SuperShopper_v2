@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 data class Category(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int = -1,
+    val id: Int = 0,
 
     val customName: String? = null,
-    val icon: String = "",
+    val iconDrawableResId: Int = -1,
     val nameStringResId: Int? = null,
     val position : Int = -1
 )

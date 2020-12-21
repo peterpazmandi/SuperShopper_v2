@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import java.lang.IllegalStateException
+import java.util.*
 
 
 /**
@@ -18,21 +19,15 @@ import java.lang.IllegalStateException
  * */
 class BaseListAdapter (
     private val itemClickCallback: ((View, BaseItem<*>) -> Unit)?
-) : ListAdapter<BaseItem<*>, BaseViewHolder<*>>(
-
-    AsyncDifferConfig.Builder(object : DiffUtil.ItemCallback<BaseItem<*>>() {
-        override fun areItemsTheSame(oldItem: BaseItem<*>, newItem: BaseItem<*>): Boolean {
-            return oldItem.uniqueId == newItem.uniqueId
-        }
-
-        override fun areContentsTheSame(oldItem: BaseItem<*>, newItem: BaseItem<*>): Boolean {
-            return oldItem == newItem
-        }
-    }).build()
-
-) {
+) : ListAdapter<BaseItem<*>, BaseViewHolder<*>>(DiffCallback()), ContentTouchHelperAdapter {
 
     private var lastItemForViewTypeLookup: BaseItem<*>? = null
+
+    private var dataList = ArrayList<BaseItem<*>>()
+    fun setDataList(data: List<BaseItem<*>>) {
+        dataList.clear()
+        dataList.addAll(data)
+    }
 
     override fun getItemViewType(position: Int) = getItem(position).layoutId
 
@@ -48,10 +43,19 @@ class BaseListAdapter (
         getItem(position).bind(holder, itemClickCallback)
     }
 
-//    override fun submitList(list: MutableList<BaseItem<*>>?) {
-//        super.submitList(list?.let { ArrayList(it) })
-//    }
+    override fun onItemDeleted(fromPosition: Int): Boolean {
+        dataList.removeAt(fromPosition)
+        notifyItemRemoved(fromPosition)
+        submitList(dataList)
+        return true
+    }
 
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        Collections.swap(dataList, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+        submitList(dataList)
+        return true
+    }
 
     private fun getItemForViewType(viewType: Int): BaseItem<*> {
         val lastItemForViewTypeLookup = lastItemForViewTypeLookup
@@ -72,14 +76,20 @@ class BaseListAdapter (
         throw IllegalStateException("Could not find model for view type: $viewType")
     }
 
+    class DiffCallback : DiffUtil.ItemCallback<BaseItem<*>>() {
+        override fun areItemsTheSame(oldItem: BaseItem<*>, newItem: BaseItem<*>): Boolean {
+            return oldItem.uniqueId == newItem.uniqueId
+        }
+
+        override fun areContentsTheSame(oldItem: BaseItem<*>, newItem: BaseItem<*>): Boolean {
+            return oldItem == newItem
+        }
+    }
 
 
+}
 
-
-
-
-
-
-
-
+interface ContentTouchHelperAdapter {
+    fun onItemDeleted(fromPosition: Int): Boolean
+    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
 }

@@ -1,6 +1,5 @@
 package com.inspirecoding.supershopper.repository.shoppinglist
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.inspirecoding.supershopper.data.ListItem
@@ -10,7 +9,6 @@ import com.inspirecoding.supershopper.data.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -48,7 +46,6 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
                     }?.toMutableList()
 
                     shoppingLists?.let {
-                        Log.d(TAG, "$shoppingLists")
                         offer(Resource.Success(it))
                     }
                 }
@@ -71,11 +68,9 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
 
         val subscription = shoppingListsCollectionReference.document(shoppingListId)
             .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                Log.d(TAG, "$documentSnapshot")
                 coroutineScope.launch {
                     val shoppingList = documentSnapshot?.let { it.toObject(ShoppingList::class.java) }
                     shoppingList?.let {
-                        Log.d(TAG, "$it")
                         offer(Resource.Success(it))
                     }
                 }

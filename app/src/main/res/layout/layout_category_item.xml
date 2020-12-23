@@ -16,22 +16,48 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_category"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:textSize="@dimen/textSize_medium"
         android:textStyle="bold"
+        android:layout_marginEnd="@dimen/margin_medium"
         app:layout_constraintBottom_toBottomOf="@id/iv_icon"
         app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintEnd_toStartOf="@id/iv_moveUp"
         app:layout_constraintTop_toTopOf="@id/iv_icon"
         tools:text="Alcoholic drinks" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_reOrder"
+        android:id="@+id/iv_moveUp"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_drag_and_drop"
+        android:src="@drawable/ic_arrow_up"
+        android:tag="@string/move_up"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_moveDown"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_moveDown"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_down"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:tag="@string/move_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_trash"
+        android:tag="@string/delete"
+        android:layout_marginEnd="@dimen/margin_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

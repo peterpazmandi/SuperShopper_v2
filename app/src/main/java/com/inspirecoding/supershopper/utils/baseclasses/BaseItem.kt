@@ -12,6 +12,8 @@ interface BaseItem<T: ViewBinding> {
 
     val uniqueId: Any
 
+    val data: Any
+
     fun initializeViewBinding(view: View): T
 
     /**

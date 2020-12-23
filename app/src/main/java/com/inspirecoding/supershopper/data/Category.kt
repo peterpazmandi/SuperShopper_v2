@@ -12,5 +12,5 @@ data class Category(
     val customName: String? = null,
     val iconDrawableResId: Int = -1,
     val nameStringResId: Int? = null,
-    val position : Int = -1
+    var position : Int = -1
 )

@@ -14,6 +14,7 @@ data class MembersItem(val user: User): BaseItem<LayoutFriendItemBinding> {
 
     override val layoutId = R.layout.layout_friend_item
     override val uniqueId = user.id
+    override val data = user
 
     override fun initializeViewBinding(view: View) = LayoutFriendItemBinding.bind(view)
 

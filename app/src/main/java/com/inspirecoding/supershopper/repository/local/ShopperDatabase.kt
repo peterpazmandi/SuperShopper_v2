@@ -33,187 +33,187 @@ abstract class ShopperDatabase : RoomDatabase() {
                     customName = "",
                     iconDrawableResId = R.drawable.ic_alcoholic_drinks,
                     nameStringResId = R.string.alcoholic_drinks,
-                    position = 1
+                    position = 0
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_baby_products,
                     nameStringResId = R.string.baby_products,
-                    position = 2
+                    position = 1
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_bakery,
                     nameStringResId = R.string.bakery,
-                    position = 3
+                    position = 2
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_beverages,
                     nameStringResId = R.string.beverages,
-                    position = 4
+                    position = 3
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_canned_foods,
                     nameStringResId = R.string.canned_foods,
-                    position = 5
+                    position = 4
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_car_care_products,
                     nameStringResId = R.string.car_care_products,
-                    position = 6
+                    position = 5
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_clothes,
                     nameStringResId = R.string.clothes,
-                    position = 7
+                    position = 6
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_coffee,
                     nameStringResId = R.string.coffee_tea_and_hot_chocolate,
-                    position = 8
+                    position = 7
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_condiments,
                     nameStringResId = R.string.condiments,
-                    position = 9
+                    position = 8
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_cosmetics,
                     nameStringResId = R.string.cosmetics,
-                    position = 10
+                    position = 9
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_dairy_product,
                     nameStringResId = R.string.dairy_products,
-                    position = 11
+                    position = 10
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_diet_food,
                     nameStringResId = R.string.diet_foods,
-                    position = 12
+                    position = 11
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_electrical_products,
                     nameStringResId = R.string.electronics_devices,
-                    position = 13
+                    position = 12
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_seafood,
                     nameStringResId = R.string.fish_and_seafood,
-                    position = 14
+                    position = 13
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_frozen_products,
                     nameStringResId = R.string.frozen,
-                    position = 15
+                    position = 14
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_pasta,
                     nameStringResId = R.string.grains_and_pasta,
-                    position = 16
+                    position = 15
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_kitchen,
                     nameStringResId = R.string.home_and_kitchen,
-                    position = 17
+                    position = 16
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_baking,
                     nameStringResId = R.string.home_baking,
-                    position = 18
+                    position = 17
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_home_cleaning,
                     nameStringResId = R.string.house_cleaning_products,
-                    position = 19
+                    position = 18
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_meat,
                     nameStringResId = R.string.meat_pourly_and_sausages,
-                    position = 20
+                    position = 19
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_newspaper,
                     nameStringResId = R.string.newspapers,
-                    position = 21
+                    position = 20
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_office_desk,
                     nameStringResId = R.string.office_supplies,
-                    position = 22
+                    position = 21
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_oils,
                     nameStringResId = R.string.oils,
-                    position = 23
+                    position = 22
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_tag,
                     nameStringResId = R.string.other,
-                    position = 24
+                    position = 23
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_toilette_paper,
                     nameStringResId = R.string.personal_hygiene,
-                    position = 25
+                    position = 24
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_pets,
                     nameStringResId = R.string.pet_care,
-                    position = 26
+                    position = 25
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_pharmacy,
                     nameStringResId = R.string.pharmacy,
-                    position = 27
+                    position = 26
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_preserved_foods,
                     nameStringResId = R.string.preserves,
-                    position = 28
+                    position = 27
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_ready_meal,
                     nameStringResId = R.string.ready_meals,
-                    position = 29
+                    position = 28
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_snacks,
                     nameStringResId = R.string.snacks,
-                    position = 30
+                    position = 29
                 ))
                 dao.insertCategory(Category(
                     customName = "",
                     iconDrawableResId = R.drawable.ic_spice,
                     nameStringResId = R.string.spices,
-                    position = 31
+                    position = 30
                 ))
             }
 

@@ -11,8 +11,8 @@ import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBinding> {
 
     override val layoutId = R.layout.layout_listitem_item
-
     override val uniqueId = listItem.id
+    override val data = listItem
 
     override fun initializeViewBinding(view: View) = LayoutListitemItemBinding.bind(view)
 

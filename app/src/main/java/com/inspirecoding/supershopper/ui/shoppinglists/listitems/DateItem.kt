@@ -11,10 +11,9 @@ data class DateItem(val shoppingList: ShoppingList): BaseItem<LayoutDateItemBind
 
     private val TAG = this.javaClass.simpleName
 
-    override val layoutId: Int
-        get() = R.layout.layout_date_item
-
+    override val layoutId = R.layout.layout_date_item
     override val uniqueId = shoppingList.dueDate.time
+    override val data = shoppingList
 
     override fun initializeViewBinding(view: View) = LayoutDateItemBinding.bind(view)
 

@@ -21,6 +21,7 @@ data class ShoppingListItemItem(val shoppingList: ShoppingList): BaseItem<Layout
 
     override val layoutId = R.layout.layout_shoppinglistitem_item
     override val uniqueId = shoppingList.dueDate.time
+    override val data = shoppingList
 
     override fun initializeViewBinding(view: View) = LayoutShoppinglistitemItemBinding.bind(view)
 

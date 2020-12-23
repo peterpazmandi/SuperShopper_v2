@@ -192,6 +192,10 @@
     <string name="sauces">Sauces</string>
     <string name="spices">Spices</string>
 
+    <string name="move_up">Move Up</string>
+    <string name="move_down">Move Down</string>
+    <string name="delete">Delete</string>
+
 
 
 </resources>

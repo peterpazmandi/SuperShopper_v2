@@ -10,7 +10,8 @@ import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBinding> {
 
     override val layoutId = R.layout.layout_category_item
-    override val uniqueId = category.id
+    override val uniqueId = category.position
+    override val data = category
 
     override fun initializeViewBinding(view: View) = LayoutCategoryItemBinding.bind(view)
 
@@ -28,11 +29,15 @@ data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBind
 
         binding.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, category.iconDrawableResId))
 
-//        binding.ivReOrder.setOnTouchListener { view, motionEvent ->
-//            itemClickCallBack?.invoke(view, this)
-//
-//            return@setOnTouchListener true
-//        }
+        binding.ivMoveUp.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
+        binding.ivMoveDown.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
+        binding.ivDelete.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
 
     }
 

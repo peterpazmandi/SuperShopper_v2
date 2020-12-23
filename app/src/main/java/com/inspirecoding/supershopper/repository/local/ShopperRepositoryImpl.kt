@@ -8,19 +8,27 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class ShopperRepositoryImpl @Inject constructor(
     private val shopperDao: ShopperDao
-)  : ShopperRepository {
+): ShopperRepository {
 
     override fun getCategories() = shopperDao.getCategories()
 
     override suspend fun insertCategory(category: Category) {
-        TODO("Not yet implemented")
+        shopperDao.insertCategory(category)
     }
 
     override suspend fun updateCategory(category: Category) {
-        TODO("Not yet implemented")
+        shopperDao.updateCategory(category)
+    }
+
+    override suspend fun updateCategories(categories: List<Category>) {
+        shopperDao.updateCategories(categories)
+    }
+
+    override suspend fun deleteCategories(categories: List<Category>) {
+        shopperDao.deleteCategories(categories)
     }
 
     override suspend fun deleteCategory(category: Category) {
-        TODO("Not yet implemented")
+        shopperDao.deleteCategory(category)
     }
 }

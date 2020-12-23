@@ -16,6 +16,12 @@ interface ShopperDao {
     @Update
     suspend fun updateCategory(category: Category)
 
+    @Update
+    suspend fun updateCategories(categories: List<Category>)
+
+    @Delete
+    suspend fun deleteCategories(categories: List<Category>)
+
     @Delete
     suspend fun deleteCategory(category: Category)
 

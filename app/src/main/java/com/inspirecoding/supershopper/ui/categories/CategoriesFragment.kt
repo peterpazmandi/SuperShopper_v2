@@ -40,29 +40,17 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
         initRecyclerView()
         viewModel.getListOfCategories()
         setupCategoriesListObserver()
-        setupChangesMadeObserver()
 
-        binding.ivSave.setOnClickListener {
-            viewModel.saveCategoryChanges()
-            findNavController().popBackStack()
+        binding.ivCreateNew.setOnClickListener {
+
         }
 
-    }
-
-    private fun setupChangesMadeObserver() {
-        viewModel.changesMade.observe(viewLifecycleOwner, { changesMade ->
-            if(!changesMade) {
-                binding.ivSave.makeItInVisible()
-            } else {
-                binding.ivSave.makeItVisible()
-            }
-        })
     }
 
     private fun setupCategoriesListObserver() {
         viewModel.listOfCategories.observe(viewLifecycleOwner, { listOfCategories ->
             val categoryItems = createListOfCategoryItems(listOfCategories)
-            Log.d(TAG, "observe -> ${categoryItems.map { (it as CategoryItem).category.id }}\"")
+            Log.d(TAG, "observe -> ${categoryItems.map { (it as CategoryItem).category.position }}")
 
             adapter.submitList(categoryItems)
 

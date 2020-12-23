@@ -10,7 +10,7 @@ import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBinding> {
 
     override val layoutId = R.layout.layout_category_item
-    override val uniqueId = category.position
+    override val uniqueId = category.id
     override val data = category
 
     override fun initializeViewBinding(view: View) = LayoutCategoryItemBinding.bind(view)

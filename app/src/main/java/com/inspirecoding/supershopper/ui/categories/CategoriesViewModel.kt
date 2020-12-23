@@ -10,7 +10,6 @@ import com.inspirecoding.supershopper.ui.categories.listitems.CategoryItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 class CategoriesViewModel @ViewModelInject constructor(
     private val shopperRepository: ShopperRepository,
@@ -24,11 +23,6 @@ class CategoriesViewModel @ViewModelInject constructor(
     private val _listOfCategories = MutableLiveData<MutableList<Category>>()
     val listOfCategories: LiveData<MutableList<Category>> = _listOfCategories
 
-    private val removedItems = mutableListOf<Category>()
-
-    private val _changesMade = MutableLiveData<Boolean>()
-    val changesMade: LiveData<Boolean> = _changesMade
-
     fun getListOfCategories() {
         viewModelScope.launch {
             shopperRepository.getCategories().collect { list ->
@@ -41,63 +35,52 @@ class CategoriesViewModel @ViewModelInject constructor(
 
     fun onRemoveItem(category: Category) {
 
-        _list.remove(category)
-
-        _list.forEachIndexed { index, category ->
-            category.position = index
-        }
-
         viewModelScope.launch {
             shopperRepository.deleteCategory(category)
-            delay(200)
-            shopperRepository.updateCategories(_list)
+
+            getListOfCategories()
+
+            for (i in 0 until _list.size-1) {
+                _list[i].position = i
+                shopperRepository.updateCategory(_list[i])
+            }
         }
+
     }
 
     fun onMoveItemUp(category: Category) {
 
-        val currentPos = _list.indexOf(category)
-
-        _list.remove(category)
-        _list.add(currentPos - 1, category)
-
-        _list.forEachIndexed { index, category ->
-            category.position = index
+        val currentPos = _list.indexOfFirst {
+            it.id == category.id
         }
+
+        val currentItem = _list[currentPos]
+        currentItem.position = currentItem.position - 1
+
+        val prevItem = _list[currentPos - 1]
+        prevItem.position = prevItem.position + 1
 
         viewModelScope.launch {
-            shopperRepository.updateCategories(_list)
+            shopperRepository.updateCategory(currentItem)
+            shopperRepository.updateCategory(prevItem)
         }
-
-        categoryListHasChanged()
     }
 
     fun onMoveItemDown(category: Category) {
 
-        val currentPos = _list.indexOf(category)
-
-        _list.remove(category)
-        _list.add(currentPos + 1, category)
-
-        _list.forEachIndexed { index, category ->
-            category.position = index
+        val currentPos = _list.indexOfFirst {
+            it.id == category.id
         }
 
+        val currentItem = _list[currentPos]
+        currentItem.position = currentItem.position + 1
+
+        val followerItem = _list[currentPos + 1]
+        followerItem.position = followerItem.position - 1
+
         viewModelScope.launch {
-            shopperRepository.updateCategories(_list)
-        }
-
-        categoryListHasChanged()
-    }
-
-
-
-    private fun categoryListHasChanged() {
-        _changesMade.postValue(true)
-    }
-    fun saveCategoryChanges() {
-        viewModelScope.launch {
-            shopperRepository.updateCategories(_list)
+            shopperRepository.updateCategory(currentItem)
+            shopperRepository.updateCategory(followerItem)
         }
     }
 

@@ -29,12 +29,6 @@ data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBind
 
         binding.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, category.iconDrawableResId))
 
-        binding.ivMoveUp.setOnClickListener {
-            itemClickCallBack?.invoke(it, this)
-        }
-        binding.ivMoveDown.setOnClickListener {
-            itemClickCallBack?.invoke(it, this)
-        }
         binding.ivDelete.setOnClickListener {
             itemClickCallBack?.invoke(it, this)
         }

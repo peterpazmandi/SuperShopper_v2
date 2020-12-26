@@ -1,11 +1,11 @@
 package com.inspirecoding.supershopper.ui.categories
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -13,11 +13,11 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.databinding.CategoriesFragmentBinding
 import com.inspirecoding.supershopper.ui.categories.listitems.CategoryItem
+import com.inspirecoding.supershopper.ui.settings.SettingsFragmentDirections
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
-import com.inspirecoding.supershopper.utils.makeItInVisible
-import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class CategoriesFragment : Fragment(R.layout.categories_fragment) {
@@ -27,6 +27,52 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
     private val viewModel by viewModels<CategoriesViewModel>()
     private lateinit var binding: CategoriesFragmentBinding
     private lateinit var adapter: BaseListAdapter
+
+
+    private val itemTouchHelper_reOrder by lazy {
+
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                source: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+
+                val from = source.adapterPosition
+                val to = target.adapterPosition
+                viewModel.moveItem(from, to)
+
+                adapter.notifyItemMoved(from, to)
+
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val from = viewHolder.adapterPosition
+                adapter.notifyItemRemoved(from)
+                viewModel.onRemoveItem(from)
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG)
+                {
+                    viewHolder?.itemView?.alpha = 0.5f
+                }
+            }
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
+
+                viewHolder.itemView.alpha = 1.0f
+                viewModel.updateItems()
+            }
+        }
+
+        ItemTouchHelper(simpleItemTouchCallback)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -41,18 +87,43 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
         viewModel.getListOfCategories()
         setupCategoriesListObserver()
 
-        binding.ivCreateNew.setOnClickListener {
+        setupEvents()
 
+
+        binding.ivCreateNew.setOnClickListener {
+            viewModel.onAddCategorySelected()
+            viewModel.printLog()
         }
 
+
+        itemTouchHelper_reOrder.attachToRecyclerView(binding.rvCategories)
+    }
+
+    private fun setupEvents() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.settingsEvents.collect { event ->
+                when(event)
+                {
+                    CategoriesViewModel.CategoryEvent.NavigateToAddCategoryFragment -> {
+                        navigateToAddCategoryFragment()
+                    }
+                    is CategoriesViewModel.CategoryEvent.NavigateToAddEditCategoryFragment -> {
+                        navigateToEditCategoryFragment(event.category)
+                    }
+                    is CategoriesViewModel.CategoryEvent.ShowErrorMessage -> {
+                        navigateToErrorBottomDialogFragment(event.message)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupCategoriesListObserver() {
         viewModel.listOfCategories.observe(viewLifecycleOwner, { listOfCategories ->
             val categoryItems = createListOfCategoryItems(listOfCategories)
-            Log.d(TAG, "observe -> ${categoryItems.map { (it as CategoryItem).category.position }}")
 
             adapter.submitList(categoryItems)
+            adapter.notifyDataSetChanged()
 
         })
     }
@@ -62,18 +133,17 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
             (view as AppCompatImageView).let { imageView ->
                 when(imageView.tag)
                 {
-                    getString(R.string.move_up) -> {
-                        viewModel.onMoveItemUp(selectedItem.data as Category)
-                    }
-                    getString(R.string.move_down) -> {
-                        viewModel.onMoveItemDown(selectedItem.data as Category)
-                    }
                     getString(R.string.delete) -> {
-                        viewModel.onRemoveItem(selectedItem.data as Category)
+                        val toDeleteItem = selectedItem.data as Category
+                        adapter.notifyItemRemoved(toDeleteItem.position)
+                        viewModel.onRemoveItem(toDeleteItem)
                     }
                 }
             }
         }
+
+        binding.rvCategories.setHasFixedSize(true)
+        binding.rvCategories.setItemViewCacheSize(50)
 
         binding.rvCategories.adapter = adapter
     }
@@ -82,12 +152,32 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
 
         val newList = mutableListOf<BaseItem<*>>()
 
-        listOfCategories.forEach {
-            newList.add(CategoryItem(it))
+        for(i in 0 until listOfCategories.size) {
+
+            val item = CategoryItem(listOfCategories[i])
+
+            newList.add(item)
+
         }
 
         return newList
 
+    }
+
+
+
+    /** Navigation methods **/
+    private fun navigateToAddCategoryFragment() {
+        val action = CategoriesFragmentDirections.actionCategoriesFragmentToAddNewCategoryFragment(null)
+        findNavController().navigate(action)
+    }
+    private fun navigateToEditCategoryFragment(category: Category) {
+        val action = CategoriesFragmentDirections.actionCategoriesFragmentToAddNewCategoryFragment(category)
+        findNavController().navigate(action)
+    }
+    private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
+        val action = SettingsFragmentDirections.actionSettingsFragmentToErrorBottomDialogFragment(errorMessage)
+        findNavController().navigate(action)
     }
 
 }

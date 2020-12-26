@@ -234,5 +234,25 @@
         android:id="@+id/categoriesFragment"
         android:name="com.inspirecoding.supershopper.ui.categories.CategoriesFragment"
         android:label="categories_fragment"
-        tools:layout="@layout/categories_fragment" />
+        tools:layout="@layout/categories_fragment" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_addNewCategoryFragment"
+            app:destination="@id/addNewCategoryFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewCategoryFragment"
+        android:name="com.inspirecoding.supershopper.ui.categories.addnew.AddNewCategoryFragment"
+        android:label="AddNewCategoryFragment" >
+        <argument
+            android:name="category"
+            app:nullable="true"
+            app:argType="com.inspirecoding.supershopper.data.Category" />
+        <action
+            android:id="@+id/action_addNewCategoryFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </fragment>
 </navigation>

@@ -23,6 +23,12 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
+    init {
+        viewModelScope.launch {
+            shopperRepository.getCategories()
+        }
+    }
+
     // CONST
     private val TAG = this.javaClass.simpleName
     companion object {

@@ -10,6 +10,8 @@ class ShopperRepositoryImpl @Inject constructor(
     private val shopperDao: ShopperDao
 ): ShopperRepository {
 
+    override suspend fun getCategoriesSuspend() = shopperDao.getCategoriesSuspend()
+
     override fun getCategories() = shopperDao.getCategories()
 
     override suspend fun insertCategory(category: Category) {

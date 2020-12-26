@@ -10,6 +10,9 @@ interface ShopperDao {
     @Query("SELECT * FROM category ORDER BY position ASC")
     fun getCategories(): Flow<List<Category>>
 
+    @Query("SELECT * FROM category ORDER BY position ASC")
+    suspend fun getCategoriesSuspend(): List<Category>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(category: Category)
 

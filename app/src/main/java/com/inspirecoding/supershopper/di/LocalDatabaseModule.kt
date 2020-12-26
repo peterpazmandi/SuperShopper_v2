@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object LocalDatabaseModule {
 
-    private val SHOPPER_DATABASE = "shopper_database"
+    private const val SHOPPER_DATABASE = "shopper_database"
 
     @Provides
     @Singleton

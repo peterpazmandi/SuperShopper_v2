@@ -195,7 +195,10 @@
     <string name="move_up">Move Up</string>
     <string name="move_down">Move Down</string>
     <string name="delete">Delete</string>
-
+    <string name="add_new_category">Add new category</string>
+    <string name="name">Name</string>
+    <string name="enter_a_name">Enter a name!</string>
+    <string name="icon">Icon</string>
 
 
 </resources>

@@ -101,6 +101,7 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                 viewModel.onOpenSelectedShoppingList(shoppingList)
             }
         }
+
         binding.rvShoppingLists.setHasFixedSize(true)
         binding.rvShoppingLists.setItemViewCacheSize(20)
 

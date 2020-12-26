@@ -52,4 +52,22 @@ object ValidateMethods {
         }
     }
 
+    fun validateCategoryName(categoryName: String?): String {
+        val usernameInput: String? = categoryName?.trim()
+        return when {
+            usernameInput.isNullOrEmpty() -> {
+                "Category name can't be empty"
+            }
+            usernameInput.length < 3 -> {
+                "Category name must be at least 3 characters long"
+            }
+            usernameInput.length > 20 -> {
+                "Category name can be up to 20 characters long"
+            }
+            else -> {
+                ""
+            }
+        }
+    }
+
 }

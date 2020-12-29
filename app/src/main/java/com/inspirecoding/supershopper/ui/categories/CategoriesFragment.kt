@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.databinding.CategoriesFragmentBinding
-import com.inspirecoding.supershopper.ui.categories.listitems.CategoryItem
+import com.inspirecoding.supershopper.ui.categories.listitems.CategorySettingsItem
 import com.inspirecoding.supershopper.ui.settings.SettingsFragmentDirections
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
@@ -130,13 +130,15 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
 
     private fun initRecyclerView() {
         adapter = BaseListAdapter { view, selectedItem ->
-            (view as AppCompatImageView).let { imageView ->
-                when(imageView.tag)
-                {
-                    getString(R.string.delete) -> {
-                        val toDeleteItem = selectedItem.data as Category
-                        adapter.notifyItemRemoved(toDeleteItem.position)
-                        viewModel.onRemoveItem(toDeleteItem)
+            if(view is AppCompatImageView) {
+                (view as AppCompatImageView).let { imageView ->
+                    when(imageView.tag)
+                    {
+                        getString(R.string.delete) -> {
+                            val toDeleteItem = selectedItem.data as Category
+                            adapter.notifyItemRemoved(toDeleteItem.position)
+                            viewModel.onRemoveItem(toDeleteItem)
+                        }
                     }
                 }
             }
@@ -154,7 +156,7 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
 
         for(i in 0 until listOfCategories.size) {
 
-            val item = CategoryItem(listOfCategories[i])
+            val item = CategorySettingsItem(listOfCategories[i])
 
             newList.add(item)
 

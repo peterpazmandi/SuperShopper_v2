@@ -4,20 +4,20 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Category
-import com.inspirecoding.supershopper.databinding.LayoutCategoryItemBinding
+import com.inspirecoding.supershopper.databinding.LayoutCategorysettingsItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 
-data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBinding> {
+data class CategorySettingsItem(val category: Category): BaseItem<LayoutCategorysettingsItemBinding> {
 
-    override val layoutId = R.layout.layout_category_item
+    override val layoutId = R.layout.layout_categorysettings_item
     override val uniqueId = category.id
     override val data = category
 
-    override fun initializeViewBinding(view: View) = LayoutCategoryItemBinding.bind(view)
+    override fun initializeViewBinding(view: View) = LayoutCategorysettingsItemBinding.bind(view)
 
     override fun bind(
-        binding: LayoutCategoryItemBinding,
-        itemClickCallBack: ((View, BaseItem<LayoutCategoryItemBinding>) -> Unit)?
+        binding: LayoutCategorysettingsItemBinding,
+        itemClickCallBack: ((View, BaseItem<LayoutCategorysettingsItemBinding>) -> Unit)?
     ) {
         val context = binding.root.context
 

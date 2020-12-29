@@ -32,6 +32,9 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
 
             changeItemUiIfCheckChange(binding, (it as AppCompatCheckBox).isChecked)
         }
+        binding.root.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
     }
 
     private fun changeItemUiIfCheckChange(binding: LayoutListitemItemBinding, checked: Boolean) {

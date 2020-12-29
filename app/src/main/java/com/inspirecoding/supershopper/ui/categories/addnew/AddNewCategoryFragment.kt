@@ -56,7 +56,7 @@ class AddNewCategoryFragment : Fragment(R.layout.add_new_category_fragment) {
 
         val listOfCategoryIconItems = createIconItems()
 
-        adapter = BaseListAdapter { view, selectedItem ->
+        adapter = BaseListAdapter { _, selectedItem ->
             viewModel.icon = selectedItem.data as Int
             adapter.currentList.forEach { baseItem ->
                 (baseItem as CategoryIconItem).also { categoryIconItem ->

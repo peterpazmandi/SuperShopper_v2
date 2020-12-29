@@ -13,6 +13,9 @@ interface ShopperDao {
     @Query("SELECT * FROM category ORDER BY position ASC")
     suspend fun getCategoriesSuspend(): List<Category>
 
+    @Query("SELECT * FROM category WHERE id=:id")
+    fun getCategoryById(id: Int): Flow<Category>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(category: Category)
 

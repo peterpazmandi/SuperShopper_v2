@@ -21,7 +21,7 @@ class CategoriesViewModel @ViewModelInject constructor(
     private val _settingsEvents = Channel<CategoryEvent>()
     val settingsEvents = _settingsEvents.receiveAsFlow()
 
-    val _list = mutableListOf<Category>()
+    private val _list = mutableListOf<Category>()
     private val _listOfCategories = MutableLiveData<MutableList<Category>>()
     val listOfCategories: LiveData<MutableList<Category>> = _listOfCategories
 

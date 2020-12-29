@@ -24,22 +24,36 @@
         android:alpha="1"
         android:elevation="1dp"
         android:layout_marginBottom="@dimen/margin_medium"
-        app:layout_constraintBottom_toTopOf="@id/fab_friends"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_friends"
+        android:id="@+id/fab_sortItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_medium"
         android:contentDescription="@string/sort_list"
         android:src="@drawable/ic_sort"
+        app:backgroundTint="@color/dark_gray_1"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fab_addItem"
+        app:layout_constraintStart_toStartOf="@+id/fab_addItem"
+        app:layout_constraintEnd_toEndOf="@+id/fab_addItem"
+        app:tint="@color/blue" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_addItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:contentDescription="@string/sort_list"
+        android:src="@drawable/ic_plus_blue"
         app:backgroundTint="@color/blue"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

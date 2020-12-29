@@ -46,6 +46,25 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
             viewModel.onOpenSettings()
         }
 
+        binding.fabCreateNewList.setOnClickListener {
+            binding.motionLayout.setTransition(R.id.transitionStart, R.id.transitionEnd)
+            binding.motionLayout.setTransitionDuration(200)
+            binding.motionLayout.transitionToEnd()
+        }
+        binding.viewTransparentBackgroundFull.setOnClickListener {
+            binding.motionLayout.setTransition(R.id.transitionEnd, R.id.transitionStart)
+            binding.motionLayout.setTransitionDuration(200)
+            binding.motionLayout.transitionToEnd()
+        }
+        binding.viewTransparentBackgroundHalf.setOnClickListener {
+            /** Don't do anything **/
+        }
+        binding.tvCancel.setOnClickListener {
+            binding.motionLayout.setTransition(R.id.transitionEnd, R.id.transitionStart)
+            binding.motionLayout.setTransitionDuration(200)
+            binding.motionLayout.transitionToEnd()
+        }
+
     }
 
     private fun setupShoppingListObserver() {

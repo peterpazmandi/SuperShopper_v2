@@ -58,6 +58,9 @@ dependencies {
 
 
 
+    /** Fragment **/
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
     /** Firebase Auth **/
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
     /** Firebase Firestore **/

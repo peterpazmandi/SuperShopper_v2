@@ -14,6 +14,8 @@ class ShopperRepositoryImpl @Inject constructor(
 
     override fun getCategories() = shopperDao.getCategories()
 
+    override fun getCategoryById(id: Int) = shopperDao.getCategoryById(id)
+
     override suspend fun insertCategory(category: Category) {
         shopperDao.insertCategory(category)
     }

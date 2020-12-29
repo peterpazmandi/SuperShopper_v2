@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/name"
+        android:textStyle="bold"
         android:textColor="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/whiteBackground" />
@@ -96,6 +97,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/icon"
+        android:textStyle="bold"
         android:textColor="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontalLine_1" />

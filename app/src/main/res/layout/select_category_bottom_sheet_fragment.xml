@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.errordialog.ErrorBottomDialogFragment">
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/tv_title"
@@ -13,16 +12,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/oh_oh"
+        android:text="@string/select_a_category"
         android:textAlignment="center"
-        android:textColor="@color/red"
+        android:textColor="@color/dark_blue"
         android:textSize="@dimen/textSize_xlarge"
-        android:drawablePadding="@dimen/margin_small"
+        android:drawablePadding="@dimen/margin_medium"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:drawableStartCompat="@drawable/ic_cart_error" />
+        app:drawableStartCompat="@drawable/ic_category" />
 
     <View
         android:id="@+id/horizontalLine"
@@ -32,21 +31,18 @@
         android:background="@color/dark_gray_1"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-    <TextView
-        android:id="@+id/tv_errorMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_categories"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginBottom="@dimen/margin_xxxlarge"
-        android:fontFamily="@font/roboto_regular"
-        android:text="@string/incorrect_filling"
-        android:textAlignment="viewStart"
-        android:textSize="@dimen/textSize_regular"
+        android:background="@drawable/shape_roundedtopcorners_white"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="100dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontalLine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

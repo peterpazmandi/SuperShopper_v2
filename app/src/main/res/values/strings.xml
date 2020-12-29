@@ -199,6 +199,28 @@
     <string name="name">Name</string>
     <string name="enter_a_name">Enter a name!</string>
     <string name="icon">Icon</string>
+    <string name="create_new_list">Create new list</string>
+    <string name="create">Create</string>
 
+    <!-- Units -->
+    <string name="g">g</string>
+    <string name="dag">dag</string>
+    <string name="kg">kg</string>
+    <string name="ml">ml</string>
+    <string name="dl">dl</string>
+    <string name="l">l</string>
+    <string name="mm">mm</string>
+    <string name="cm">cm</string>
+    <string name="m">m</string>
+    <string name="pc">pc</string>
+
+    <string name="unit">Unit</string>
+    <string name="quantity">Quantity</string>
+    <string name="enter_the_quantity">Enter the quantity</string>
+    <string name="category">Category</string>
+    <string name="select_a_category">Select a category</string>
+
+    <string name="add_new_item">Add new item</string>
+    <string name="edit_item">Edit item</string>
 
 </resources>

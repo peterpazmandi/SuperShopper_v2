@@ -1,16 +1,12 @@
 package com.inspirecoding.supershopper.utils.baseclasses
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
-import com.inspirecoding.supershopper.data.Category
-import com.inspirecoding.supershopper.ui.categories.listitems.CategoryItem
 import java.lang.IllegalStateException
-import java.util.*
 
 
 /**

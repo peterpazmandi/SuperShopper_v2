@@ -181,6 +181,13 @@
         <argument
             android:name="user"
             app:argType="com.inspirecoding.supershopper.data.User"/>
+        <action
+            android:id="@+id/action_openedShoppingListFragment_to_addEditItemFragment"
+            app:destination="@id/addEditItemFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListItemsFragment"
@@ -190,6 +197,13 @@
         <action
             android:id="@+id/action_openedShoppingListItemsFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
+        <action
+            android:id="@+id/action_openedShoppingListItemsFragment_to_addEditItemFragment"
+            app:destination="@id/addEditItemFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListDetailsFragment"
@@ -255,4 +269,32 @@
             android:id="@+id/action_addNewCategoryFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addEditItemFragment"
+        android:name="com.inspirecoding.supershopper.ui.addedititem.AddEditItemFragment"
+        android:label="add_edit_item_fragment"
+        tools:layout="@layout/add_edit_item_fragment" >
+        <argument
+            android:name="openedShoppingList"
+            app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
+        <argument
+            android:name="listItem"
+            app:nullable="true"
+            app:argType="com.inspirecoding.supershopper.data.ListItem" />
+        <action
+            android:id="@+id/action_addEditItemFragment_to_selectCategoryBottomSheetFragment"
+            app:destination="@id/selectCategoryBottomSheetFragment" />
+        <action
+            android:id="@+id/action_addEditItemFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/selectCategoryBottomSheetFragment"
+        android:name="com.inspirecoding.supershopper.ui.selectcategory.SelectCategoryBottomSheetFragment"
+        android:label="select_category_bottom_sheet_fragment"
+        tools:layout="@layout/select_category_bottom_sheet_fragment" >
+        <action
+            android:id="@+id/action_selectCategoryBottomSheetFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </dialog>
 </navigation>

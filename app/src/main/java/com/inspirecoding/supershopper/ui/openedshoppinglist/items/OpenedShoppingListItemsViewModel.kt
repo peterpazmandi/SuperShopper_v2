@@ -76,6 +76,20 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
 
 
     /** Events **/
+    fun onAddItemFragment() {
+        viewModelScope.launch {
+            openedShoppingList.value?.data?.let { shoppingList ->
+                _listItemEventChannel.send(ListItemEvent.NavigateToAddFragment(shoppingList))
+            }
+        }
+    }
+    fun onEditItemFragment(listItem: ListItem) {
+        viewModelScope.launch {
+            openedShoppingList.value?.data?.let { shoppingList ->
+                _listItemEventChannel.send(ListItemEvent.NavigateToEditFragment(shoppingList, listItem))
+            }
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _listItemEventChannel.send(ListItemEvent.ShowErrorMessage(message))
@@ -84,6 +98,8 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
 
 
     sealed class ListItemEvent {
+        data class NavigateToAddFragment(val shoppingList: ShoppingList) : ListItemEvent()
+        data class NavigateToEditFragment(val shoppingList: ShoppingList, val listItem: ListItem) : ListItemEvent()
         data class ShowErrorMessage(val message: String) : ListItemEvent()
     }
 

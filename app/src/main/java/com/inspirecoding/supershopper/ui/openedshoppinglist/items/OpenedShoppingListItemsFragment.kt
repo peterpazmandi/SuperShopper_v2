@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.ui.openedshoppinglist.items
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListItemsFragmentBinding
+import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragmentDirections
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.items.listitem.ListItemsItem
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
@@ -40,6 +42,10 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
         initRecyclerView()
         setupShoppingListObserver()
         setupEventHandler()
+
+        binding.fabAddItem.setOnClickListener {
+            viewModel.onAddItemFragment()
+        }
     }
 
     private fun setupShoppingListObserver() {
@@ -78,6 +84,10 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
                         itemCheckedChanged(view, shoppingListItem.listItem, shoppingList)
                     }
                 }
+            }
+
+            if(view is ConstraintLayout) {
+
             }
         }
 
@@ -141,6 +151,12 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
             viewModel.listItemEventChannel.collect { event ->
                 when(event)
                 {
+                    is OpenedShoppingListItemsViewModel.ListItemEvent.NavigateToAddFragment ->  {
+                        navigateToAddFragment(event.shoppingList)
+                    }
+                    is OpenedShoppingListItemsViewModel.ListItemEvent.NavigateToEditFragment ->  {
+                        navigateToEditFragment(event.shoppingList, event.listItem)
+                    }
                     is OpenedShoppingListItemsViewModel.ListItemEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
@@ -152,6 +168,14 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
 
 
     /** Navigation methods **/
+    private fun navigateToAddFragment(shoppingList: ShoppingList) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToAddEditItemFragment(shoppingList, null)
+        findNavController().navigate(action)
+    }
+    private fun navigateToEditFragment(shoppingList: ShoppingList, listItem: ListItem) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToAddEditItemFragment(shoppingList, listItem)
+        findNavController().navigate(action)
+    }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
         val action = OpenedShoppingListItemsFragmentDirections.actionOpenedShoppingListItemsFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)

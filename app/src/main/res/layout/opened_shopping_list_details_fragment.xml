@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
         android:layout_marginTop="@dimen/margin_medium"
         android:text="@string/due_date"

@@ -12,6 +12,6 @@ data class ListItem(
     var isBought: Boolean = false,
     var priority: String = "",
     val icon: String = "",
-    val categoryId: Int = -1,
+    val categoryId: Int? = null,
     val comment: String = ""
 ) : Parcelable

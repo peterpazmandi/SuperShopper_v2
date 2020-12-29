@@ -7,6 +7,7 @@ interface ShopperRepository {
 
     fun getCategories(): Flow<List<Category>>
     suspend fun getCategoriesSuspend(): List<Category>
+    fun getCategoryById(id: Int): Flow<Category>
     suspend fun insertCategory(category: Category)
     suspend fun updateCategory(category: Category)
     suspend fun updateCategories(categories: List<Category>)

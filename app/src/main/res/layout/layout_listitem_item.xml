@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/margin_medium"
         android:background="@drawable/shape_circle_darkborder"
         android:padding="@dimen/margin_small"
-        android:src="@drawable/ic_alcoholic_drinks"
+        android:src="@drawable/ic_category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

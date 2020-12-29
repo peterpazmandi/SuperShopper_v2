@@ -14,7 +14,10 @@ interface ShopperDao {
     suspend fun getCategoriesSuspend(): List<Category>
 
     @Query("SELECT * FROM category WHERE id=:id")
-    fun getCategoryById(id: Int): Flow<Category>
+    fun getCategoryByIdWithFlow(id: Int): Flow<Category>
+
+    @Query("SELECT * FROM category WHERE id=:id")
+    suspend fun getCategoryByIdSuspend(id: Int): Category
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(category: Category)

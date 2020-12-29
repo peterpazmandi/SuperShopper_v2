@@ -49,7 +49,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
 
     fun getCategoryById(id: Int) {
         viewModelScope.launch {
-            shopperRepository.getCategoryById(id).collect {
+            shopperRepository.getCategoryByIdWithFlow(id).collect {
                 _category.postValue(it)
             }
         }

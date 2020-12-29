@@ -14,9 +14,7 @@ import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListItemsFragmentBinding
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragmentDirections
-import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.items.listitem.ListItemsItem
-import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
@@ -42,10 +40,19 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
         initRecyclerView()
         setupShoppingListObserver()
         setupEventHandler()
+        setupListItemsItemsObserver()
 
         binding.fabAddItem.setOnClickListener {
             viewModel.onAddItemFragment()
         }
+    }
+
+    private fun setupListItemsItemsObserver() {
+        viewModel.listOfItems.observe(viewLifecycleOwner, { listOfSortedItems ->
+            adapter.submitList(listOfSortedItems as List<BaseItem<*>>?)
+            adapter.notifyDataSetChanged()
+            binding.rvListOfItems.scrollToPosition(0)
+        })
     }
 
     private fun setupShoppingListObserver() {
@@ -59,9 +66,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
                 Status.SUCCESS -> {
                     binding.progressBar.makeItInVisible()
                     result.data?.let { shoppingList ->
-                        val listOfSortedItems = createSortListOfItems(shoppingList.listOfItems)
-                        adapter.submitList(listOfSortedItems)
-                        binding.rvListOfItems.scrollToPosition(0)
+                        viewModel.createCategoryItem(shoppingList.listOfItems)
                     }
                 }
                 Status.ERROR -> {
@@ -132,7 +137,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
         )
     }
 
-    private fun createSortListOfItems(listItem: MutableList<ListItem>): MutableList<BaseItem<*>> {
+    private fun createSortedListOfItems(listItem: MutableList<ListItem>): MutableList<BaseItem<*>> {
 
         return listItem.map {
             ListItemsItem(it)

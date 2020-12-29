@@ -4,6 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.databinding.LayoutListitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
@@ -13,6 +14,8 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
     override val layoutId = R.layout.layout_listitem_item
     override val uniqueId = listItem.id
     override val data = listItem
+
+    var category: Category? = null
 
     override fun initializeViewBinding(view: View) = LayoutListitemItemBinding.bind(view)
 
@@ -39,6 +42,10 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         }
         binding.root.setOnClickListener {
             itemClickCallBack?.invoke(it, this)
+        }
+
+        category?.let { _category ->
+            binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(context, _category.iconDrawableResId))
         }
     }
 

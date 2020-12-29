@@ -6,9 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.data.Category
-import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.repository.local.ShopperRepository
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
 import com.inspirecoding.supershopper.utils.ValidateMethods
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -33,9 +31,9 @@ class AddNewCategoryViewModel@ViewModelInject constructor(
         var _errorMessage = ""
 
         _errorMessage += if (_errorMessage != "") {
-            "\n${ValidateMethods.validateCategoryName(name)}"
+            "\n${ValidateMethods.validateName(name)}"
         } else {
-            ValidateMethods.validateCategoryName(name)
+            ValidateMethods.validateName(name)
         }
 
         if (icon == null) {

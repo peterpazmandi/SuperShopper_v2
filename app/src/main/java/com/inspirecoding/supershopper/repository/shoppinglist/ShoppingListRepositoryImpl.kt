@@ -92,6 +92,8 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             .update(LISTOFITEMS, listOfItems)
             .await()
 
+        emit(Resource.Success(null))
+
     }.catch { exception ->
 
         exception.message?.let { message ->

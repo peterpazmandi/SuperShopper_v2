@@ -1,6 +1,8 @@
 package com.inspirecoding.supershopper.utils
 
 import android.util.Patterns
+import com.inspirecoding.supershopper.data.Category
+import java.util.*
 
 object ValidateMethods {
 
@@ -52,17 +54,48 @@ object ValidateMethods {
         }
     }
 
-    fun validateCategoryName(categoryName: String?): String {
-        val usernameInput: String? = categoryName?.trim()
+    fun validateName(name: String?): String {
+        val usernameInput: String? = name?.trim()
         return when {
             usernameInput.isNullOrEmpty() -> {
-                "Category name can't be empty"
+                "Name can't be empty"
             }
             usernameInput.length < 3 -> {
-                "Category name must be at least 3 characters long"
+                "Name must be at least 3 characters long"
             }
-            usernameInput.length > 20 -> {
-                "Category name can be up to 20 characters long"
+            else -> {
+                ""
+            }
+        }
+    }
+
+    fun validateUnit(unit: String?): String {
+        val usernameInput: String? = unit?.trim()
+        return when {
+            usernameInput.isNullOrEmpty() -> {
+                "You have not selected a unit"
+            }
+            else -> {
+                ""
+            }
+        }
+    }
+
+    fun validateQuantity(quantity: Float): String {
+        return when (quantity) {
+            0f -> {
+                "You did not enter a quantity"
+            }
+            else -> {
+                ""
+            }
+        }
+    }
+
+    fun validateCategory(category: Category?): String {
+        return when (category) {
+            null -> {
+                "You did not select a category"
             }
             else -> {
                 ""

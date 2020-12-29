@@ -5,13 +5,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ListItem(
-    val id: String = "",
+    var id: String = "",
     var item: String = "",
     var unit: String = "",
     var qunatity: Float = 0f,
     var isBought: Boolean = false,
     var priority: String = "",
-    val icon: String = "",
-    val categoryId: Int? = null,
-    val comment: String = ""
+    var icon: String = "",
+    var categoryId: Int? = null,
+    var comment: String = ""
 ) : Parcelable

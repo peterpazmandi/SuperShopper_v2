@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/white"
         android:text="@string/add_new_item"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="@id/iv_backButton"
@@ -64,8 +64,8 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/name"
-                android:textStyle="bold"
                 android:textColor="@color/dark_blue"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,8 +102,8 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/unit"
-                android:textStyle="bold"
                 android:textColor="@color/dark_blue"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_1" />
 
@@ -111,12 +111,12 @@
                 android:id="@+id/rv_units"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:itemCount="3"
-                tools:listitem="@layout/layout_unit_item"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_unitText" />
+                app:layout_constraintTop_toBottomOf="@id/tv_unitText"
+                tools:itemCount="3"
+                tools:listitem="@layout/layout_unit_item" />
 
             <View
                 android:id="@+id/horizontalLine_2"
@@ -135,8 +135,8 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/quantity"
-                android:textStyle="bold"
                 android:textColor="@color/dark_blue"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_2" />
 
@@ -147,12 +147,13 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_medium"
+                android:ems="8"
                 android:fontFamily="@font/roboto_bold"
                 android:hint="@string/enter_the_quantity"
                 android:textColor="@color/dark_blue"
+                android:inputType="numberDecimal|numberSigned"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
-                android:ems="8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_quantityText" />
 
@@ -173,8 +174,8 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/category"
-                android:textStyle="bold"
                 android:textColor="@color/dark_blue"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_3" />
 
@@ -184,13 +185,10 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_xlarge"
                 android:background="@drawable/shape_circle_darkborder"
                 android:padding="@dimen/margin_small"
                 android:src="@drawable/ic_category"
-                android:inputType="numberDecimal|numberSigned"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_categoryText" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -200,12 +198,52 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/category"
-                android:textStyle="bold"
-                android:textSize="@dimen/textSize_regular"
                 android:textColor="@color/dark_blue"
-                app:layout_constraintTop_toTopOf="@id/iv_category"
+                android:textSize="@dimen/textSize_regular"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/iv_category"
-                app:layout_constraintStart_toEndOf="@id/iv_category"/>
+                app:layout_constraintStart_toEndOf="@id/iv_category"
+                app:layout_constraintTop_toTopOf="@id/iv_category" />
+
+            <View
+                android:id="@+id/horizontalLine_4"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="#E5E5E5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_category" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_commentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/comment"
+                android:textColor="@color/dark_blue"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalLine_4" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:fontFamily="@font/roboto_bold"
+                android:hint="@string/write_some_comment_if_you_want"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/textSize_regular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_commentText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -87,7 +87,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
             }
 
             if(view is ConstraintLayout) {
-
+                viewModel.onEditItemFragment(selectedItem.data as ListItem)
             }
         }
 

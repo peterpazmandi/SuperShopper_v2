@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Units -->
+    <string name="g">g</string>
+    <string name="dag">dkg</string>
+    <string name="kg">kg</string>
+    <string name="ml">ml</string>
+    <string name="dl">dl</string>
+    <string name="l">l</string>
+    <string name="mm">mm</string>
+    <string name="cm">cm</string>
+    <string name="m">m</string>
+    <string name="pc">db</string>
+
+</resources>

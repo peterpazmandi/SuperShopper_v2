@@ -20,11 +20,16 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         binding: LayoutListitemItemBinding,
         itemClickCallBack: ((View, BaseItem<LayoutListitemItemBinding>) -> Unit)?
     ) {
+        val context = binding.root.context
 
         changeItemUiIfCheckChange(binding, listItem.isBought)
 
         binding.tvName.text = listItem.item
-        binding.tvUnit.text = "${listItem.qunatity} ${listItem.unit}"
+
+        val unit = listItem.unit.toIntOrNull()?.let {
+            context.getString(listItem.unit.toInt())
+        } ?: listItem.unit
+        binding.tvUnit.text = "${listItem.qunatity} $unit"
 
         binding.chbDone.isChecked = listItem.isBought
         binding.chbDone.setOnClickListener {

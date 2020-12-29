@@ -16,8 +16,6 @@ import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.databinding.AddEditItemFragmentBinding
 import com.inspirecoding.supershopper.ui.addedititem.AddEditItemViewModel.Companion.CATEGORY
 import com.inspirecoding.supershopper.ui.addedititem.listitem.UnitItem
-import com.inspirecoding.supershopper.ui.categories.addnew.listitem.CategoryIconItem
-import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.listOfUnits
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +45,12 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
             viewModel.item = it.toString().trim()
         }
         binding.etQuantity.doAfterTextChanged {
-            viewModel.qunatity = it.toString().trim().toFloat()
+            if(it?.length != 0) {
+                viewModel.qunatity = it.toString().trim().toFloat()
+            }
+        }
+        binding.etComment.doAfterTextChanged {
+            viewModel.comment = it.toString().trim()
         }
 
         binding.ivCategory.setOnClickListener {
@@ -55,6 +58,12 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         }
         binding.tvCategory.setOnClickListener {
             viewModel.onSelectCategory()
+        }
+
+        binding.ivSave.setOnClickListener {
+            if(viewModel.areTheFieldsValid()) {
+                viewModel.updateShoppingListItems()
+            }
         }
 
         setFragmentResultListener(CATEGORY) { _, bundle ->
@@ -75,6 +84,10 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
                     is AddEditItemViewModel.AddEditItemEvent.ShowErrorMessage ->  {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
+                    AddEditItemViewModel.AddEditItemEvent.NavigateBack -> {
+                        println("NavigateBack")
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
@@ -82,18 +95,34 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
 
     private fun setupCategoryObserver() {
         viewModel.category.observe(viewLifecycleOwner, { category ->
-            category.let {
+            category?.let { _category ->
                 context?.let { _context ->
-                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, category.iconDrawableResId))
+                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, _category.iconDrawableResId))
                 }
 
-                if(category.nameStringResId != null) {
-                    binding.tvCategory.text = getString(category.nameStringResId)
+                if(_category.nameStringResId != null) {
+                    binding.tvCategory.text = getString(_category.nameStringResId)
                 } else {
-                    binding.tvCategory.text = category.customName
+                    binding.tvCategory.text = _category.customName
                 }
             }
         })
+    }
+
+    private fun setupListItemObserverIfEdit() {
+        viewModel.listItem.observe(viewLifecycleOwner, {
+            it?.let {
+                updateUiIfEditItem(it)
+                udpateViewModelData(it)
+            }
+        })
+    }
+
+    private fun udpateViewModelData(listItem: ListItem) {
+        viewModel.item = listItem.item
+        viewModel.unit = listItem.unit
+        viewModel.qunatity = listItem.qunatity
+        viewModel.comment = listItem.comment
     }
 
     private fun initUnitRecyclerView() {
@@ -101,7 +130,7 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         val listOfUnitItems = createUnitItems()
 
         adapter = BaseListAdapter { _, selectedItem ->
-            viewModel.unit = getString(selectedItem.data as Int)
+            viewModel.unit = selectedItem.data.toString()
 
             adapter.currentList.forEach { baseItem ->
                 (baseItem as UnitItem).also { unitItem ->
@@ -135,14 +164,6 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         return listOfUnitItems
     }
 
-    private fun setupListItemObserverIfEdit() {
-        viewModel.listItem.observe(viewLifecycleOwner, {
-            it?.let {
-                updateUiIfEditItem(it)
-            }
-        })
-    }
-
     private fun updateUiIfEditItem(listItem: ListItem) {
         binding.tvAddEditText.text = getString(R.string.edit_item)
 
@@ -150,7 +171,10 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
 
         adapter.currentList.forEach { baseItem ->
             (baseItem as UnitItem).also { unitItem ->
-                unitItem.isSelected = listItem.item == getString(unitItem.data)
+                if(listItem.unit.toIntOrNull() == unitItem.data) {
+                    unitItem.isSelected = true
+                }
+                adapter.notifyDataSetChanged()
             }
         }
         adapter.notifyDataSetChanged()
@@ -160,6 +184,8 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         listItem.categoryId?.let {
             viewModel.getCategoryById(it)
         }
+
+        binding.etComment.setText(listItem.comment)
     }
 
 
@@ -178,7 +204,7 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         findNavController().navigate(action)
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
-        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToErrorBottomDialogFragment(errorMessage)
+        val action = AddEditItemFragmentDirections.actionAddEditItemFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)
     }
 

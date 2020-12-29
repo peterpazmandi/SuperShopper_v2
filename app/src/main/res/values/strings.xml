@@ -222,5 +222,7 @@
 
     <string name="add_new_item">Add new item</string>
     <string name="edit_item">Edit item</string>
+    <string name="comment">Comment</string>
+    <string name="write_some_comment_if_you_want">Write some comment if you want</string>
 
 </resources>

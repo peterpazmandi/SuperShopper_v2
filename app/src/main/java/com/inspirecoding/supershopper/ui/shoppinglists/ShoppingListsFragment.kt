@@ -1,8 +1,8 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -59,12 +59,20 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         binding.viewTransparentBackgroundHalf.setOnClickListener {
             /** Don't do anything **/
         }
+
+        binding.tietName.doAfterTextChanged {
+            viewModel.shoppingListName = it.toString().trim()
+        }
         binding.tvCancel.setOnClickListener {
             binding.motionLayout.setTransition(R.id.transitionEnd, R.id.transitionStart)
             binding.motionLayout.setTransitionDuration(200)
             binding.motionLayout.transitionToEnd()
         }
-
+        binding.tvCreate.setOnClickListener {
+            if(viewModel.validateShoppingListName()) {
+                viewModel.insertShoppingList()
+            }
+        }
     }
 
     private fun setupShoppingListObserver() {

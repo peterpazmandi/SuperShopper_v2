@@ -28,6 +28,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:textSize="@dimen/textSize_large"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/pb_itemProgress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_date"
@@ -102,8 +103,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/shape_circle"
         android:layout_marginEnd="@dimen/margin_medium"
+        android:background="@drawable/shape_circle"
         android:indeterminate="false"
         android:max="100"
         android:progress="65"
@@ -125,6 +126,7 @@
         app:layout_constraintStart_toStartOf="@id/pb_itemProgress"
         app:layout_constraintTop_toTopOf="@id/pb_itemProgress"
         tools:text="15/16" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_doneMark"
         android:layout_width="24dp"

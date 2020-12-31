@@ -13,6 +13,7 @@
         android:fontFamily="@font/roboto_bold"
         android:layout_margin="@dimen/margin_medium"
         android:textSize="@dimen/textSize_regular"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

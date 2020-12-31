@@ -6,12 +6,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.repository.local.ShopperRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(
+    private val shopperRepository: ShopperRepository,
     private val userRepository: UserRepository,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
@@ -20,6 +23,16 @@ class SplashViewModel @ViewModelInject constructor(
     val splashEventChannel = _splashEventChannel.receiveAsFlow()
 
     val userResource = userRepository.userResource
+
+    init {
+        getListOfCategories()
+    }
+
+    private fun getListOfCategories() {
+        viewModelScope.launch {
+            shopperRepository.getCategoriesSuspend()
+        }
+    }
 
     fun checkUserLoggedIn() {
         viewModelScope.launch {

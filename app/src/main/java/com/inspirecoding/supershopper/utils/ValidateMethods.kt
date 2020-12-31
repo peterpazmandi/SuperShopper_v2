@@ -55,12 +55,11 @@ object ValidateMethods {
     }
 
     fun validateName(name: String?): String {
-        val usernameInput: String? = name?.trim()
         return when {
-            usernameInput.isNullOrEmpty() -> {
+            name.isNullOrEmpty() -> {
                 "Name can't be empty"
             }
-            usernameInput.length < 3 -> {
+            name.length < 3 -> {
                 "Name must be at least 3 characters long"
             }
             else -> {

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.databinding.LayoutUnitItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.listOfUnits
 
 data class UnitItem(@StringRes val unit: Int): BaseItem<LayoutUnitItemBinding> {
 
@@ -23,7 +24,7 @@ data class UnitItem(@StringRes val unit: Int): BaseItem<LayoutUnitItemBinding> {
     ) {
         val context = binding.root.context
 
-        binding.tvUnit.text = context.getString(unit)
+        binding.tvUnit.text = context.getString(listOfUnits[unit])
 
         if (isSelected) {
             binding.tvUnit.background = ContextCompat.getDrawable(context, R.drawable.shape_roundedallcorners_blue)

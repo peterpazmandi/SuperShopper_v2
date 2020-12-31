@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
+import android.content.Context
 import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -11,15 +12,19 @@ import com.inspirecoding.supershopper.repository.local.ShopperRepository
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.Status
+import com.inspirecoding.supershopper.utils.ValidateMethods
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ShoppingListsViewModel @ViewModelInject constructor(
     private val shopperRepository: ShopperRepository,
     private val userRepository: UserRepository,
     private val shoppingListRepository: ShoppingListRepository,
+    @ApplicationContext appContext: Context,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
@@ -34,6 +39,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     companion object {
         const val  ARG_KEY_USER = "user"
     }
+
+    var shoppingListName: String? = null
 
     val user = state.getLiveData<User>(ARG_KEY_USER)
     val currentUser = state.getLiveData<User>(ARG_KEY_USER)
@@ -90,6 +97,45 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    fun validateShoppingListName(): Boolean {
+        val errorMessage = ValidateMethods.validateName(shoppingListName)
+
+        if (errorMessage != "") onShowErrorMessage(errorMessage)
+
+        return errorMessage.isEmpty()
+    }
+
+    fun insertShoppingList() {
+        viewModelScope.launch {
+            val shoppingList = createShoppingListObject()
+            shoppingListRepository.insertShoppingList(shoppingList).collect { result ->
+                when(result.status)
+                {
+                    Status.LOADING ->  {
+                        _shoppingLists.postValue(Resource.Loading(true))
+                    }
+                    Status.SUCCESS ->  {
+                        onOpenSelectedShoppingList(shoppingList)
+                    }
+                    Status.ERROR -> {
+                        result.message?.let {
+                            onShowErrorMessage(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun createShoppingListObject(): ShoppingList {
+        return ShoppingList(
+            shoppingListId =  UUID.randomUUID().toString(),
+            name = shoppingListName!!,
+            dueDate = Date(),
+            timeStamp = Date().time,
+            friendsSharedWith = mutableListOf((user.value as User).id)
+        )
     }
 
 

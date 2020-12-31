@@ -60,10 +60,13 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
             viewModel.onSelectCategory()
         }
 
-        binding.ivSave.setOnClickListener {
+        binding.fabSave.setOnClickListener {
             if(viewModel.areTheFieldsValid()) {
-                viewModel.updateShoppingListItems()
+                viewModel.updateAddShoppingListItem()
             }
+        }
+        binding.ivDelete.setOnClickListener {
+            viewModel.deleteShoppingListItem()
         }
 
         setFragmentResultListener(CATEGORY) { _, bundle ->
@@ -113,12 +116,12 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         viewModel.listItem.observe(viewLifecycleOwner, {
             it?.let {
                 updateUiIfEditItem(it)
-                udpateViewModelData(it)
+                updateViewModelData(it)
             }
         })
     }
 
-    private fun udpateViewModelData(listItem: ListItem) {
+    private fun updateViewModelData(listItem: ListItem) {
         viewModel.item = listItem.item
         viewModel.unit = listItem.unit
         viewModel.qunatity = listItem.qunatity
@@ -157,8 +160,8 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
     private fun createUnitItems(): List<UnitItem> {
         val listOfUnitItems = mutableListOf<UnitItem>()
 
-        listOfUnits.forEach {
-            listOfUnitItems.add(UnitItem(it))
+        listOfUnits.forEachIndexed() { index, item ->
+            listOfUnitItems.add(UnitItem(index))
         }
 
         return listOfUnitItems

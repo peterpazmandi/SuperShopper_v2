@@ -13,4 +13,6 @@ interface ShoppingListRepository {
     suspend fun getShoppingListRealTime(shoppingListId: String, coroutineScope: CoroutineScope): Flow<Resource<ShoppingList>>
 
     suspend fun updateShoppingListItems(shoppingListId: String, listOfItems: List<ListItem>): Flow<Resource<Nothing>>
+
+    suspend fun insertShoppingList(shoppingList: ShoppingList): Flow<Resource<Nothing>>
 }

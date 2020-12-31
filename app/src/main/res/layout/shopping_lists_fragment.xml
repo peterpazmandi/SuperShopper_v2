@@ -89,13 +89,12 @@
         android:id="@+id/progressBar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_xxlarge"
         android:alpha="1"
         android:elevation="1dp"
         android:progressBackgroundTint="@color/blue"
         android:progressTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fab_createNewList"
+        app:layout_constraintBottom_toTopOf="@id/view_transparentBackground_half"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -176,7 +175,7 @@
         app:layout_constraintStart_toStartOf="@id/view"
         app:layout_constraintTop_toTopOf="@id/view" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -223,7 +222,7 @@
         app:layout_constraintVertical_bias="0.15">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_username"
+            android:id="@+id/tiet_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/name"

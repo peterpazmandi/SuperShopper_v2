@@ -92,33 +92,50 @@ class AddEditItemViewModel @ViewModelInject constructor(
         return _errorMessage.isEmpty()
     }
 
-    fun updateShoppingListItems() {
-        viewModelScope.launch {
-            openedShoppingList.value?.let { shoppingList ->
-                if(listItem.value != null) {
+    fun updateAddShoppingListItem() {
+        openedShoppingList.value?.let { shoppingList ->
+            if(listItem.value != null) {
 
-                    shoppingList.listOfItems.forEach { _listItem ->
-                        if(_listItem.id == (listItem.value as ListItem).id) {
-                            category.value?.let { _category ->
-                                _listItem.let {
-                                    it.item = item
-                                    it.unit = unit
-                                    it.qunatity = qunatity
-                                    it.categoryId = _category.id
-                                    it.comment = comment
-                                }
+                shoppingList.listOfItems.forEach { _listItem ->
+                    if(_listItem.id == (listItem.value as ListItem).id) {
+                        category.value?.let { _category ->
+                            _listItem.let {
+                                it.item = item
+                                it.unit = unit
+                                it.qunatity = qunatity
+                                it.categoryId = _category.id
+                                it.comment = comment
                             }
                         }
                     }
-
-                } else {
-
-                    shoppingList.listOfItems.add(
-                        createNewShoppingListItem()
-                    )
-
                 }
 
+            } else {
+
+                shoppingList.listOfItems.add(
+                    createNewShoppingListItem()
+                )
+
+            }
+
+            updateShoppingListItems()
+        }
+    }
+
+    fun deleteShoppingListItem() {
+        openedShoppingList.value?.let { shoppingList ->
+
+            listItem.value?.let {
+                shoppingList.listOfItems.remove(it)
+            }
+
+            updateShoppingListItems()
+        }
+    }
+
+    private fun updateShoppingListItems() {
+        viewModelScope.launch {
+            openedShoppingList.value?.let { shoppingList ->
                 shoppingListRepository.updateShoppingListItems(
                     shoppingList.shoppingListId, shoppingList.listOfItems
                 ).collect { result ->

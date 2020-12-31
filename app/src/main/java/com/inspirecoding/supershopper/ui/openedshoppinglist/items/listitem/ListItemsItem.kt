@@ -8,6 +8,7 @@ import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.databinding.LayoutListitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.listOfUnits
 
 data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBinding> {
 
@@ -30,7 +31,7 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         binding.tvName.text = listItem.item
 
         val unit = listItem.unit.toIntOrNull()?.let {
-            context.getString(listItem.unit.toInt())
+            context.getString(listOfUnits[listItem.unit.toInt()])
         } ?: listItem.unit
         binding.tvUnit.text = "${listItem.qunatity} $unit"
 
@@ -47,6 +48,8 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         category?.let { _category ->
             binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(context, _category.iconDrawableResId))
         }
+
+        binding.tvComment.text = listItem.comment
     }
 
     private fun changeItemUiIfCheckChange(binding: LayoutListitemItemBinding, checked: Boolean) {

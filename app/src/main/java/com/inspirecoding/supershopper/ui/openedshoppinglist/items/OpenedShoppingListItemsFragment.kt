@@ -66,6 +66,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
                 Status.SUCCESS -> {
                     binding.progressBar.makeItInVisible()
                     result.data?.let { shoppingList ->
+                        setEmptyCartVisibility(shoppingList.listOfItems.isEmpty())
                         viewModel.createCategoryItem(shoppingList.listOfItems)
                     }
                 }
@@ -78,6 +79,18 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
             }
 
         })
+    }
+
+    private fun setEmptyCartVisibility(isListEmpty: Boolean) {
+        if(isListEmpty) {
+            binding.ivEmptyCartIllustration.makeItVisible()
+            binding.tvEmptyCartText.makeItVisible()
+            binding.tvAddItemText.makeItVisible()
+        } else {
+            binding.ivEmptyCartIllustration.makeItInVisible()
+            binding.tvEmptyCartText.makeItInVisible()
+            binding.tvAddItemText.makeItInVisible()
+        }
     }
 
     private fun initRecyclerView() {

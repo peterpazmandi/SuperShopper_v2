@@ -31,17 +31,32 @@
         tools:text="TesztBevásárlás" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_save"
+        android:id="@+id/iv_delete"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:src="@drawable/ic_save"
+        android:src="@drawable/ic_trash"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:contentDescription="@string/sort_list"
+        android:src="@drawable/ic_save"
+        app:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -150,8 +165,8 @@
                 android:ems="8"
                 android:fontFamily="@font/roboto_bold"
                 android:hint="@string/enter_the_quantity"
-                android:textColor="@color/dark_blue"
                 android:inputType="numberDecimal|numberSigned"
+                android:textColor="@color/dark_blue"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -240,9 +255,9 @@
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_commentText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

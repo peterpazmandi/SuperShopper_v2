@@ -1,5 +1,7 @@
 package com.inspirecoding.supershopper.repository.shoppinglist
 
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.inspirecoding.supershopper.data.ListItem
@@ -90,6 +92,25 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         shoppingListsCollectionReference
             .document(shoppingListId)
             .update(LISTOFITEMS, listOfItems)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    override suspend fun insertShoppingList(shoppingList: ShoppingList) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        shoppingListsCollectionReference
+            .document(shoppingList.shoppingListId)
+            .set(shoppingList)
             .await()
 
         emit(Resource.Success(null))

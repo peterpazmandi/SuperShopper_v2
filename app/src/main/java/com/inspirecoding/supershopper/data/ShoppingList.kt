@@ -8,7 +8,7 @@ import java.util.*
 @Parcelize
 data class ShoppingList(
     var shoppingListId: String = "",
-    val name: String = "",
+    var name: String = "",
     val dueDate: Date = Date(),
     var timeStamp: Long = 0,
     var shoppingListStatus: String = "",

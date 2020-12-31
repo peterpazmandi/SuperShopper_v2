@@ -1,7 +1,9 @@
 package com.inspirecoding.supershopper.utils
 
 import android.view.View
+import android.widget.DatePicker
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 fun View.showSnackbarWithOkButton(message: String) {
     val snackbar = Snackbar.make(this,
@@ -18,4 +20,13 @@ fun View.makeItVisible() {
 }
 fun View.makeItInVisible() {
     this.alpha = 0f
+}
+
+fun DatePicker.convertSelectedDateToLong(): Long {
+
+    val calender = Calendar.getInstance()
+    calender.set(this.year, this.month, this.dayOfMonth)
+
+    return calender.time.time
+
 }

@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.ui.openedshoppinglist.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -10,10 +11,11 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListDetailsFragmentBinding
+import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragmentDirections
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.details.membersitem.MembersItem
 import com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsFragmentDirections
-import com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsViewModel
+import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel.Companion.ARG_KEY_DUEDATE
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
@@ -40,6 +42,10 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
 
         setupShoppingListObserver()
         setupEventHandler()
+
+        binding.ivSetDueDate.setOnClickListener {
+            viewModel.onShowDueDatePickerDialog()
+        }
     }
 
 
@@ -125,6 +131,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
                     is OpenedShoppingListDetailsViewModel.ListDetailsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
+                    is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToDueDatePickerDialog -> {
+                        navigateToDueDatePickerDialog(event.dueDate)
+                    }
                 }
             }
         }
@@ -133,6 +142,10 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
 
 
     /** Navigation methods **/
+    private fun navigateToDueDatePickerDialog(dueDate: Long) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToSelectDueDateBottomSheetFragment(dueDate)
+        findNavController().navigate(action)
+    }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
         val action = OpenedShoppingListDetailsFragmentDirections.actionOpenedShoppingListDetailsFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)

@@ -226,5 +226,7 @@
     <string name="write_some_comment_if_you_want">Write some comment if you want</string>
     <string name="your_shopping_list_is_still_empty">Your shopping list is still empty.</string>
     <string name="add_items_using_this_plus_button">Add items using\nthis plus button.</string>
+    <string name="select_a_due_date">Select a due date</string>
+    <string name="ok">Ok</string>
 
 </resources>

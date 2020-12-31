@@ -188,6 +188,9 @@
             app:exitAnim="@anim/slide_out_from_right"
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right" />
+        <action
+            android:id="@+id/action_openedShoppingListFragment_to_selectDueDateBottomSheetFragment"
+            app:destination="@id/selectDueDateBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListItemsFragment"
@@ -296,5 +299,13 @@
         <action
             android:id="@+id/action_selectCategoryBottomSheetFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/selectDueDateBottomSheetFragment"
+        android:name="com.inspirecoding.supershopper.ui.selectduedate.SelectDueDateBottomSheetFragment"
+        android:label="SelectDueDateBottomSheetFragment" >
+        <argument
+            android:name="dueDate"
+            app:argType="long" />
     </dialog>
 </navigation>

@@ -9,7 +9,7 @@ import java.util.*
 data class ShoppingList(
     var shoppingListId: String = "",
     var name: String = "",
-    val dueDate: Date = Date(),
+    var dueDate: Date = Date(),
     var timeStamp: Long = 0,
     var shoppingListStatus: String = "",
     val friendsSharedWith: MutableList<String> = mutableListOf<String>(),

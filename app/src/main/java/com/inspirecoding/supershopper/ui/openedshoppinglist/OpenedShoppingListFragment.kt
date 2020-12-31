@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.ui.openedshoppinglist
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -45,6 +46,12 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
         setupOpenedShoppingListObserver()
         setupTabSelectedListener()
         setupEventHandler()
+
+        setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_DUEDATE) { _, bundle ->
+            bundle.getLong(OpenedShoppingListViewModel.ARG_KEY_DUEDATE).let { dueDate ->
+                viewModel.updateShoppingListDueDate(dueDate)
+            }
+        }
     }
 
     private fun setupTabSelectedListener() {

@@ -15,15 +15,18 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 class OpenedShoppingListViewModel @ViewModelInject constructor(
-    @Assisted private val state: SavedStateHandle
+    @Assisted private val state: SavedStateHandle,
+    private val shoppingListRepository: ShoppingListRepository
 ): ViewModel() {
 
     // CONST
     private val TAG = this.javaClass.simpleName
     companion object {
         const val ARG_KEY_OPENEDSHOPPINGLIST = "openedShoppingList"
+        const val ARG_KEY_DUEDATE = "dueDate"
     }
 
     private val _listItemEventChannel = Channel<ListItemEvent>()
@@ -32,6 +35,19 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
     val openedShoppingList = state.getLiveData<ShoppingList>(ARG_KEY_OPENEDSHOPPINGLIST)
 
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
+
+
+    fun updateShoppingListDueDate(dueDate: Long) {
+        openedShoppingList.value?.let { shoppingList ->
+            shoppingList.dueDate = Date(dueDate)
+            viewModelScope.launch {
+                shoppingListRepository.updateShoppingListDueDate(
+                    shoppingListId = shoppingList.shoppingListId,
+                    dueDate = shoppingList.dueDate
+                ).collect()
+            }
+        }
+    }
 
 
 

@@ -16,6 +16,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
@@ -81,6 +82,13 @@ class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
 
 
     /** Events **/
+    fun onShowDueDatePickerDialog() {
+        viewModelScope.launch {
+            openedShoppingList.value?.data?.let { shoppingList ->
+                _listDetailsEventChannel.send(ListDetailsEvent.NavigateToDueDatePickerDialog(shoppingList.dueDate.time))
+            }
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _listDetailsEventChannel.send(ListDetailsEvent.ShowErrorMessage(message))
@@ -89,6 +97,7 @@ class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
 
 
     sealed class ListDetailsEvent {
+        data class NavigateToDueDatePickerDialog(val dueDate: Long): ListDetailsEvent()
         data class ShowErrorMessage(val message: String) : ListDetailsEvent()
     }
 

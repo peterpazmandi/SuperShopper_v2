@@ -15,6 +15,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -87,7 +88,9 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun updateShoppingListItems(shoppingListId: String, listOfItems: List<ListItem>) = flow<Resource<Nothing>> {
+    override suspend fun updateShoppingListItems(
+        shoppingListId: String, listOfItems: List<ListItem>
+    ) = flow<Resource<Nothing>> {
 
         shoppingListsCollectionReference
             .document(shoppingListId)
@@ -103,6 +106,26 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         }
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun updateShoppingListDueDate(
+        shoppingListId: String, dueDate: Date
+    ) = flow<Resource<Nothing>> {
+
+//        emit(Resource.Loading(true))
+        println("DueDate -> $shoppingListId")
+        println("DueDate -> $dueDate")
+        shoppingListsCollectionReference
+            .document(shoppingListId)
+            .update(DUEDATE, dueDate)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun insertShoppingList(shoppingList: ShoppingList) = flow<Resource<Nothing>> {
 

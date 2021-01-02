@@ -165,5 +165,21 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         }
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun deleteShoppingList(shoppingList: ShoppingList) = flow<Resource<Nothing>> {
 
+        emit(Resource.Loading(true))
+
+        shoppingListsCollectionReference
+            .document(shoppingList.shoppingListId)
+            .delete()
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
 }

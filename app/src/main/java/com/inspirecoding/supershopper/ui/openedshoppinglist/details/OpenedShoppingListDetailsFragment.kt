@@ -50,6 +50,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
         binding.ivAddMembers.setOnClickListener {
             viewModel.onShowFindFriendsDialog()
         }
+        binding.tvDeleteLeave.setOnClickListener {
+            viewModel.onShowLeaveDeleteDialog()
+        }
     }
 
 
@@ -138,6 +141,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
                     is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToFindFriendsDialog -> {
                         navigateToFindFriendsDialog(event.user, event.shoppingList)
                     }
+                    is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToLeaveDeleteDialog -> {
+                        navigateToLeaveDeleteDialog(event.user, event.shoppingList)
+                    }
                     is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToDueDatePickerDialog -> {
                         navigateToDueDatePickerDialog(event.dueDate)
                     }
@@ -151,6 +157,10 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
     /** Navigation methods **/
     private fun navigateToFindFriendsDialog(user: User, shoppingList: ShoppingList) {
         val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToFindFriendsBottomSheetFragment(user, shoppingList)
+        findNavController().navigate(action)
+    }
+    private fun navigateToLeaveDeleteDialog(user: User, shoppingList: ShoppingList) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToLeaveDeleteShoppingListBottomSheetFragment(user, shoppingList)
         findNavController().navigate(action)
     }
     private fun navigateToDueDatePickerDialog(dueDate: Long) {

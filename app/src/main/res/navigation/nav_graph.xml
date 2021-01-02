@@ -203,6 +203,9 @@
         <action
             android:id="@+id/action_openedShoppingListFragment_to_openedShoppingListDetailsFragment"
             app:destination="@id/openedShoppingListDetailsFragment" />
+        <action
+            android:id="@+id/action_openedShoppingListFragment_to_leaveDeleteShoppingListBottomSheetFragment"
+            app:destination="@id/leaveDeleteShoppingListBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListItemsFragment"
@@ -221,7 +224,11 @@
         android:id="@+id/openedShoppingListDetailsFragment"
         android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.details.OpenedShoppingListDetailsFragment"
         android:label="opened_shopping_list_details_fragment"
-        tools:layout="@layout/opened_shopping_list_details_fragment" />
+        tools:layout="@layout/opened_shopping_list_details_fragment" >
+        <action
+            android:id="@+id/action_openedShoppingListDetailsFragment_to_leaveDeleteShoppingListBottomSheetFragment"
+            app:destination="@id/leaveDeleteShoppingListBottomSheetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.inspirecoding.supershopper.ui.settings.SettingsFragment"
@@ -326,5 +333,16 @@
         <action
             android:id="@+id/action_findFriendsBottomSheetFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/leaveDeleteShoppingListBottomSheetFragment"
+        android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.details.leavedeleteshoppinglist.LeaveDeleteShoppingListBottomSheetFragment"
+        android:label="LeaveDeleteShoppingListBottomSheetFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.inspirecoding.supershopper.data.User"/>
+        <argument
+            android:name="openedShoppingList"
+            app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
     </dialog>
 </navigation>

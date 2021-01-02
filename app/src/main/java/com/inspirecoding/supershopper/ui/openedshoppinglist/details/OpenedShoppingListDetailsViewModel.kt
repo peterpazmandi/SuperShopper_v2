@@ -91,6 +91,15 @@ class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
             }
         }
     }
+    fun onShowLeaveDeleteDialog() {
+        viewModelScope.launch {
+            currentUser.value?.let { _currentUser ->
+                openedShoppingList.value?.data?.let { _openedShoppingList ->
+                    _listDetailsEventChannel.send(ListDetailsEvent.NavigateToLeaveDeleteDialog(_currentUser, _openedShoppingList))
+                }
+            }
+        }
+    }
     fun onShowDueDatePickerDialog() {
         viewModelScope.launch {
             openedShoppingList.value?.data?.let { shoppingList ->
@@ -106,6 +115,7 @@ class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
 
 
     sealed class ListDetailsEvent {
+        data class NavigateToLeaveDeleteDialog(val user: User, val shoppingList: ShoppingList): ListDetailsEvent()
         data class NavigateToFindFriendsDialog(val user: User, val shoppingList: ShoppingList): ListDetailsEvent()
         data class NavigateToDueDatePickerDialog(val dueDate: Long): ListDetailsEvent()
         data class ShowErrorMessage(val message: String) : ListDetailsEvent()

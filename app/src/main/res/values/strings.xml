@@ -229,5 +229,9 @@
     <string name="select_a_due_date">Select a due date</string>
     <string name="ok">Ok</string>
     <string name="find_your_friends">Find your friends</string>
+    <string name="are_you_sure_you_want_to_delete_your_shopping_list">Are you sure you want\nto delete your shopping list?</string>
+    <string name="are_you_sure_you_want_to_leave_your_shopping_list">Are you sure you want\nto leave your shopping list?</string>
+    <string name="add_friends">Add friends</string>
+    <string name="yes_i_m_sure">Yes, I\'m sure</string>
 
 </resources>

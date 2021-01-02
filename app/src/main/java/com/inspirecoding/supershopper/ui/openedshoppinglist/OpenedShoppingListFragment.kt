@@ -58,6 +58,16 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
                 viewModel.updateShoppingListsSharedWithFriends(listOfFriends.toList())
             }
         }
+
+        setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE) { _, bundle ->
+            bundle.getString(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE)?.let { leaveOrDelete ->
+                if(leaveOrDelete == getString(R.string.delete_shopping_list)) {
+                    viewModel.deleteShoppingList()
+                } else if(leaveOrDelete == getString(R.string.leave_shopping_list)) {
+                    viewModel.leaveShoppingList()
+                }
+            }
+        }
     }
 
     private fun setupTabSelectedListener() {
@@ -120,6 +130,9 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
                     is OpenedShoppingListViewModel.ListItemEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
+                    OpenedShoppingListViewModel.ListItemEvent.NavigateBackWithoutResult -> {
+                        navigateBackWithoutResult()
+                    }
                 }
             }
         }
@@ -128,6 +141,9 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
 
 
     /** Navigation methods **/
+    private fun navigateBackWithoutResult() {
+        findNavController().popBackStack()
+    }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
         val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)

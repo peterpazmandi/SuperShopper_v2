@@ -24,7 +24,7 @@ data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBind
         val context = binding.root.context
 
         if (category.nameStringResId != null) {
-            binding.tvCategory.text = context.getString(listOfDefaultCategories[category.iconDrawableResId].second)
+            binding.tvCategory.text = context.getString(listOfDefaultCategories[category.nameStringResId].second)
         } else {
             binding.tvCategory.text = category.customName
         }

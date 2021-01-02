@@ -57,7 +57,6 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
 
     private fun setupShoppingListObserver() {
         viewModel.openedShoppingList.observe(viewLifecycleOwner, { result ->
-
             when(result.status)
             {
                 Status.LOADING -> {
@@ -77,7 +76,6 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
                     }
                 }
             }
-
         })
     }
 
@@ -94,7 +92,6 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
     }
 
     private fun initRecyclerView() {
-
         adapter = BaseListAdapter { view, selectedItem ->
             if (view is AppCompatCheckBox) {
                 (selectedItem as ListItemsItem).let { shoppingListItem ->

@@ -43,7 +43,6 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
 
     private fun getShoppingList(shoppingListId: String) = liveData {
         shoppingListRepository.getShoppingListRealTime(shoppingListId, viewModelScope).collect {  shoppingList ->
-
             when(shoppingList.status)
             {
                 Status.LOADING -> {
@@ -70,9 +69,11 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
                     listItemsItem.category = category
                     return@map listItemsItem
                 } ?: ListItemsItem(listItem)
-            }.sortedBy {
-                it.listItem.isBought
-            }.toMutableList()
+            }.sortedWith(compareBy(
+                { it.listItem.isBought},
+                { it.category?.position},
+                { it.listItem.item}
+            )).toMutableList()
 
             _listOfItems.postValue(listOfListItemsItem)
         }

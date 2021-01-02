@@ -85,8 +85,8 @@ class AddNewCategoryFragment : Fragment(R.layout.add_new_category_fragment) {
 
         val listOfCategoryItems = mutableListOf<CategoryIconItem>()
 
-        listOfCategoryIcons.forEach {
-            listOfCategoryItems.add(CategoryIconItem(it))
+        listOfCategoryIcons.forEachIndexed { index, item ->
+            listOfCategoryItems.add(CategoryIconItem(index))
         }
 
         return listOfCategoryItems
@@ -96,7 +96,6 @@ class AddNewCategoryFragment : Fragment(R.layout.add_new_category_fragment) {
 
     private fun setupAddNewCategoryEvents() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-
             viewModel.addNewCategoryEventChannel.collect { event ->
                 when(event)
                 {

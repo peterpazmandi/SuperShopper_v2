@@ -6,6 +6,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.databinding.LayoutCategoryItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.listOfCategoryIcons
 import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 
 data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBinding> {
@@ -30,7 +31,7 @@ data class CategoryItem(val category: Category): BaseItem<LayoutCategoryItemBind
 
         binding.ivIcon.setImageDrawable(
             ContextCompat.getDrawable(
-                context, listOfDefaultCategories[category.iconDrawableResId].first
+                context, listOfCategoryIcons[category.iconDrawableResId]
             )
         )
 

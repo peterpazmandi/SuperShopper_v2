@@ -7,8 +7,9 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.databinding.LayoutCategoryIconBinding
 import com.inspirecoding.supershopper.databinding.LayoutCategoryItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.listOfCategoryIcons
 
-data class CategoryIconItem(@DrawableRes val icon: Int): BaseItem<LayoutCategoryIconBinding> {
+data class CategoryIconItem(val icon: Int): BaseItem<LayoutCategoryIconBinding> {
 
     override val layoutId: Int = R.layout.layout_category_icon
     override val uniqueId: Any = icon
@@ -24,7 +25,7 @@ data class CategoryIconItem(@DrawableRes val icon: Int): BaseItem<LayoutCategory
     ) {
         val context = binding.root.context
 
-        binding.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, icon))
+        binding.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, listOfCategoryIcons[icon]))
 
         binding.ivIcon.setOnClickListener {
             itemClickCallBack?.invoke(it, this)

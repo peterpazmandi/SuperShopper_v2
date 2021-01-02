@@ -17,6 +17,7 @@ import com.inspirecoding.supershopper.databinding.AddEditItemFragmentBinding
 import com.inspirecoding.supershopper.ui.addedititem.AddEditItemViewModel.Companion.CATEGORY
 import com.inspirecoding.supershopper.ui.addedititem.listitem.UnitItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
+import com.inspirecoding.supershopper.utils.listOfCategoryIcons
 import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 import com.inspirecoding.supershopper.utils.listOfUnits
 import dagger.hilt.android.AndroidEntryPoint
@@ -101,7 +102,7 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         viewModel.category.observe(viewLifecycleOwner, { category ->
             category?.let { _category ->
                 context?.let { _context ->
-                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, listOfDefaultCategories[_category.iconDrawableResId].first))
+                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, listOfCategoryIcons[_category.iconDrawableResId]))
                 }
 
                 if(_category.nameStringResId != null) {

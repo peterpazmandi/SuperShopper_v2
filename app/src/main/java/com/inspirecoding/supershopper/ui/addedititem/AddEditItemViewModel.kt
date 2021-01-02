@@ -28,6 +28,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
     // CONST
     private val TAG = this.javaClass.simpleName
     private val LISTITEM = "listItem"
+    private val LOW = "LOW"
 
     companion object {
         const val CATEGORY = "category"
@@ -105,6 +106,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
                                 it.qunatity = qunatity
                                 it.categoryId = _category.id
                                 it.comment = comment
+                                it.priority = LOW
                             }
                         }
                     }
@@ -171,6 +173,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
                 it.qunatity = qunatity
                 it.categoryId = _category.id
                 it.comment = comment
+                it.priority = LOW
             }
         }
 
@@ -188,7 +191,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
             _addEditItemEventChannel.send(AddEditItemEvent.NavigateToSelectCategoryFragment)
         }
     }
-    fun onItemSavedSuccessfully() {
+    private fun onItemSavedSuccessfully() {
         viewModelScope.launch {
             _addEditItemEventChannel.send(AddEditItemEvent.NavigateBack)
         }

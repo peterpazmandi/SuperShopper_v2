@@ -150,16 +150,6 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
         )
     }
 
-    private fun createSortedListOfItems(listItem: MutableList<ListItem>): MutableList<BaseItem<*>> {
-
-        return listItem.map {
-            ListItemsItem(it)
-        }.sortedBy {
-            it.listItem.isBought
-        }.toMutableList()
-
-    }
-
 
 
 
@@ -195,7 +185,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
         findNavController().navigate(action)
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
-        val action = OpenedShoppingListItemsFragmentDirections.actionOpenedShoppingListItemsFragmentToErrorBottomDialogFragment(errorMessage)
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)
     }
 }

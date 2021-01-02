@@ -18,8 +18,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.utils.ObjectFactory.createUserObject
@@ -41,10 +44,12 @@ class UserRepositoryImpl @Inject constructor(
     //CONST
     private val TAG = this.javaClass.simpleName
     private val USER_COLLECTION_NAME = "users"
+    private val FRIENDS_COLLECTION_NAME = "friends"
     private val RC_SIGN_IN = 1
 
     // COLLECTIONS
     private val usersCollectionReference = FirebaseFirestore.getInstance().collection(USER_COLLECTION_NAME)
+    private val friendsCollection = FirebaseFirestore.getInstance().collection(FRIENDS_COLLECTION_NAME)
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -54,6 +59,7 @@ class UserRepositoryImpl @Inject constructor(
     private var callbackManager: CallbackManager? = null
     private lateinit var googleSingInClient: GoogleSignInClient
 
+    private var lastResultOfFriends: DocumentSnapshot? = null
 
 
 
@@ -322,35 +328,53 @@ class UserRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
+    override fun getFriendsAlphabeticalList(user: User) = flow<Resource<List<Friend>>> {
 
+        emit(Resource.Loading(true))
 
+        val result = if(lastResultOfFriends == null) {
+            friendsCollection
+                .whereEqualTo("friendshipOwnerId", user.id)
+                .orderBy("friendName", Query.Direction.ASCENDING)
+                .limit(10)
+                .get()
+                .await()
+        } else {
+            friendsCollection
+                .whereEqualTo("friendshipOwnerId", user.id)
+                .orderBy("friendName", Query.Direction.ASCENDING)
+                .startAfter(lastResultOfFriends as DocumentSnapshot)
+                .limit(10)
+                .get()
+                .await()
+        }
 
+        val documentsList = result.documents
+        if(documentsList.size > 0) {
+            lastResultOfFriends = documentsList[documentsList.size - 1]
+        }
 
+        val listOfFriends = mutableListOf<Friend>()
+        for(document in documentsList) {
+            val friend = document.toObject(Friend::class.java)
+            friend?.let {
+                listOfFriends.add(friend)
+            }
+        }
 
+        emit(Resource.Success(listOfFriends))
 
+    }.catch {  exception ->
 
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
 
+    }.flowOn(Dispatchers.IO)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    override fun clearLastResultOfFriends() {
+        lastResultOfFriends = null
+    }
 
 
 

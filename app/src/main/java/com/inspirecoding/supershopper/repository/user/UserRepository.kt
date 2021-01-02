@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import kotlinx.coroutines.CoroutineScope
@@ -14,16 +15,9 @@ interface UserRepository {
 
     val userResource: Flow<Resource<User>>
 
-    suspend fun registerUserFromAuthWithEmailAndPassword(
-        username: String,
-        email: String,
-        password: String
-    )
+    suspend fun registerUserFromAuthWithEmailAndPassword(username: String, email: String, password: String)
 
-    suspend fun logInUserFromAuthWithEmailAndPassword(
-        email: String,
-        password: String
-    )
+    suspend fun logInUserFromAuthWithEmailAndPassword(email: String, password: String)
 
     suspend fun signInWithFacebook(fragment: Fragment)
     suspend fun signInWithGoogle(activity: Activity)
@@ -36,23 +30,6 @@ interface UserRepository {
     suspend fun sendPasswordResetEmail(email: String): Flow<Resource<Nothing>>
     suspend fun signOut()
 
-//    suspend fun getUserFromFirestore(userId: String): Resource<User>?
-//
-//    suspend fun registerUserFromAuthWithEmailAndPassword(
-//        email: String,
-//        password: String,
-//        context: Context
-//    ): Resource<FirebaseUser?>
-
-//    suspend fun sendPasswordResetEmail(
-//        email: String
-//    ): Resource<Void?>
-//
-//    suspend fun checkUserLoggedIn(): FirebaseUser?
-//    suspend fun logOutUser()
-//
-//    suspend fun signInWithCredential(
-//        authCredential: AuthCredential
-//    ): Resource<AuthResult?>
-
+    fun getFriendsAlphabeticalList(user: User): Flow<Resource<List<Friend>>>
+    fun clearLastResultOfFriends()
 }

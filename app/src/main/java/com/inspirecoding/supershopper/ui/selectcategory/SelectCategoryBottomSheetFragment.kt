@@ -14,12 +14,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Category
-import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.databinding.SelectCategoryBottomSheetFragmentBinding
 import com.inspirecoding.supershopper.ui.addedititem.AddEditItemViewModel
 import com.inspirecoding.supershopper.ui.categories.listitems.CategoryItem
-import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
-import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
+import com.inspirecoding.supershopper.ui.categories.listitems.UserItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import dagger.hilt.android.AndroidEntryPoint

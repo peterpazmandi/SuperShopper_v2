@@ -110,12 +110,32 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         shoppingListId: String, dueDate: Date
     ) = flow<Resource<Nothing>> {
 
-//        emit(Resource.Loading(true))
-        println("DueDate -> $shoppingListId")
-        println("DueDate -> $dueDate")
+        emit(Resource.Loading(true))
+
         shoppingListsCollectionReference
             .document(shoppingListId)
             .update(DUEDATE, dueDate)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun updateShoppingListsSharedWithFriends(
+        shoppingListId: String,
+        friendsSharedWith: List<String>
+    ) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        shoppingListsCollectionReference
+            .document(shoppingListId)
+            .update(FRIENDSSHAREDWITH, friendsSharedWith)
             .await()
 
         emit(Resource.Success(null))
@@ -144,4 +164,6 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             emit(Resource.Error(message))
         }
     }.flowOn(Dispatchers.IO)
+
+
 }

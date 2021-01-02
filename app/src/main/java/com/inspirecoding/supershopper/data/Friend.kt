@@ -1,7 +1,11 @@
 package com.inspirecoding.supershopper.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Friend(
-    val id : String = "",
-    val friend_1_userId   : String = "",
-    val friend_2_userId   : String = ""
-)
+    val friendshipOwnerId   : String = "",
+    val friendId   : String = "",
+    val friendName   : String = ""
+): Parcelable

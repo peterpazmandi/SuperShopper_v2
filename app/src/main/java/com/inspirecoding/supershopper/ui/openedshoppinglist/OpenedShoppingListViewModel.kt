@@ -27,6 +27,7 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
     companion object {
         const val ARG_KEY_OPENEDSHOPPINGLIST = "openedShoppingList"
         const val ARG_KEY_DUEDATE = "dueDate"
+        const val ARG_KEY_FRIENDSSHAREDWITH = "friendsSharedWith"
     }
 
     private val _listItemEventChannel = Channel<ListItemEvent>()
@@ -44,6 +45,16 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                 shoppingListRepository.updateShoppingListDueDate(
                     shoppingListId = shoppingList.shoppingListId,
                     dueDate = shoppingList.dueDate
+                ).collect()
+            }
+        }
+    }
+    fun updateShoppingListsSharedWithFriends(friendsSharedWith: List<String>) {
+        openedShoppingList.value?.let { shoppingList ->
+            viewModelScope.launch {
+                shoppingListRepository.updateShoppingListsSharedWithFriends(
+                    shoppingListId = shoppingList.shoppingListId,
+                    friendsSharedWith = friendsSharedWith
                 ).collect()
             }
         }

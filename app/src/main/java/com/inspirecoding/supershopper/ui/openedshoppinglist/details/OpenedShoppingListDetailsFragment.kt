@@ -11,6 +11,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListDetailsFragmentBinding
+import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragment
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragmentDirections
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.details.membersitem.MembersItem
@@ -45,6 +46,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
 
         binding.ivSetDueDate.setOnClickListener {
             viewModel.onShowDueDatePickerDialog()
+        }
+        binding.ivAddMembers.setOnClickListener {
+            viewModel.onShowFindFriendsDialog()
         }
     }
 
@@ -131,6 +135,9 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
                     is OpenedShoppingListDetailsViewModel.ListDetailsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
+                    is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToFindFriendsDialog -> {
+                        navigateToFindFriendsDialog(event.user, event.shoppingList)
+                    }
                     is OpenedShoppingListDetailsViewModel.ListDetailsEvent.NavigateToDueDatePickerDialog -> {
                         navigateToDueDatePickerDialog(event.dueDate)
                     }
@@ -142,12 +149,16 @@ class OpenedShoppingListDetailsFragment : Fragment(R.layout.opened_shopping_list
 
 
     /** Navigation methods **/
+    private fun navigateToFindFriendsDialog(user: User, shoppingList: ShoppingList) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToFindFriendsBottomSheetFragment(user, shoppingList)
+        findNavController().navigate(action)
+    }
     private fun navigateToDueDatePickerDialog(dueDate: Long) {
         val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToSelectDueDateBottomSheetFragment(dueDate)
         findNavController().navigate(action)
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
-        val action = OpenedShoppingListDetailsFragmentDirections.actionOpenedShoppingListDetailsFragmentToErrorBottomDialogFragment(errorMessage)
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToErrorBottomDialogFragment(errorMessage)
         findNavController().navigate(action)
     }
 }

@@ -1,0 +1,37 @@
+package com.inspirecoding.supershopper.utils
+
+import com.inspirecoding.supershopper.R
+
+val listOfDefaultCategories = listOf(
+    Pair(R.drawable.ic_alcoholic_drinks, R.string.alcoholic_drinks),
+    Pair(R.drawable.ic_baby_products, R.string.baby_products),
+    Pair(R.drawable.ic_bakery, R.string.bakery),
+    Pair(R.drawable.ic_beverages, R.string.beverages),
+    Pair(R.drawable.ic_canned_foods, R.string.canned_foods),
+    Pair(R.drawable.ic_car_care_products, R.string.car_care_products),
+    Pair(R.drawable.ic_clothes, R.string.clothes),
+    Pair(R.drawable.ic_coffee, R.string.coffee_tea_and_hot_chocolate),
+    Pair(R.drawable.ic_condiments, R.string.condiments),
+    Pair(R.drawable.ic_cosmetics, R.string.cosmetics),
+    Pair(R.drawable.ic_dairy_product, R.string.dairy_products),
+    Pair(R.drawable.ic_diet_food, R.string.diet_foods),
+    Pair(R.drawable.ic_electrical_products, R.string.electronics_devices),
+    Pair(R.drawable.ic_seafood, R.string.fish_and_seafood),
+    Pair(R.drawable.ic_frozen_products, R.string.frozen),
+    Pair(R.drawable.ic_pasta, R.string.grains_and_pasta),
+    Pair(R.drawable.ic_kitchen, R.string.home_and_kitchen),
+    Pair(R.drawable.ic_baking, R.string.home_baking),
+    Pair(R.drawable.ic_home_cleaning, R.string.house_cleaning_products),
+    Pair(R.drawable.ic_meat, R.string.meat_pourly_and_sausages),
+    Pair(R.drawable.ic_newspaper, R.string.newspapers),
+    Pair(R.drawable.ic_office_desk, R.string.office_supplies),
+    Pair(R.drawable.ic_oils, R.string.oils),
+    Pair(R.drawable.ic_tag, R.string.other),
+    Pair(R.drawable.ic_toilette_paper, R.string.personal_hygiene),
+    Pair(R.drawable.ic_pets, R.string.pet_care),
+    Pair(R.drawable.ic_pharmacy, R.string.pharmacy),
+    Pair(R.drawable.ic_preserved_foods, R.string.preserves),
+    Pair(R.drawable.ic_ready_meal, R.string.ready_meals),
+    Pair(R.drawable.ic_snacks, R.string.snacks),
+    Pair(R.drawable.ic_spice, R.string.spices),
+)

@@ -15,7 +15,6 @@ data class ShoppingList(
     val friendsSharedWith: MutableList<String> = mutableListOf<String>(),
     val usersSharedWith: MutableList<User> = mutableListOf(),
     var listOfItems: MutableList<ListItem> = mutableListOf<ListItem>(),
-    val status: String = "",
     val comment: String = ""
 ): Parcelable {
 

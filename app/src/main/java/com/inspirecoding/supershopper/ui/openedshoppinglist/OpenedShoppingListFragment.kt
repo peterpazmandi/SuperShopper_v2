@@ -52,6 +52,12 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
                 viewModel.updateShoppingListDueDate(dueDate)
             }
         }
+
+        setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH) { _, bundle ->
+            bundle.getStringArrayList(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH)?.let { listOfFriends ->
+                viewModel.updateShoppingListsSharedWithFriends(listOfFriends.toList())
+            }
+        }
     }
 
     private fun setupTabSelectedListener() {

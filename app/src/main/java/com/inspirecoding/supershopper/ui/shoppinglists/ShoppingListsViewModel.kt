@@ -36,6 +36,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     // CONST
     private val TAG = this.javaClass.simpleName
+    private val OPEN = "OPEN"
     companion object {
         const val  ARG_KEY_USER = "user"
     }
@@ -134,6 +135,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
             name = shoppingListName!!,
             dueDate = Date(),
             timeStamp = Date().time,
+            shoppingListStatus = OPEN,
             friendsSharedWith = mutableListOf((user.value as User).id)
         )
     }

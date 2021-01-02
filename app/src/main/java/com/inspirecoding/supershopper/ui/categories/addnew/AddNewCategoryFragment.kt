@@ -11,12 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.databinding.AddNewCategoryFragmentBinding
 import com.inspirecoding.supershopper.ui.categories.addnew.listitem.CategoryIconItem
-import com.inspirecoding.supershopper.ui.register.RegisterFragmentDirections
-import com.inspirecoding.supershopper.ui.register.RegisterViewModel
-import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.dismissKeyboard
 import com.inspirecoding.supershopper.utils.listOfCategoryIcons
+import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

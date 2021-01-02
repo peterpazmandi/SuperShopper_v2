@@ -15,6 +15,7 @@ interface ShoppingListRepository {
 
     suspend fun updateShoppingListItems(shoppingListId: String, listOfItems: List<ListItem>): Flow<Resource<Nothing>>
     suspend fun updateShoppingListDueDate(shoppingListId: String, dueDate: Date): Flow<Resource<Nothing>>
+    suspend fun updateShoppingListsSharedWithFriends(shoppingListId: String, friendsSharedWith: List<String>): Flow<Resource<Nothing>>
 
     suspend fun insertShoppingList(shoppingList: ShoppingList): Flow<Resource<Nothing>>
 }

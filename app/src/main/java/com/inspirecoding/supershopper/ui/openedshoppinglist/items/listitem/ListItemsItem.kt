@@ -8,6 +8,7 @@ import com.inspirecoding.supershopper.data.Category
 import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.databinding.LayoutListitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
+import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 import com.inspirecoding.supershopper.utils.listOfUnits
 
 data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBinding> {
@@ -46,7 +47,7 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         }
 
         category?.let { _category ->
-            binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(context, _category.iconDrawableResId))
+            binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(context, listOfDefaultCategories[_category.iconDrawableResId].first))
         }
 
         binding.tvComment.text = listItem.comment

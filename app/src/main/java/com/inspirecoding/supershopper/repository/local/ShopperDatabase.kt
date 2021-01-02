@@ -33,8 +33,8 @@ abstract class ShopperDatabase : RoomDatabase() {
                 for (i in listOfDefaultCategories.indices) {
                     dao.insertCategory(Category(
                         customName = "",
-                        iconDrawableResId = listOfDefaultCategories[i].first,
-                        nameStringResId = listOfDefaultCategories[i].second,
+                        iconDrawableResId = i,
+                        nameStringResId = i,
                         position = i
                     ))
                 }

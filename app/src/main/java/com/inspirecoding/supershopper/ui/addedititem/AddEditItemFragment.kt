@@ -17,6 +17,7 @@ import com.inspirecoding.supershopper.databinding.AddEditItemFragmentBinding
 import com.inspirecoding.supershopper.ui.addedititem.AddEditItemViewModel.Companion.CATEGORY
 import com.inspirecoding.supershopper.ui.addedititem.listitem.UnitItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
+import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 import com.inspirecoding.supershopper.utils.listOfUnits
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -100,11 +101,11 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         viewModel.category.observe(viewLifecycleOwner, { category ->
             category?.let { _category ->
                 context?.let { _context ->
-                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, _category.iconDrawableResId))
+                    binding.ivCategory.setImageDrawable(ContextCompat.getDrawable(_context, listOfDefaultCategories[_category.iconDrawableResId].first))
                 }
 
                 if(_category.nameStringResId != null) {
-                    binding.tvCategory.text = getString(_category.nameStringResId)
+                    binding.tvCategory.text = getString(listOfDefaultCategories[_category.nameStringResId].second)
                 } else {
                     binding.tvCategory.text = _category.customName
                 }

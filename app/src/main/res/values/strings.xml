@@ -233,5 +233,7 @@
     <string name="are_you_sure_you_want_to_leave_your_shopping_list">Are you sure you want\nto leave your shopping list?</string>
     <string name="add_friends">Add friends</string>
     <string name="yes_i_m_sure">Yes, I\'m sure</string>
+    <string name="your_friends">Your friends</string>
+    <string name="unfriend">Unfriend</string>
 
 </resources>

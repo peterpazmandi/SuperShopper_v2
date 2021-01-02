@@ -34,6 +34,9 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
     val listItemEventChannel = _listItemEventChannel.receiveAsFlow()
 
     val openedShoppingList = state.getLiveData<ShoppingList>(ARG_KEY_OPENEDSHOPPINGLIST).switchMap {
+        viewModelScope.launch {
+            shopperRepository.getCategories().collect()
+        }
         getShoppingList(it.shoppingListId)
     }
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
@@ -70,9 +73,9 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
                     return@map listItemsItem
                 } ?: ListItemsItem(listItem)
             }.sortedWith(compareBy(
-                { it.listItem.isBought},
-                { it.category?.position},
-                { it.listItem.item}
+                { it.listItem.isBought },
+                { it.category?.position },
+                { it.listItem.item }
             )).toMutableList()
 
             _listOfItems.postValue(listOfListItemsItem)

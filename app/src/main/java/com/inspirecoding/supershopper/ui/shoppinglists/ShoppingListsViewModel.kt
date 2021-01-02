@@ -1,6 +1,5 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
-import android.content.Context
 import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -13,7 +12,6 @@ import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListReposi
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.ValidateMethods
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -24,15 +22,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     private val shopperRepository: ShopperRepository,
     private val userRepository: UserRepository,
     private val shoppingListRepository: ShoppingListRepository,
-    @ApplicationContext appContext: Context,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch {
-            shopperRepository.getCategories()
-        }
-    }
 
     // CONST
     private val TAG = this.javaClass.simpleName
@@ -150,6 +141,13 @@ class ShoppingListsViewModel @ViewModelInject constructor(
             _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSettingsFragment)
         }
     }
+    fun onOpenFriends() {
+        viewModelScope.launch {
+            currentUser.value?.let {
+                _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToFriendsFragment(it))
+            }
+        }
+    }
     fun onOpenSelectedShoppingList(shoppingList: ShoppingList) {
         viewModelScope.launch {
             _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.OpenSelectedShoppingList(shoppingList))
@@ -168,6 +166,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     sealed class ShoppingListsFragmentsEvent {
         object NavigateToSettingsFragment : ShoppingListsFragmentsEvent()
+        data class NavigateToFriendsFragment(val currentUser: User) : ShoppingListsFragmentsEvent()
         data class OpenSelectedShoppingList(val shoppingList: ShoppingList) : ShoppingListsFragmentsEvent()
         data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
     }

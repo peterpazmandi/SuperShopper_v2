@@ -1,26 +1,23 @@
-package com.inspirecoding.supershopper.ui.openedshoppinglist.details.membersitem
+package com.inspirecoding.supershopper.ui.friends.listitems
 
 import android.view.View
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.User
-import com.inspirecoding.supershopper.databinding.LayoutMemberItemBinding
+import com.inspirecoding.supershopper.databinding.LayoutFriendslistItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.squareup.picasso.Picasso
 
-data class MembersItem(val user: User): BaseItem<LayoutMemberItemBinding> {
+data class FriendsListItem(val user: User): BaseItem<LayoutFriendslistItemBinding> {
 
-    // CONST
-    private val TAG = this.javaClass.simpleName
-
-    override val layoutId = R.layout.layout_member_item
+    override val layoutId = R.layout.layout_friendslist_item
     override val uniqueId = user.id
     override val data = user
 
-    override fun initializeViewBinding(view: View) = LayoutMemberItemBinding.bind(view)
+    override fun initializeViewBinding(view: View) = LayoutFriendslistItemBinding.bind(view)
 
     override fun bind(
-        binding: LayoutMemberItemBinding,
-        itemClickCallBack: ((View, BaseItem<LayoutMemberItemBinding>) -> Unit)?
+        binding: LayoutFriendslistItemBinding,
+        itemClickCallBack: ((View, BaseItem<LayoutFriendslistItemBinding>) -> Unit)?
     ) {
 
         binding.tvName.text = user.name

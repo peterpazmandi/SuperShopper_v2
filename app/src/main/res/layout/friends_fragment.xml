@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/ic_back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_shoppingListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/your_friends"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintStart_toEndOf="@id/iv_backButton"
+        app:layout_constraintTop_toTopOf="@id/iv_backButton" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_searchFriend"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintEnd_toStartOf="@id/iv_friendRequests"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_friendRequests"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_people_blue"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_pendingRequestsCount"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:background="@drawable/shape_roundedallcorners_blue"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:alpha="0"
+        android:textSize="@dimen/textSize_small"
+        app:layout_constraintEnd_toEndOf="@id/iv_friendRequests"
+        app:layout_constraintTop_toTopOf="@id/iv_friendRequests"
+        tools:text="130" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_friends"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_roundedtopcorners_white"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="100dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_searchFriend" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:alpha="0"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

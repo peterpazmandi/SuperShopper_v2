@@ -1,7 +1,10 @@
 package com.inspirecoding.supershopper.ui.openedshoppinglist.items
 
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -33,9 +36,23 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
     private lateinit var binding: OpenedShoppingListItemsFragmentBinding
     private lateinit var adapter: BaseListAdapter
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = OpenedShoppingListItemsFragmentBinding.inflate(inflater)
+
+        initRecyclerView()
+        setupShoppingListObserver()
+        setupEventHandler()
+        setupListItemsItemsObserver()
+
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = OpenedShoppingListItemsFragmentBinding.bind(view)
 
         initRecyclerView()
         setupShoppingListObserver()
@@ -46,6 +63,7 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
             viewModel.onAddItemFragment()
         }
     }
+
 
     private fun setupListItemsItemsObserver() {
         viewModel.listOfItems.observe(viewLifecycleOwner, { listOfSortedItems ->

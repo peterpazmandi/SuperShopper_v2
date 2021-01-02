@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="com.inspirecoding.supershopper.ui.splash.SplashFragment"
         android:label="splash_fragment"
-        tools:layout="@layout/splash_fragment" >
+        tools:layout="@layout/splash_fragment">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -18,7 +18,7 @@
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right"
             app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"  />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -45,7 +45,7 @@
         android:id="@+id/loginFragment"
         android:name="com.inspirecoding.supershopper.ui.login.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment" >
+        tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -54,7 +54,7 @@
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"  />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
@@ -75,7 +75,7 @@
         android:id="@+id/registerFragment"
         android:name="com.inspirecoding.supershopper.ui.register.RegisterFragment"
         android:label="register_fragment"
-        tools:layout="@layout/register_fragment" >
+        tools:layout="@layout/register_fragment">
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -84,7 +84,7 @@
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right"
             app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true"  />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registerFragment_to_termsAndConditionsFragment"
             app:destination="@id/termsAndConditionsFragment"
@@ -125,16 +125,16 @@
         android:id="@+id/errorBottomDialogFragment"
         android:name="com.inspirecoding.supershopper.ui.errordialog.ErrorBottomDialogFragment"
         android:label="error_bottom_dialog_fragment"
-        tools:layout="@layout/error_bottom_dialog_fragment" >
+        tools:layout="@layout/error_bottom_dialog_fragment">
         <argument
             android:name="errorMessage"
-            app:argType="string"/>
+            app:argType="string" />
     </dialog>
     <dialog
         android:id="@+id/forgotPasswordDialog"
         android:name="com.inspirecoding.supershopper.ui.forgotpassword.ForgotPasswordDialog"
         android:label="forgot_password_dialog"
-        tools:layout="@layout/forgot_password_dialog" >
+        tools:layout="@layout/forgot_password_dialog">
         <action
             android:id="@+id/action_forgotPasswordDialog_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
@@ -143,10 +143,10 @@
         android:id="@+id/shoppingListsFragment"
         android:name="com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragment"
         android:label="shopping_lists_fragment"
-        tools:layout="@layout/shopping_lists_fragment" >
+        tools:layout="@layout/shopping_lists_fragment">
         <argument
             android:name="user"
-            app:argType="com.inspirecoding.supershopper.data.User"/>
+            app:argType="com.inspirecoding.supershopper.data.User" />
         <action
             android:id="@+id/action_shoppingListsFragment_to_splashFragment"
             app:destination="@id/splashFragment"
@@ -169,18 +169,25 @@
             app:exitAnim="@anim/slide_out_from_right"
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right" />
+        <action
+            android:id="@+id/action_shoppingListsFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListFragment"
         android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragment"
         android:label="opened_shopping_list_fragment"
-        tools:layout="@layout/opened_shopping_list_fragment" >
+        tools:layout="@layout/opened_shopping_list_fragment">
         <argument
             android:name="openedShoppingList"
             app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
         <argument
             android:name="user"
-            app:argType="com.inspirecoding.supershopper.data.User"/>
+            app:argType="com.inspirecoding.supershopper.data.User" />
         <action
             android:id="@+id/action_openedShoppingListFragment_to_addEditItemFragment"
             app:destination="@id/addEditItemFragment"
@@ -211,7 +218,7 @@
         android:id="@+id/openedShoppingListItemsFragment"
         android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.items.OpenedShoppingListItemsFragment"
         android:label="opened_shopping_list_items_fragment"
-        tools:layout="@layout/opened_shopping_list_items_fragment" >
+        tools:layout="@layout/opened_shopping_list_items_fragment">
         <action
             android:id="@+id/action_openedShoppingListItemsFragment_to_addEditItemFragment"
             app:destination="@id/addEditItemFragment"
@@ -224,7 +231,7 @@
         android:id="@+id/openedShoppingListDetailsFragment"
         android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.details.OpenedShoppingListDetailsFragment"
         android:label="opened_shopping_list_details_fragment"
-        tools:layout="@layout/opened_shopping_list_details_fragment" >
+        tools:layout="@layout/opened_shopping_list_details_fragment">
         <action
             android:id="@+id/action_openedShoppingListDetailsFragment_to_leaveDeleteShoppingListBottomSheetFragment"
             app:destination="@id/leaveDeleteShoppingListBottomSheetFragment" />
@@ -233,7 +240,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.inspirecoding.supershopper.ui.settings.SettingsFragment"
         android:label="settings_fragment"
-        tools:layout="@layout/settings_fragment" >
+        tools:layout="@layout/settings_fragment">
         <action
             android:id="@+id/action_settingsFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
@@ -263,7 +270,7 @@
         android:id="@+id/categoriesFragment"
         android:name="com.inspirecoding.supershopper.ui.categories.CategoriesFragment"
         android:label="categories_fragment"
-        tools:layout="@layout/categories_fragment" >
+        tools:layout="@layout/categories_fragment">
         <action
             android:id="@+id/action_categoriesFragment_to_addNewCategoryFragment"
             app:destination="@id/addNewCategoryFragment"
@@ -275,11 +282,11 @@
     <fragment
         android:id="@+id/addNewCategoryFragment"
         android:name="com.inspirecoding.supershopper.ui.categories.addnew.AddNewCategoryFragment"
-        android:label="AddNewCategoryFragment" >
+        android:label="AddNewCategoryFragment">
         <argument
             android:name="category"
-            app:nullable="true"
-            app:argType="com.inspirecoding.supershopper.data.Category" />
+            app:argType="com.inspirecoding.supershopper.data.Category"
+            app:nullable="true" />
         <action
             android:id="@+id/action_addNewCategoryFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
@@ -288,14 +295,14 @@
         android:id="@+id/addEditItemFragment"
         android:name="com.inspirecoding.supershopper.ui.addedititem.AddEditItemFragment"
         android:label="add_edit_item_fragment"
-        tools:layout="@layout/add_edit_item_fragment" >
+        tools:layout="@layout/add_edit_item_fragment">
         <argument
             android:name="openedShoppingList"
             app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
         <argument
             android:name="listItem"
-            app:nullable="true"
-            app:argType="com.inspirecoding.supershopper.data.ListItem" />
+            app:argType="com.inspirecoding.supershopper.data.ListItem"
+            app:nullable="true" />
         <action
             android:id="@+id/action_addEditItemFragment_to_selectCategoryBottomSheetFragment"
             app:destination="@id/selectCategoryBottomSheetFragment" />
@@ -307,7 +314,7 @@
         android:id="@+id/selectCategoryBottomSheetFragment"
         android:name="com.inspirecoding.supershopper.ui.selectcategory.SelectCategoryBottomSheetFragment"
         android:label="select_category_bottom_sheet_fragment"
-        tools:layout="@layout/select_category_bottom_sheet_fragment" >
+        tools:layout="@layout/select_category_bottom_sheet_fragment">
         <action
             android:id="@+id/action_selectCategoryBottomSheetFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
@@ -315,7 +322,7 @@
     <dialog
         android:id="@+id/selectDueDateBottomSheetFragment"
         android:name="com.inspirecoding.supershopper.ui.selectduedate.SelectDueDateBottomSheetFragment"
-        android:label="SelectDueDateBottomSheetFragment" >
+        android:label="SelectDueDateBottomSheetFragment">
         <argument
             android:name="dueDate"
             app:argType="long" />
@@ -323,10 +330,10 @@
     <dialog
         android:id="@+id/findFriendsBottomSheetFragment"
         android:name="com.inspirecoding.supershopper.ui.findfriends.FindFriendsBottomSheetFragment"
-        android:label="FindFriendsBottomSheetFragment" >
+        android:label="FindFriendsBottomSheetFragment">
         <argument
             android:name="user"
-            app:argType="com.inspirecoding.supershopper.data.User"/>
+            app:argType="com.inspirecoding.supershopper.data.User" />
         <argument
             android:name="openedShoppingList"
             app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
@@ -337,12 +344,20 @@
     <dialog
         android:id="@+id/leaveDeleteShoppingListBottomSheetFragment"
         android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.details.leavedeleteshoppinglist.LeaveDeleteShoppingListBottomSheetFragment"
-        android:label="LeaveDeleteShoppingListBottomSheetFragment" >
+        android:label="LeaveDeleteShoppingListBottomSheetFragment">
         <argument
             android:name="user"
-            app:argType="com.inspirecoding.supershopper.data.User"/>
+            app:argType="com.inspirecoding.supershopper.data.User" />
         <argument
             android:name="openedShoppingList"
             app:argType="com.inspirecoding.supershopper.data.ShoppingList" />
     </dialog>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.inspirecoding.supershopper.ui.friends.FriendsFragment"
+        android:label="FriendsFragment">
+        <argument
+            android:name="user"
+            app:argType="com.inspirecoding.supershopper.data.User" />
+    </fragment>
 </navigation>

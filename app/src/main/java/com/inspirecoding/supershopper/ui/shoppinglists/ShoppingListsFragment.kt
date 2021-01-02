@@ -73,6 +73,9 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                 viewModel.insertShoppingList()
             }
         }
+        binding.fabFriends.setOnClickListener {
+            viewModel.onOpenFriends()
+        }
     }
 
     private fun setupShoppingListObserver() {
@@ -143,6 +146,9 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                     ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSettingsFragment -> {
                         navigateToSettingsFragment()
                     }
+                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToFriendsFragment -> {
+                        navigateToFriendsListFragment(event.currentUser)
+                    }
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
@@ -207,6 +213,10 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
 
     /** Navigation methods **/
+    private fun navigateToFriendsListFragment(currentUser: User) {
+        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToFriendsFragment(currentUser)
+        findNavController().navigate(action)
+    }
     private fun navigateToSettingsFragment() {
         findNavController().navigate(R.id.action_shoppingListsFragment_to_settingsFragment)
     }

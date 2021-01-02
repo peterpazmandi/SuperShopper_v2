@@ -28,23 +28,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_sortItems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:background="@color/blue"
-        android:backgroundTint="@color/gray"
-        android:contentDescription="@string/sort_list"
-        android:src="@drawable/ic_sort"
-        app:backgroundTint="@color/blue"
-        app:borderWidth="0.5dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@id/fab_addItem"
-        app:layout_constraintEnd_toEndOf="@+id/fab_addItem"
-        app:layout_constraintStart_toStartOf="@+id/fab_addItem"
-        app:tint="@color/blue" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

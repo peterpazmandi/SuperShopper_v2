@@ -45,7 +45,9 @@ class UserRepositoryImpl @Inject constructor(
     private val TAG = this.javaClass.simpleName
     private val USER_COLLECTION_NAME = "users"
     private val FRIENDS_COLLECTION_NAME = "friends"
+    private val FIELD_NAME = "name"
     private val RC_SIGN_IN = 1
+    private val LIMIT: Long = 10
 
     // COLLECTIONS
     private val usersCollectionReference = FirebaseFirestore.getInstance().collection(USER_COLLECTION_NAME)
@@ -59,7 +61,7 @@ class UserRepositoryImpl @Inject constructor(
     private var callbackManager: CallbackManager? = null
     private lateinit var googleSingInClient: GoogleSignInClient
 
-    private var lastResultOfFriends: DocumentSnapshot? = null
+    private var lastResult: DocumentSnapshot? = null
 
 
 
@@ -332,26 +334,26 @@ class UserRepositoryImpl @Inject constructor(
 
         emit(Resource.Loading(true))
 
-        val result = if(lastResultOfFriends == null) {
+        val result = if(lastResult == null) {
             friendsCollection
                 .whereEqualTo("friendshipOwnerId", user.id)
                 .orderBy("friendName", Query.Direction.ASCENDING)
-                .limit(10)
+                .limit(LIMIT)
                 .get()
                 .await()
         } else {
             friendsCollection
                 .whereEqualTo("friendshipOwnerId", user.id)
                 .orderBy("friendName", Query.Direction.ASCENDING)
-                .startAfter(lastResultOfFriends as DocumentSnapshot)
-                .limit(10)
+                .startAfter(lastResult as DocumentSnapshot)
+                .limit(LIMIT)
                 .get()
                 .await()
         }
 
         val documentsList = result.documents
         if(documentsList.size > 0) {
-            lastResultOfFriends = documentsList[documentsList.size - 1]
+            lastResult = documentsList[documentsList.size - 1]
         }
 
         val listOfFriends = mutableListOf<Friend>()
@@ -372,8 +374,39 @@ class UserRepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
+    override fun searchFriends(searchText: String) = flow<Resource<List<User>>> {
+
+        emit(Resource.Loading(true))
+
+        val result = usersCollectionReference
+                .whereGreaterThanOrEqualTo(FIELD_NAME, searchText)
+                .whereLessThanOrEqualTo(FIELD_NAME, searchText + '\uf8ff')
+                .orderBy(FIELD_NAME, Query.Direction.DESCENDING)
+                .limit(LIMIT)
+                .get()
+                .await()
+
+        val listOfUsers = mutableListOf<User>()
+
+        for(document in result.documents) {
+
+            document.toObject(User::class.java)?.let { user ->
+                listOfUsers.add(user)
+            }
+        }
+
+        emit(Resource.Success(listOfUsers))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
     override fun clearLastResultOfFriends() {
-        lastResultOfFriends = null
+        lastResult = null
     }
 
 

@@ -31,5 +31,6 @@ interface UserRepository {
     suspend fun signOut()
 
     fun getFriendsAlphabeticalList(user: User): Flow<Resource<List<Friend>>>
+    fun searchFriends(searchText: String): Flow<Resource<List<User>>>
     fun clearLastResultOfFriends()
 }

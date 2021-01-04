@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profilePhoto"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/ic_default_profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_profilePhoto"
+        app:layout_constraintEnd_toStartOf="@id/btn_viewProfile"
+        app:layout_constraintStart_toEndOf="@id/iv_profilePhoto"
+        app:layout_constraintTop_toTopOf="@id/iv_profilePhoto"
+        tools:text="Péter Pázmándi" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_viewProfile"
+        android:layout_width="70dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:background="@drawable/shape_whiteback_blueborder_roundedcorners"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/view_profile"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/textSize_small"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_addFriend"
+        android:layout_width="70dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:background="@drawable/shape_roundedallcorners_blue"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/add_friend"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_small"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/iv_profilePhoto"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

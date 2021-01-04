@@ -69,24 +69,24 @@ class AddEditItemViewModel @ViewModelInject constructor(
         } else {
             ValidateMethods.validateName(item)
         }
-        /** Unit **/
-        _errorMessage += if (_errorMessage != "") {
-            "\n${ValidateMethods.validateUnit(item)}"
-        } else {
-            ValidateMethods.validateUnit(item)
-        }
-        /** Quantity **/
-        _errorMessage += if (_errorMessage != "") {
-            "\n${ValidateMethods.validateQuantity(qunatity)}"
-        } else {
-            ValidateMethods.validateQuantity(qunatity)
-        }
-        /** Category **/
-        _errorMessage += if (_errorMessage != "") {
-            "\n${ValidateMethods.validateCategory(_category.value)}"
-        } else {
-            ValidateMethods.validateCategory(_category.value)
-        }
+//        /** Unit **/
+//        _errorMessage += if (_errorMessage != "") {
+//            "\n${ValidateMethods.validateUnit(item)}"
+//        } else {
+//            ValidateMethods.validateUnit(item)
+//        }
+//        /** Quantity **/
+//        _errorMessage += if (_errorMessage != "") {
+//            "\n${ValidateMethods.validateQuantity(qunatity)}"
+//        } else {
+//            ValidateMethods.validateQuantity(qunatity)
+//        }
+//        /** Category **/
+//        _errorMessage += if (_errorMessage != "") {
+//            "\n${ValidateMethods.validateCategory(_category.value)}"
+//        } else {
+//            ValidateMethods.validateCategory(_category.value)
+//        }
 
         if (_errorMessage != "") onShowErrorMessage(_errorMessage)
 

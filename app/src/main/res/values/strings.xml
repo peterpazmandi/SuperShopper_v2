@@ -235,5 +235,10 @@
     <string name="yes_i_m_sure">Yes, I\'m sure</string>
     <string name="your_friends">Your friends</string>
     <string name="unfriend">Unfriend</string>
+    <string name="search_friends">Search Friends</string>
+    <string name="view_profile">View Profile</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="enter_at_least_5_characters_to_search">Enter at least\n5 characters to search.</string>
+    <string name="no_user_was_found">No user was found.</string>
 
 </resources>

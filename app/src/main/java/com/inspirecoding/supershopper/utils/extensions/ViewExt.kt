@@ -16,9 +16,11 @@ fun View.showSnackbarWithOkButton(message: String) {
 }
 
 fun View.makeItVisible() {
+    this.visibility = View.VISIBLE
     this.alpha = 1f
 }
 fun View.makeItInVisible() {
+    this.visibility = View.INVISIBLE
     this.alpha = 0f
 }
 

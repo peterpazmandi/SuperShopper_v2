@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.FriendsFragmentBinding
+import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.Status.*
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class FriendsFragment : Fragment(R.layout.friends_fragment) {
@@ -28,9 +32,33 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         initRecyclerView()
         setupFriendsListObserver()
         viewModel.getFriendsAlphabeticalList()
+        setupEvents()
 
         binding.ivBackButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.ivSearchFriend.setOnClickListener {
+            viewModel.onSearchFriendSelected()
+        }
+    }
+
+    private fun setupEvents() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.friendsEvents.collect { event ->
+                when(event)
+                {
+                    is FriendsViewModel.FriendsFragmentsEvent.NavigateSearchFriendsFragment -> {
+                        navigateToSearchFrindsFragment(event.user)
+                    }
+                    is FriendsViewModel.FriendsFragmentsEvent.NavigateFriendRequestsFragment -> {
+
+                    }
+                    is FriendsViewModel.FriendsFragmentsEvent.ShowErrorMessage -> {
+                        navigateToErrorBottomDialogFragment(event.message)
+                    }
+                }
+            }
         }
     }
 
@@ -65,4 +93,22 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
     }
 
 
+
+
+
+
+
+
+
+
+
+    /** Navigation methods **/
+    private fun navigateToSearchFrindsFragment(user: User) {
+        val action = FriendsFragmentDirections.actionFriendsFragmentToSearchFriendsFragment(user)
+        findNavController().navigate(action)
+    }
+    private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
+        val action = FriendsFragmentDirections.actionFriendsFragmentToErrorBottomDialogFragment(errorMessage)
+        findNavController().navigate(action)
+    }
 }

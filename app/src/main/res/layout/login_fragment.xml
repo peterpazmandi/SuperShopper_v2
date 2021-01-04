@@ -35,17 +35,17 @@
         android:id="@+id/tv_logInText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_bold"
-        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_4xlarge"
+        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_xlarge"
+        android:fontFamily="@font/roboto_bold"
         android:text="@string/log_in"
         android:textColor="@color/white"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_emailAddress"
@@ -62,13 +62,14 @@
         app:layout_constraintVertical_bias="0.15"
         app:startIconDrawable="@drawable/ic_email_blue"
         app:startIconTint="@color/blue">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_emailAddress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_regular"
             android:hint="@string/email_address"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,13 +86,14 @@
         app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/ic_lock_blue"
         app:startIconTint="@color/blue">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_regular"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

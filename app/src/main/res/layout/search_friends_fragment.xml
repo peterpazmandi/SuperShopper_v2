@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:src="@drawable/ic_back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/til_searchField"
+        app:layout_constraintTop_toTopOf="@+id/til_searchField" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_searchField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:hint="@string/search_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_backButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/ic_search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_searchField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_roundedallcorners_white"
+            android:inputType="text"
+            android:textSize="@dimen/textSize_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/whiteBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="@drawable/shape_roundedtopcorners_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_searchField" />
+
+    <LinearLayout
+        android:id="@+id/ll_searchFriendsScreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_searchField">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/margin_medium"
+            android:src="@drawable/ic_arrow_up"
+            app:tint="@color/dark_blue" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/enter_at_least_5_characters_to_search"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSize_large"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ill_search_friends" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_noResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_searchField">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/no_user_was_found"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSize_large"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ill_no_friends_found" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_users"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="100dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_searchField" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:alpha="0"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,9 +34,7 @@ class FriendsViewModel @ViewModelInject constructor(
 
     fun getFriendsAlphabeticalList() = liveData<Resource<List<User>>> {
         currentUser.value?.let { currentUser ->
-            println("result -> $currentUser")
             userRepository.getFriendsAlphabeticalList(currentUser).collect { result ->
-                println("result -> ${result.data?.size}")
                 when(result.status)
                 {
                     LOADING -> {
@@ -44,7 +42,6 @@ class FriendsViewModel @ViewModelInject constructor(
                     }
                     SUCCESS -> {
                         result.data?.let { listOfFriends ->
-                            println("listOfFriends -> ${listOfFriends.size}")
                             listOfFriends.forEach {
                                 userRepository.getUserFromFirestore(it.friendId).collect { result ->
                                     when (result.status) {

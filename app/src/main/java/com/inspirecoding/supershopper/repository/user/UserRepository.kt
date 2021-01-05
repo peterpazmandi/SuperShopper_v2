@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.inspirecoding.supershopper.data.Friend
+import com.inspirecoding.supershopper.data.FriendRequest
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import kotlinx.coroutines.CoroutineScope
@@ -33,4 +34,9 @@ interface UserRepository {
     fun getFriendsAlphabeticalList(user: User): Flow<Resource<List<Friend>>>
     fun searchFriends(searchText: String): Flow<Resource<List<User>>>
     fun clearLastResultOfFriends()
+
+    fun getFriend(friendshipOwnerId: String, friendId: String): Flow<Resource<Friend?>>
+    fun getFriendRequest(requestOwnerId: String, requestPartnerId: String): Flow<Resource<FriendRequest?>>
+
+    fun sendFriendRequest(friendRequest: FriendRequest): Flow<Resource<Nothing>>
 }

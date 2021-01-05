@@ -39,28 +39,8 @@ class SearchFriendsViewModel @ViewModelInject constructor(
                                 if(listOfFoundUsers.isEmpty()) {
                                     onNoUserFound()
                                 } else {
-                                    currentUser.value?.let { _currentUser ->
-                                        userRepository.clearLastResultOfFriends()
-                                        userRepository.getFriendsAlphabeticalList(_currentUser).collect { result ->
-                                            when(result.status)
-                                            {
-                                                LOADING -> {
-                                                    onShowLoading()
-                                                }
-                                                SUCCESS -> {
-                                                    result.data?.let { listOfFriends ->
-                                                        val listOfSearchFriendItem = createSearchFriendsItemsListComparedToFriends(listOfFoundUsers, listOfFriends, _currentUser)
-                                                        onShowResult(listOfSearchFriendItem)
-                                                    }
-                                                }
-                                                ERROR -> {
-                                                    result.message?.let { _message ->
-                                                        onShowErrorMessage(_message)
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    val listOfSearchFriendItem = createSearchFriendsItemsListComparedToFriends(listOfFoundUsers)
+                                    onShowResult(listOfSearchFriendItem)
                                 }
                             }
                         }
@@ -78,23 +58,12 @@ class SearchFriendsViewModel @ViewModelInject constructor(
     }
 
     private fun createSearchFriendsItemsListComparedToFriends(
-        listOfFoundUsers: List<User>, listOfFriends: List<Friend>, currentUser: User
+        listOfFoundUsers: List<User>
     ): List<SearchFriendItem> {
         val listOfSearchFriendItem = mutableListOf<SearchFriendItem>()
 
         for(foundUser in listOfFoundUsers) {
-            if(foundUser != currentUser) {
-                val foundElement = listOfFriends.find { friend ->
-                    foundUser.id == friend.friendId
-                }
-                if(foundElement == null) {
-                    listOfSearchFriendItem.add(SearchFriendItem(foundUser))
-                } else {
-                    val item = SearchFriendItem(foundUser)
-                    item.isFriend = true
-                    listOfSearchFriendItem.add(item)
-                }
-            }
+            listOfSearchFriendItem.add(SearchFriendItem(foundUser))
         }
 
         return listOfSearchFriendItem
@@ -135,10 +104,10 @@ class SearchFriendsViewModel @ViewModelInject constructor(
             }
         }
     }
-    fun onNavigateToProfileFragmentSelected() {
+    fun onNavigateToProfileFragmentSelected(selectedUser: User) {
         viewModelScope.launch {
-            currentUser.value?.let {
-                _searchFriendsEvents.send(SearchFriendsFragmentsEvent.NavigateToProfileFragment(it))
+            currentUser.value?.let { user ->
+                _searchFriendsEvents.send(SearchFriendsFragmentsEvent.NavigateToProfileFragment(user, selectedUser))
             }
         }
     }
@@ -158,7 +127,7 @@ class SearchFriendsViewModel @ViewModelInject constructor(
         object NoUserFound: SearchFriendsFragmentsEvent()
         object ShowLoading: SearchFriendsFragmentsEvent()
         data class ShowResult(val listOfFriends: List<SearchFriendItem>): SearchFriendsFragmentsEvent()
-        data class NavigateToProfileFragment(val user: User): SearchFriendsFragmentsEvent()
+        data class NavigateToProfileFragment(val user: User, val selectedUser: User): SearchFriendsFragmentsEvent()
         data class ShowErrorMessage(val message: String): SearchFriendsFragmentsEvent()
     }
 

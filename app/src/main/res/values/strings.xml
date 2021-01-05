@@ -241,5 +241,11 @@
     <string name="enter_at_least_5_characters_to_search">Enter at least\n5 characters to search.</string>
     <string name="no_user_was_found">No user was found.</string>
     <string name="you_don_t_have_any_friends_yet">You don\'t have any friends yet.</string>
+    <string name="request_sent">Request sent</string>
+    <string name="profile">Profile</string>
+    <string name="send_friends_request">Send friends request</string>
+    <string name="accept_friend_request">Accept friend request</string>
+    <string name="decline_friend_request">Decline friend request</string>
+    <string name="remove_friend_request">Remove friend request</string>
 
 </resources>

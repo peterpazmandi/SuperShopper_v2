@@ -8,7 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.SearchFriendsFragmentBinding
+import com.inspirecoding.supershopper.ui.friends.FriendsFragmentDirections
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
@@ -74,11 +76,11 @@ class SearchFriendsFragment : Fragment(R.layout.search_friends_fragment) {
                         binding.llNoResult.makeItInVisible()
                     }
                     is SearchFriendsViewModel.SearchFriendsFragmentsEvent.NavigateToProfileFragment -> {
-
+                        navigateToUserProfileFragment(event.user, event.selectedUser)
                     }
                     is SearchFriendsViewModel.SearchFriendsFragmentsEvent.ShowErrorMessage -> {
                         binding.progressBar.makeItInVisible()
-
+                        navigateToErrorBottomDialogFragment(event.message)
                     }
                 }
             }
@@ -86,13 +88,30 @@ class SearchFriendsFragment : Fragment(R.layout.search_friends_fragment) {
     }
 
     private fun initRecyclerView() {
-        adapter = BaseListAdapter { view, selectedItem ->
-
+        adapter = BaseListAdapter { view, selectedUser ->
+            viewModel.onNavigateToProfileFragmentSelected(selectedUser.data as User)
         }
-
-
 
         binding.rvUsers.adapter = adapter
     }
 
+
+
+
+
+
+
+
+
+
+
+    /** Navigation methods **/
+    private fun navigateToUserProfileFragment(user: User, selectedUser: User) {
+        val action = SearchFriendsFragmentDirections.actionSearchFriendsFragmentToUserProfileFragment(user, selectedUser)
+        findNavController().navigate(action)
+    }
+    private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
+        val action = SearchFriendsFragmentDirections.actionSearchFriendsFragmentToErrorBottomDialogFragment(errorMessage)
+        findNavController().navigate(action)
+    }
 }

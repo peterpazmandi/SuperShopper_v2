@@ -9,8 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.FriendsFragmentBinding
-import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsFragmentDirections
-import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.Status.*
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.makeItInVisible
@@ -49,7 +47,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                 when(event)
                 {
                     is FriendsViewModel.FriendsFragmentsEvent.NavigateSearchFriendsFragment -> {
-                        navigateToSearchFrindsFragment(event.user)
+                        navigateToSearchFriendsFragment(event.user)
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.NavigateFriendRequestsFragment -> {
 
@@ -107,7 +105,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
 
 
     /** Navigation methods **/
-    private fun navigateToSearchFrindsFragment(user: User) {
+    private fun navigateToSearchFriendsFragment(user: User) {
         val action = FriendsFragmentDirections.actionFriendsFragmentToSearchFriendsFragment(user)
         findNavController().navigate(action)
     }

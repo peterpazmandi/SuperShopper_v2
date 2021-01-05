@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/ic_back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_shoppingListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintStart_toEndOf="@id/iv_backButton"
+        app:layout_constraintTop_toTopOf="@id/iv_backButton" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profilePhoto"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:elevation="6dp"
+        android:src="@drawable/ic_default_profile_picture"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_backButton"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
+
+    <View
+        android:id="@+id/whiteBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/shape_roundedtopcorners_white"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_usersName"
+        app:layout_constraintTop_toTopOf="@id/iv_profilePhoto" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_usersName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Péter Pázmándi"
+        android:fontFamily="@font/roboto_bold"
+        android:textStyle="bold"
+        android:textSize="@dimen/textSize_xlarge"
+        android:textColor="@color/dark_blue"
+        android:layout_marginTop="@dimen/margin_xxxlarge"
+        android:paddingBottom="@dimen/margin_xxxlarge"
+        app:layout_constraintTop_toBottomOf="@id/iv_profilePhoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/grayBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_sendFriendRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="invisible"
+        android:drawableStart="@drawable/ic_send_friend_request"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/send_friends_request"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_unfriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="invisible"
+        android:drawableStart="@drawable/ic_remove_friendship"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/unfriend"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_acceptFriendRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="invisible"
+        android:drawableStart="@drawable/ic_send_friend_request"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/accept_friend_request"
+        android:textColor="@color/green"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_declineFriendRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="invisible"
+        android:drawableStart="@drawable/ic_remove_friendship"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/decline_friend_request"
+        android:textColor="@color/red"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_acceptFriendRequest" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_removeFriendRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_5xlarge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="invisible"
+        android:drawableStart="@drawable/ic_remove_friendship"
+        android:drawablePadding="@dimen/margin_medium"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/remove_friend_request"
+        android:textColor="@color/red"
+        android:textSize="@dimen/textSize_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Friend(
-    val friendshipOwnerId   : String = "",
-    val friendId   : String = "",
-    val friendName   : String = ""
+    var id: String = "",
+    var friendId: String = "",
+    var friendName: String = "",
+    var friendshipOwnerId: String = ""
 ): Parcelable

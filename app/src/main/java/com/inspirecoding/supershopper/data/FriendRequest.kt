@@ -3,8 +3,9 @@ package com.inspirecoding.supershopper.data
 import java.util.*
 
 data class FriendRequest(
-    val id : String = "",
-    val sender : String = "",
-    val receiver : String = "",
-    val requestDate : Date = Date()
+    var id : String = "",
+    var friendshipStatus : String = "",
+    var requestOwnerId : String = "",
+    var requestPartnerId : String = "",
+    var requestDate : Date = Date()
 )

@@ -373,12 +373,34 @@
     <fragment
         android:id="@+id/searchFriendsFragment"
         android:name="com.inspirecoding.supershopper.ui.friends.searchfriends.SearchFriendsFragment"
-        android:label="SearchFriendsFragment" >
+        android:label="SearchFriendsFragment">
         <argument
             android:name="user"
             app:argType="com.inspirecoding.supershopper.data.User" />
         <action
+            android:id="@+id/action_searchFriendsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"  />
+        <action
             android:id="@+id/action_searchFriendsFragment_to_errorBottomDialogFragment"
+            app:destination="@id/errorBottomDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.inspirecoding.supershopper.ui.userprofile.UserProfileFragment"
+        android:label="user_profile_fragment"
+        tools:layout="@layout/user_profile_fragment">
+        <argument
+            android:name="user"
+            app:argType="com.inspirecoding.supershopper.data.User" />
+        <argument
+            android:name="selectedUser"
+            app:argType="com.inspirecoding.supershopper.data.User" />
+        <action
+            android:id="@+id/action_friendsFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
     </fragment>
 </navigation>

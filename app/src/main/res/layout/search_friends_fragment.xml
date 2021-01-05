@@ -71,7 +71,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/enter_at_least_5_characters_to_search"
             android:textAlignment="center"
-            android:textSize="@dimen/textSize_large"
+            android:textSize="@dimen/textSize_regular"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -98,7 +98,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/no_user_was_found"
             android:textAlignment="center"
-            android:textSize="@dimen/textSize_large"
+            android:textSize="@dimen/textSize_regular"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatImageView

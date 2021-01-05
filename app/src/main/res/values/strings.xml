@@ -240,5 +240,6 @@
     <string name="add_friend">Add Friend</string>
     <string name="enter_at_least_5_characters_to_search">Enter at least\n5 characters to search.</string>
     <string name="no_user_was_found">No user was found.</string>
+    <string name="you_don_t_have_any_friends_yet">You don\'t have any friends yet.</string>
 
 </resources>

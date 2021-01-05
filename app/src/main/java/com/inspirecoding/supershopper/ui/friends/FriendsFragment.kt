@@ -81,6 +81,10 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                 SUCCESS -> {
                     binding.progressBar.makeItInVisible()
                     result.data?.let { listOfFriends ->
+                        if(listOfFriends.isEmpty()) {
+                            binding.clNoFriends.makeItVisible()
+                        }
+
                         val listOfUserObjects = viewModel.createListOfFriendsItem(listOfFriends)
                         adapter.submitList(listOfUserObjects)
                     }

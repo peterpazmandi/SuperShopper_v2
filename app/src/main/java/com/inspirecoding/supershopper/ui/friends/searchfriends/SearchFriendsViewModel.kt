@@ -107,28 +107,28 @@ class SearchFriendsViewModel @ViewModelInject constructor(
 
 
     /** Events **/
-    fun onLessThenFourCharacters() {
+    private fun onLessThenFourCharacters() {
         viewModelScope.launch {
             currentUser.value?.let {
                 _searchFriendsEvents.send(SearchFriendsFragmentsEvent.LessThenFiveCharacters)
             }
         }
     }
-    fun onNoUserFound() {
+    private fun onNoUserFound() {
         viewModelScope.launch {
             currentUser.value?.let {
                 _searchFriendsEvents.send(SearchFriendsFragmentsEvent.NoUserFound)
             }
         }
     }
-    fun onShowLoading() {
+    private fun onShowLoading() {
         viewModelScope.launch {
             currentUser.value?.let {
                 _searchFriendsEvents.send(SearchFriendsFragmentsEvent.ShowLoading)
             }
         }
     }
-    fun onShowResult(listOfFriends: List<SearchFriendItem>) {
+    private fun onShowResult(listOfFriends: List<SearchFriendItem>) {
         viewModelScope.launch {
             currentUser.value?.let {
                 _searchFriendsEvents.send(SearchFriendsFragmentsEvent.ShowResult(listOfFriends))

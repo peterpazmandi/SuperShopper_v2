@@ -47,7 +47,8 @@ class UserRepositoryImpl @Inject constructor(
     private val FRIENDS_COLLECTION_NAME = "friends"
     private val FIELD_NAME = "name"
     private val RC_SIGN_IN = 1
-    private val LIMIT: Long = 10
+    private val LIMIT_10: Long = 10
+    private val LIMIT_20: Long = 20
 
     // COLLECTIONS
     private val usersCollectionReference = FirebaseFirestore.getInstance().collection(USER_COLLECTION_NAME)
@@ -338,7 +339,7 @@ class UserRepositoryImpl @Inject constructor(
             friendsCollection
                 .whereEqualTo("friendshipOwnerId", user.id)
                 .orderBy("friendName", Query.Direction.ASCENDING)
-                .limit(LIMIT)
+                .limit(LIMIT_10)
                 .get()
                 .await()
         } else {
@@ -346,7 +347,7 @@ class UserRepositoryImpl @Inject constructor(
                 .whereEqualTo("friendshipOwnerId", user.id)
                 .orderBy("friendName", Query.Direction.ASCENDING)
                 .startAfter(lastResult as DocumentSnapshot)
-                .limit(LIMIT)
+                .limit(LIMIT_10)
                 .get()
                 .await()
         }
@@ -382,7 +383,7 @@ class UserRepositoryImpl @Inject constructor(
                 .whereGreaterThanOrEqualTo(FIELD_NAME, searchText)
                 .whereLessThanOrEqualTo(FIELD_NAME, searchText + '\uf8ff')
                 .orderBy(FIELD_NAME, Query.Direction.DESCENDING)
-                .limit(LIMIT)
+                .limit(LIMIT_20)
                 .get()
                 .await()
 

@@ -90,8 +90,7 @@ class SearchFriendsFragment : Fragment(R.layout.search_friends_fragment) {
 
         }
 
-//        binding.rvUsers.setHasFixedSize(true)
-//        binding.rvUsers.setItemViewCacheSize(30)
+
 
         binding.rvUsers.adapter = adapter
     }

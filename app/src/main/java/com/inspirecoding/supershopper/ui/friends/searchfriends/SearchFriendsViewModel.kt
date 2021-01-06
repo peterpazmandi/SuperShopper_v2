@@ -2,15 +2,17 @@ package com.inspirecoding.supershopper.ui.friends.searchfriends
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import com.inspirecoding.supershopper.data.Friend
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.repository.user.UserRepository
-import com.inspirecoding.supershopper.ui.friends.searchfriends.listitem.SearchFriendItem
+import com.inspirecoding.supershopper.ui.friends.listitems.FriendsListItem
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SearchFriendsViewModel @ViewModelInject constructor(
@@ -59,11 +61,11 @@ class SearchFriendsViewModel @ViewModelInject constructor(
 
     private fun createSearchFriendsItemsListComparedToFriends(
         listOfFoundUsers: List<User>
-    ): List<SearchFriendItem> {
-        val listOfSearchFriendItem = mutableListOf<SearchFriendItem>()
+    ): List<FriendsListItem> {
+        val listOfSearchFriendItem = mutableListOf<FriendsListItem>()
 
         for(foundUser in listOfFoundUsers) {
-            listOfSearchFriendItem.add(SearchFriendItem(foundUser))
+            listOfSearchFriendItem.add(FriendsListItem(foundUser))
         }
 
         return listOfSearchFriendItem
@@ -97,7 +99,7 @@ class SearchFriendsViewModel @ViewModelInject constructor(
             }
         }
     }
-    private fun onShowResult(listOfFriends: List<SearchFriendItem>) {
+    private fun onShowResult(listOfFriends: List<FriendsListItem>) {
         viewModelScope.launch {
             currentUser.value?.let {
                 _searchFriendsEvents.send(SearchFriendsFragmentsEvent.ShowResult(listOfFriends))
@@ -126,7 +128,7 @@ class SearchFriendsViewModel @ViewModelInject constructor(
         object LessThenFiveCharacters: SearchFriendsFragmentsEvent()
         object NoUserFound: SearchFriendsFragmentsEvent()
         object ShowLoading: SearchFriendsFragmentsEvent()
-        data class ShowResult(val listOfFriends: List<SearchFriendItem>): SearchFriendsFragmentsEvent()
+        data class ShowResult(val listOfFriends: List<FriendsListItem>): SearchFriendsFragmentsEvent()
         data class NavigateToProfileFragment(val user: User, val selectedUser: User): SearchFriendsFragmentsEvent()
         data class ShowErrorMessage(val message: String): SearchFriendsFragmentsEvent()
     }

@@ -247,5 +247,6 @@
     <string name="accept_friend_request">Accept friend request</string>
     <string name="decline_friend_request">Decline friend request</string>
     <string name="remove_friend_request">Remove friend request</string>
+    <string name="pending_friend_requests">Pending Friend Requests</string>
 
 </resources>

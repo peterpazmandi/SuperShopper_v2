@@ -410,7 +410,6 @@ class UserRepositoryImpl @Inject constructor(
         val listOfUsers = mutableListOf<User>()
 
         for (document in result.documents) {
-
             document.toObject(User::class.java)?.let { user ->
                 listOfUsers.add(user)
             }
@@ -459,10 +458,7 @@ class UserRepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    override fun getFriendRequest(
-        requestOwnerId: String,
-        requestPartnerId: String
-    ) = flow<Resource<FriendRequest?>> {
+    override fun getFriendRequest(requestOwnerId: String, requestPartnerId: String) = flow<Resource<FriendRequest?>> {
 
         var friendRequest: FriendRequest? = null
 
@@ -479,6 +475,32 @@ class UserRepositoryImpl @Inject constructor(
         }
 
         emit(Resource.Success(friendRequest))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun getListOfFriendRequests(requestPartnerId: String) = flow<Resource<List<FriendRequest>>> {
+
+        emit(Resource.Loading(true))
+
+        val querySnapshot = friendsRequestCollection
+            .whereEqualTo("requestPartnerId", requestPartnerId)
+            .get()
+            .await()
+
+        val listOfRequests = mutableListOf<FriendRequest>()
+
+        for(document in querySnapshot) {
+            val friendRequest = document.toObject(FriendRequest::class.java)
+            listOfRequests.add(friendRequest)
+        }
+
+        emit(Resource.Success(listOfRequests))
 
     }.catch { exception ->
 

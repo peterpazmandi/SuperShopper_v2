@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,24 +30,25 @@
         app:layout_constraintTop_toTopOf="@id/iv_backButton" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_searchFriend"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:padding="@dimen/margin_medium"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
-        app:layout_constraintEnd_toStartOf="@id/iv_friendRequests"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
-
-    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_friendRequests"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginTop="@dimen/margin_medium"
         android:padding="@dimen/margin_medium"
         android:src="@drawable/ic_people_blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintEnd_toStartOf="@id/iv_searchFriend"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_searchFriend"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:padding="@dimen/margin_medium"
+        android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -67,90 +69,94 @@
         app:layout_constraintTop_toTopOf="@id/iv_friendRequests"
         tools:text="130" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_friends"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/shape_roundedtopcorners_white"
-        android:clipToPadding="false"
-        android:paddingStart="@dimen/margin_medium"
-        android:paddingTop="@dimen/margin_medium"
-        android:paddingEnd="@dimen/margin_medium"
-        android:paddingBottom="100dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_searchFriend" />
+        app:layout_constraintTop_toBottomOf="@id/iv_searchFriend">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:alpha="0"
-        android:elevation="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_noFriends"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/rv_friends"
-        app:layout_constraintEnd_toEndOf="@id/rv_friends"
-        app:layout_constraintStart_toStartOf="@id/rv_friends"
-        app:layout_constraintTop_toTopOf="@id/rv_friends">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_friends"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="100dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_upArrow"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="@dimen/margin_5xlarge"
-            android:layout_marginEnd="@dimen/margin_4xlarge"
-            android:padding="@dimen/margin_medium"
-            android:src="@drawable/ic_arrow_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/dark_blue" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_noFriends"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/rv_friends"
+                app:layout_constraintEnd_toEndOf="@id/rv_friends"
+                app:layout_constraintStart_toStartOf="@id/rv_friends"
+                app:layout_constraintTop_toTopOf="@id/rv_friends">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/find_your_friends"
-            android:textAlignment="center"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/textSize_regular"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/iv_upArrow"
-            app:layout_constraintTop_toBottomOf="@id/iv_upArrow" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_upArrow"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/margin_5xlarge"
+                    android:padding="@dimen/margin_medium"
+                    android:src="@drawable/ic_arrow_up"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dark_blue" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_illNoFriends"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_5xlarge"
-            android:layout_marginEnd="@dimen/margin_5xlarge"
-            android:src="@drawable/ill_no_friends"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/find_your_friends"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/textSize_regular"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_upArrow"
+                    app:layout_constraintTop_toTopOf="@id/iv_upArrow"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_upArrow" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/you_don_t_have_any_friends_yet"
-            android:textAlignment="center"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/textSize_large"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_illNoFriends" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_illNoFriends"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_5xlarge"
+                    android:layout_marginEnd="@dimen/margin_5xlarge"
+                    android:src="@drawable/ill_no_friends"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/you_don_t_have_any_friends_yet"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/textSize_large"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_illNoFriends" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

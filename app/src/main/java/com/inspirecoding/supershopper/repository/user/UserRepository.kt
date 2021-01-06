@@ -54,6 +54,7 @@ interface UserRepository {
         requestOwnerId: String,
         requestPartnerId: String
     ): Flow<Resource<FriendRequest?>>
+    fun getListOfFriendRequests(requestPartnerId: String): Flow<Resource<List<FriendRequest>>>
 
     fun sendFriendRequest(friendRequest: FriendRequest): Flow<Resource<Nothing>>
     fun removeFriendRequest(friendRequest: FriendRequest): Flow<Resource<Nothing>>

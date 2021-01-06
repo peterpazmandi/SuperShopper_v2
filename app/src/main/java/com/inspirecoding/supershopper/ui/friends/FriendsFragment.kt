@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
@@ -29,8 +30,10 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
 
         initRecyclerView()
         setupFriendsListObserver()
-        viewModel.getFriendsAlphabeticalList()
+        setupNumberOfPendingFriendRequestsObserver()
         setupEvents()
+        viewModel.getFriendsAlphabeticalList()
+        viewModel.getListOfPendingFriendRequests()
 
         binding.ivBackButton.setOnClickListener {
             findNavController().popBackStack()
@@ -38,6 +41,17 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
 
         binding.ivSearchFriend.setOnClickListener {
             viewModel.onSearchFriendSelected()
+        }
+
+        binding.ivFriendRequests.setOnClickListener {
+            viewModel.onFriendRequestsSelected()
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.getFriendsAlphabeticalList()
+                viewModel.getListOfPendingFriendRequests()
+            }
         }
     }
 
@@ -53,7 +67,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                         navigateToUserProfileFragment(event.user, event.selectedUser)
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.NavigateToFriendRequestsFragment -> {
-
+                        navigateToFriendRequestsFragment(event.user)
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
@@ -77,13 +91,15 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         viewModel.listOfFriends.observe(viewLifecycleOwner, { result ->
             when (result.status) {
                 LOADING -> {
-                    binding.progressBar.makeItVisible()
+                    binding.swipeRefreshLayout.isRefreshing = true
                 }
                 SUCCESS -> {
-                    binding.progressBar.makeItInVisible()
+                    binding.swipeRefreshLayout.isRefreshing = false
                     result.data?.let { listOfFriends ->
                         if(listOfFriends.isEmpty()) {
                             binding.clNoFriends.makeItVisible()
+                        } else {
+                            binding.clNoFriends.makeItInVisible()
                         }
 
                         val listOfUserObjects = viewModel.createListOfFriendsItem(listOfFriends)
@@ -91,8 +107,21 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                     }
                 }
                 ERROR -> {
-                    binding.progressBar.makeItInVisible()
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
+            }
+        })
+    }
+
+    private fun setupNumberOfPendingFriendRequestsObserver() {
+        viewModel.numberOfPendingFriendRequests.observe(viewLifecycleOwner, { number ->
+            if(number > 0) {
+                binding.tvPendingRequestsCount.text = number.toString()
+                binding.ivFriendRequests.makeItVisible()
+                binding.tvPendingRequestsCount.makeItVisible()
+            } else {
+                binding.ivFriendRequests.makeItInVisible()
+                binding.tvPendingRequestsCount.makeItInVisible()
             }
         })
     }
@@ -110,6 +139,10 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
     /** Navigation methods **/
     private fun navigateToSearchFriendsFragment(user: User) {
         val action = FriendsFragmentDirections.actionFriendsFragmentToSearchFriendsFragment(user)
+        findNavController().navigate(action)
+    }
+    private fun navigateToFriendRequestsFragment(user: User) {
+        val action = FriendsFragmentDirections.actionFriendsFragmentToPendingFriendRequestsFragment(user)
         findNavController().navigate(action)
     }
     private fun navigateToUserProfileFragment(user: User, selectedUser: User) {

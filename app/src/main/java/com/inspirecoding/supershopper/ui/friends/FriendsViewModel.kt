@@ -35,7 +35,6 @@ class FriendsViewModel @ViewModelInject constructor(
     val friendsEvents = _friendsEvents.receiveAsFlow()
 
     fun getFriendsAlphabeticalList() {
-        userRepository.clearLastResultOfFriends()
         viewModelScope.launch {
             currentUser.value?.let { user ->
                 userRepository.getFriendsAlphabeticalList(user).collect { result ->
@@ -46,7 +45,6 @@ class FriendsViewModel @ViewModelInject constructor(
                         }
                         SUCCESS -> {
                             result.data?.let { listOfFriends ->
-                                listOfUserObjects.clear()
                                 listOfFriends.forEach {
                                     userRepository.getUserFromFirestore(it.friendId).collect { result ->
                                         when (result.status) {
@@ -118,6 +116,13 @@ class FriendsViewModel @ViewModelInject constructor(
 
 
     /** Events **/
+    fun onRefreshList() {
+        userRepository.clearLastResultOfFriends()
+        listOfUserObjects.clear()
+
+        getFriendsAlphabeticalList()
+        getListOfPendingFriendRequests()
+    }
     fun onSearchFriendSelected() {
         viewModelScope.launch {
             currentUser.value?.let { user ->

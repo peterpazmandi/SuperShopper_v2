@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.FriendsFragmentBinding
@@ -48,10 +49,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.getFriendsAlphabeticalList()
-                viewModel.getListOfPendingFriendRequests()
-            }
+            viewModel.onRefreshList()
         }
     }
 
@@ -85,6 +83,15 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         binding.rvFriends.setItemViewCacheSize(50)
 
         binding.rvFriends.adapter = adapter
+
+        binding.rvFriends.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if(!recyclerView.canScrollVertically(1)) {
+                    viewModel.getFriendsAlphabeticalList()
+                }
+            }
+        })
     }
 
     private fun setupFriendsListObserver() {

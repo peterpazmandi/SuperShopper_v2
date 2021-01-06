@@ -39,6 +39,18 @@ class UserProfileFragment : Fragment(R.layout.user_profile_fragment) {
         binding.tvSendFriendRequest.setOnClickListener {
             viewModel.onSendFriendRequest()
         }
+        binding.tvAcceptFriendRequest.setOnClickListener {
+            viewModel.onAcceptFriendRequest()
+        }
+        binding.tvDeclineFriendRequest.setOnClickListener {
+            viewModel.onRemoveFriendRequest()
+        }
+        binding.tvRemoveFriendRequest.setOnClickListener {
+            viewModel.onRemoveFriendRequest()
+        }
+        binding.tvUnfriend.setOnClickListener {
+            viewModel.onUnfriend()
+        }
     }
 
     private fun setupFriendshipStatusObserver() {

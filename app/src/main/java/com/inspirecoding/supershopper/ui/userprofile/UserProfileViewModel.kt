@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.ui.userprofile
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.FriendRequest
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
@@ -32,13 +33,15 @@ class UserProfileViewModel @ViewModelInject constructor(
     private val _fragmentEvent = Channel<FragmentEvent>()
     val fragmentEvent = _fragmentEvent.receiveAsFlow()
 
+    private var friendOwnerCurrentUser: Friend? = null
+    private var friendOwnerSelectedUser: Friend? = null
+    private var senderFriendRequest: FriendRequest? = null
+    private var receiverFriendRequest: FriendRequest? = null
 
     private val _friendshipStatus = combine(
         currentUser.asFlow(),
         selectedUser.asFlow()
     ) { currentUser, selectedUser ->
-        println("currentUser $currentUser")
-        println("selectedUser $selectedUser")
         combine(
             userRepository.getFriend(currentUser.id, selectedUser.id),
             userRepository.getFriendRequest(currentUser.id, selectedUser.id)
@@ -51,33 +54,95 @@ class UserProfileViewModel @ViewModelInject constructor(
                 }
                 SUCCESS -> {
                     if (friend.data != null) {
+                        this.friendOwnerCurrentUser = friend.data
+                        userRepository.getFriend(selectedUser.id, currentUser.id).collect { _friendOwnerSelectedUser ->
+                            when(_friendOwnerSelectedUser.status)
+                            {
+                                SUCCESS -> {
+                                    friendOwnerSelectedUser = _friendOwnerSelectedUser.data
+                                }
+                                LOADING -> {
+                                    Resource.Loading(true)
+                                }
+                                ERROR -> {
+                                    _friendOwnerSelectedUser.message?.let {
+                                        onShowErrorMessage(it)
+                                    }
+                                }
+                            }
+                        }
                         onShowResult(FriendshipStatus.FRIENDS)
                     } else {
                         when (friendRequest.status) {
-                            LOADING -> {
-                                Resource.Loading(true)
-                            }
                             SUCCESS -> {
                                 if (friendRequest.data != null) {
-                                    val friendShipStatus = friendRequest.data.friendshipStatus
-                                    when (friendShipStatus) {
+                                    when (friendRequest.data.friendshipStatus) {
+
                                         FriendshipStatus.SENDER.name -> {
+                                            senderFriendRequest = friendRequest.data
+
+                                            userRepository.getFriendRequest(
+                                                selectedUser.id,
+                                                currentUser.id
+                                            ).collect { resultReceiver ->
+                                                when (resultReceiver.status) {
+                                                    SUCCESS -> {
+                                                        receiverFriendRequest = resultReceiver.data
+                                                    }
+                                                    LOADING -> {
+                                                        Resource.Loading(true)
+                                                    }
+                                                    ERROR -> {
+                                                        resultReceiver.message?.let {
+                                                            onShowErrorMessage(it)
+                                                        }
+                                                    }
+                                                }
+                                            }
+
                                             onShowResult(FriendshipStatus.SENDER)
                                         }
+
                                         FriendshipStatus.RECEIVER.name -> {
-                                            onShowResult(FriendshipStatus.SENDER)
+                                            receiverFriendRequest = friendRequest.data
+
+                                            userRepository.getFriendRequest(
+                                                selectedUser.id,
+                                                currentUser.id
+                                            ).collect { resultSender ->
+                                                when (resultSender.status) {
+                                                    SUCCESS -> {
+                                                        senderFriendRequest = resultSender.data
+                                                    }
+                                                    LOADING -> {
+                                                        Resource.Loading(true)
+                                                    }
+                                                    ERROR -> {
+                                                        resultSender.message?.let {
+                                                            onShowErrorMessage(it)
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            onShowResult(FriendshipStatus.RECEIVER)
                                         }
+
                                         else -> {
                                             onShowResult(FriendshipStatus.NOFRIENDSHIP)
                                         }
+
                                     }
                                 } else {
                                     onShowResult(FriendshipStatus.NOFRIENDSHIP)
                                 }
                             }
+                            LOADING -> {
+                                Resource.Loading(true)
+                            }
                             ERROR -> {
                                 friendRequest.message?.let {
-                                    Resource.Error(it)
+                                    onShowErrorMessage(it)
                                 }
                             }
                         }
@@ -85,7 +150,7 @@ class UserProfileViewModel @ViewModelInject constructor(
                 }
                 ERROR -> {
                     friend.message?.let {
-                        Resource.Error(it)
+                        onShowErrorMessage(it)
                     }
                 }
             }
@@ -109,20 +174,20 @@ class UserProfileViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             currentUser.value?.let { _currentUser ->
                 selectedUser.value?.let { _selectedUser ->
-                    val senderFriendRequest = createSenderFriendRequest(
+                    senderFriendRequest = createSenderFriendRequest(
                         _currentUser.id, _selectedUser.id
                     )
-                    val receiverFriendRequest = createReceiverFriendRequest(
+                    receiverFriendRequest = createReceiverFriendRequest(
                         _currentUser.id, _selectedUser.id
                     )
-                    userRepository.sendFriendRequest(senderFriendRequest).collect { resultSender ->
+                    userRepository.sendFriendRequest(senderFriendRequest as FriendRequest).collect { resultSender ->
                         when(resultSender.status)
                         {
                             LOADING -> {
                                 onShowLoading()
                             }
                             SUCCESS -> {
-                                userRepository.sendFriendRequest(receiverFriendRequest).collect { resultReceiver ->
+                                userRepository.sendFriendRequest(receiverFriendRequest as FriendRequest).collect { resultReceiver ->
                                     when(resultReceiver.status)
                                     {
                                         LOADING -> {
@@ -151,19 +216,159 @@ class UserProfileViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onUnfriend() {
-        viewModelScope.launch {
-
-        }
-    }
     fun onAcceptFriendRequest() {
         viewModelScope.launch {
-
+            if(senderFriendRequest != null && receiverFriendRequest != null) {
+                userRepository.removeFriendRequest(senderFriendRequest as FriendRequest).collect { resultSender ->
+                    when(resultSender.status)
+                    {
+                        LOADING -> {
+                            onShowLoading()
+                        }
+                        ERROR -> {
+                            resultSender.message?.let {
+                                onShowErrorMessage(it)
+                            }
+                        }
+                        SUCCESS -> {
+                            userRepository.removeFriendRequest(receiverFriendRequest as FriendRequest).collect { resultReceiver ->
+                                when(resultReceiver.status)
+                                {
+                                    LOADING -> {
+                                        onShowLoading()
+                                    }
+                                    ERROR -> {
+                                        resultReceiver.message?.let {
+                                            onShowErrorMessage(it)
+                                        }
+                                    }
+                                    SUCCESS -> {
+                                        currentUser.value?.let { _currentUser ->
+                                            selectedUser.value?.let { _selectedUser ->
+                                                createFriend(_currentUser, _selectedUser).let { friend ->
+                                                    userRepository.createFriend(friend).collect { resultFriend ->
+                                                        when(resultFriend.status)
+                                                        {
+                                                            LOADING -> {
+                                                                onShowLoading()
+                                                            }
+                                                            ERROR -> {
+                                                                resultReceiver.message?.let {
+                                                                    onShowErrorMessage(it)
+                                                                }
+                                                            }
+                                                            SUCCESS -> {
+                                                                createFriend(_selectedUser, _currentUser).let { friend ->
+                                                                    userRepository.createFriend(friend).collect { resultFriend ->
+                                                                        when(resultFriend.status)
+                                                                        {
+                                                                            LOADING -> {
+                                                                                onShowLoading()
+                                                                            }
+                                                                            ERROR -> {
+                                                                                resultReceiver.message?.let {
+                                                                                    onShowErrorMessage(it)
+                                                                                }
+                                                                            }
+                                                                            SUCCESS -> {
+                                                                                onShowResult(FriendshipStatus.FRIENDS)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-    fun onDeclineFriendRequest() {
+    fun onUnfriend() {
         viewModelScope.launch {
-
+            friendOwnerCurrentUser?.let { _friendOwnerCurrentUser ->
+                friendOwnerSelectedUser?.let { _friendOwnerSelectedUser ->
+                    userRepository.removeFriend(_friendOwnerCurrentUser).collect { resultCurrentUser ->
+                        when(resultCurrentUser.status)
+                        {
+                            SUCCESS -> {
+                                userRepository.removeFriend(_friendOwnerSelectedUser).collect { resultSelectedUser ->
+                                    when(resultSelectedUser.status)
+                                    {
+                                        SUCCESS -> {
+                                            onShowResult(FriendshipStatus.NOFRIENDSHIP)
+                                        }
+                                        LOADING -> {
+                                            onShowLoading()
+                                        }
+                                        ERROR -> {
+                                            resultCurrentUser.message?.let {
+                                                onShowErrorMessage(it)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            LOADING -> {
+                                onShowLoading()
+                            }
+                            ERROR -> {
+                                resultCurrentUser.message?.let {
+                                    onShowErrorMessage(it)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    fun onRemoveFriendRequest() {
+        viewModelScope.launch {
+            viewModelScope.launch {
+                viewModelScope.launch {
+                    if(senderFriendRequest != null && receiverFriendRequest != null) {
+                        userRepository.removeFriendRequest(senderFriendRequest as FriendRequest).collect { resultSender ->
+                            when(resultSender.status)
+                            {
+                                SUCCESS -> {
+                                    userRepository.removeFriendRequest(receiverFriendRequest as FriendRequest).collect { resultReceiver ->
+                                        when(resultReceiver.status)
+                                        {
+                                            LOADING -> {
+                                                onShowLoading()
+                                            }
+                                            ERROR -> {
+                                                resultReceiver.message?.let {
+                                                    onShowErrorMessage(it)
+                                                }
+                                            }
+                                            SUCCESS -> {
+                                                onShowResult(FriendshipStatus.NOFRIENDSHIP)
+                                            }
+                                        }
+                                    }
+                                }
+                                LOADING -> {
+                                    onShowLoading()
+                                }
+                                ERROR -> {
+                                    resultSender.message?.let {
+                                        onShowErrorMessage(it)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     private fun onShowLoading() {
@@ -200,14 +405,23 @@ class UserProfileViewModel @ViewModelInject constructor(
 
 
 
-
+    private fun createFriend(friend: User, friendshipOwner: User): Friend {
+        return Friend(
+            id = UUID.randomUUID().toString(),
+            friendId = friend.id,
+            friendName = friend.name,
+            friendshipOwnerId = friendshipOwner.id
+        )
+    }
     private fun createSenderFriendRequest(currentUserId: String, selectedUserId: String) = FriendRequest(
+        id = UUID.randomUUID().toString(),
         friendshipStatus = FriendshipStatus.SENDER.name,
         requestDate = Date(),
         requestOwnerId = currentUserId,
         requestPartnerId = selectedUserId
     )
     private fun createReceiverFriendRequest(currentUserId: String, selectedUserId: String) = FriendRequest(
+        id = UUID.randomUUID().toString(),
         friendshipStatus = FriendshipStatus.RECEIVER.name,
         requestDate = Date(),
         requestOwnerId = selectedUserId,

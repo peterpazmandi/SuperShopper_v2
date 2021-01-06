@@ -367,6 +367,13 @@
             app:popEnterAnim="@anim/slide_in_from_right"
             app:popExitAnim="@anim/slide_out_from_right" />
         <action
+            android:id="@+id/action_friendsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_from_right"
+            app:popEnterAnim="@anim/slide_in_from_right"
+            app:popExitAnim="@anim/slide_out_from_right"  />
+        <action
             android:id="@+id/action_friendsFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
     </fragment>

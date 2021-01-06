@@ -29,5 +29,9 @@ data class FriendsListItem(val user: User): BaseItem<LayoutFriendslistItemBindin
             .placeholder(R.drawable.ic_default_profile_picture)
             .into(binding.ivProfilePhoto)
 
+        binding.btnViewProfile.setOnClickListener {
+            itemClickCallBack?.invoke(it, this)
+        }
+
     }
 }

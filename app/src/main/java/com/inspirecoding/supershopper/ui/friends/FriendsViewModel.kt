@@ -7,7 +7,6 @@ import com.inspirecoding.supershopper.data.*
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.friends.listitems.FriendsListItem
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
-import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.Status.*
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import kotlinx.coroutines.channels.Channel
@@ -91,7 +90,14 @@ class FriendsViewModel @ViewModelInject constructor(
     fun onSearchFriendSelected() {
         viewModelScope.launch {
             currentUser.value?.let { user ->
-                _friendsEvents.send(FriendsFragmentsEvent.NavigateSearchFriendsFragment(user))
+                _friendsEvents.send(FriendsFragmentsEvent.NavigateToSearchFriendsFragment(user))
+            }
+        }
+    }
+    fun onUserProfileSelected(selectedUser: User) {
+        viewModelScope.launch {
+            currentUser.value?.let { user ->
+                _friendsEvents.send(FriendsFragmentsEvent.NavigateToUserProfileFragment(user, selectedUser))
             }
         }
     }
@@ -115,8 +121,9 @@ class FriendsViewModel @ViewModelInject constructor(
 
 
     sealed class FriendsFragmentsEvent {
-        data class NavigateSearchFriendsFragment(val user: User): FriendsFragmentsEvent()
-        data class NavigateFriendRequestsFragment(val listOfFriendRequests: List<FriendRequest>): FriendsFragmentsEvent()
+        data class NavigateToSearchFriendsFragment(val user: User): FriendsFragmentsEvent()
+        data class NavigateToUserProfileFragment(val user: User, val selectedUser: User): FriendsFragmentsEvent()
+        data class NavigateToFriendRequestsFragment(val listOfFriendRequests: List<FriendRequest>): FriendsFragmentsEvent()
         data class ShowErrorMessage(val message: String): FriendsFragmentsEvent()
     }
 

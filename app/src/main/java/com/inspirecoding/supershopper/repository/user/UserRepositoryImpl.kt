@@ -297,7 +297,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun sendPasswordResetEmail(email: String) = flow<Resource<Nothing>> {
+    override fun sendPasswordResetEmail(email: String) = flow<Resource<Nothing>> {
         emit(Resource.Loading(true))
 
         try {
@@ -321,7 +321,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
 
-    private suspend fun createUserInFirestore(user: User) = flow<Resource<User>> {
+    override fun createUserInFirestore(user: User) = flow<Resource<User>> {
 
         usersCollectionReference.document(user.id).set(user).await()
 
@@ -335,7 +335,7 @@ class UserRepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getUserFromFirestore(userId: String) = flow<Resource<User>> {
+    override fun getUserFromFirestore(userId: String) = flow<Resource<User>> {
 
         val documentSnapshot = usersCollectionReference.document(userId).get().await()
         val user = documentSnapshot.toObject(User::class.java)
@@ -492,7 +492,7 @@ class UserRepositoryImpl @Inject constructor(
 
         emit(Resource.Loading(true))
 
-        friendsRequestCollection.document().set(friendRequest).await()
+        friendsRequestCollection.document(friendRequest.id).set(friendRequest).await()
 
         emit(Resource.Success(null))
 
@@ -503,6 +503,63 @@ class UserRepositoryImpl @Inject constructor(
         }
 
     }.flowOn(Dispatchers.IO)
+
+    override fun removeFriend(friend: Friend) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        friendsCollection.document(friend.id).delete().await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun createFriend(friend: Friend) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        friendsCollection.document(friend.id).set(friend).await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun removeFriendRequest(friendRequest: FriendRequest) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        friendsRequestCollection.document(friendRequest.id).delete().await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+
+
+
+
+
+
+
+
 
 
 

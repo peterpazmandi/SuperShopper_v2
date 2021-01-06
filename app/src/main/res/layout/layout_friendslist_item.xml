@@ -27,19 +27,19 @@
         android:textSize="@dimen/textSize_medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_profilePhoto"
-        app:layout_constraintEnd_toStartOf="@id/btn_unfriend"
+        app:layout_constraintEnd_toStartOf="@id/btn_viewProfile"
         app:layout_constraintStart_toEndOf="@id/iv_profilePhoto"
         app:layout_constraintTop_toTopOf="@id/iv_profilePhoto"
         tools:text="Péter Pázmándi" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_unfriend"
+        android:id="@+id/btn_viewProfile"
         android:layout_width="70dp"
         android:layout_height="24dp"
         android:layout_marginEnd="@dimen/margin_medium"
         android:background="@drawable/shape_whiteback_blueborder_roundedcorners"
         android:fontFamily="@font/roboto_regular"
-        android:text="@string/unfriend"
+        android:text="@string/view_profile"
         android:textAllCaps="false"
         android:textColor="@color/blue"
         android:textSize="@dimen/textSize_small"

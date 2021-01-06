@@ -46,10 +46,13 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
             viewModel.friendsEvents.collect { event ->
                 when(event)
                 {
-                    is FriendsViewModel.FriendsFragmentsEvent.NavigateSearchFriendsFragment -> {
+                    is FriendsViewModel.FriendsFragmentsEvent.NavigateToSearchFriendsFragment -> {
                         navigateToSearchFriendsFragment(event.user)
                     }
-                    is FriendsViewModel.FriendsFragmentsEvent.NavigateFriendRequestsFragment -> {
+                    is FriendsViewModel.FriendsFragmentsEvent.NavigateToUserProfileFragment -> {
+                        navigateToUserProfileFragment(event.user, event.selectedUser)
+                    }
+                    is FriendsViewModel.FriendsFragmentsEvent.NavigateToFriendRequestsFragment -> {
 
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.ShowErrorMessage -> {
@@ -61,8 +64,8 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
     }
 
     private fun initRecyclerView() {
-        adapter = BaseListAdapter { view, selectedItem ->
-
+        adapter = BaseListAdapter { _, selectedItem ->
+            viewModel.onUserProfileSelected(selectedUser = selectedItem.data as User)
         }
         binding.rvFriends.setHasFixedSize(true)
         binding.rvFriends.setItemViewCacheSize(50)
@@ -107,6 +110,10 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
     /** Navigation methods **/
     private fun navigateToSearchFriendsFragment(user: User) {
         val action = FriendsFragmentDirections.actionFriendsFragmentToSearchFriendsFragment(user)
+        findNavController().navigate(action)
+    }
+    private fun navigateToUserProfileFragment(user: User, selectedUser: User) {
+        val action = FriendsFragmentDirections.actionFriendsFragmentToUserProfileFragment(user, selectedUser)
         findNavController().navigate(action)
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {

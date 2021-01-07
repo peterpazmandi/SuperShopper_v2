@@ -61,7 +61,7 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         }
 
         val subscription = query
-            .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
+            .addSnapshotListener{ querySnapshot, _ ->
                 coroutineScope.launch {
                     val shoppingLists = querySnapshot?.documents?.mapNotNull {
                         lastShoppingListResult = it as DocumentSnapshot

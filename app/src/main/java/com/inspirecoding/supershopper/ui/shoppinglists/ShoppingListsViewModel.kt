@@ -76,7 +76,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                                         }
                                     }
                                 }
-                                __shoppingLists.add(_shoppingList)
+
+                                updateShoppingList(_shoppingList)
                             }
 
                             _shoppingLists.postValue(Resource.Success(__shoppingLists))
@@ -89,6 +90,18 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun updateShoppingList(shoppingList: ShoppingList) {
+        val index = __shoppingLists.indexOfFirst {
+            shoppingList.shoppingListId == it.shoppingListId
+        }
+
+        if(index != -1) {
+            __shoppingLists[index] = shoppingList
+        } else {
+            __shoppingLists.add(shoppingList)
         }
     }
 

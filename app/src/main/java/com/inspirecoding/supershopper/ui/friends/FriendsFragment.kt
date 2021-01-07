@@ -98,10 +98,10 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         viewModel.listOfFriends.observe(viewLifecycleOwner, { result ->
             when (result.status) {
                 LOADING -> {
-                    binding.swipeRefreshLayout.isRefreshing = true
+                    binding.progressBar.makeItVisible()
                 }
                 SUCCESS -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.makeItInVisible()
                     result.data?.let { listOfFriends ->
                         if(listOfFriends.isEmpty()) {
                             binding.clNoFriends.makeItVisible()
@@ -114,7 +114,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                     }
                 }
                 ERROR -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.makeItInVisible()
                 }
             }
         })

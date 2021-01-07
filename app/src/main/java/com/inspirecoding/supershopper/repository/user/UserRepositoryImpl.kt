@@ -31,7 +31,6 @@ import com.inspirecoding.supershopper.utils.Status
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -69,6 +68,10 @@ class UserRepositoryImpl @Inject constructor(
     private lateinit var googleSingInClient: GoogleSignInClient
 
     private var lastResult: DocumentSnapshot? = null
+
+
+
+
 
 
     override suspend fun registerUserFromAuthWithEmailAndPassword(
@@ -314,7 +317,7 @@ class UserRepositoryImpl @Inject constructor(
             emit(Resource.Error(it))
         }
 
-    }.flowOn(IO)
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun signOut() {
         firebaseAuth.signOut()
@@ -351,7 +354,9 @@ class UserRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-    override fun getFriendsAlphabeticalList(user: User) = flow<Resource<List<Friend>>> {
+    override fun getFriendsAlphabeticalList(
+        user: User
+    ) = flow<Resource<List<Friend>>> {
 
         emit(Resource.Loading(true))
 
@@ -381,6 +386,7 @@ class UserRepositoryImpl @Inject constructor(
         for (document in documentsList) {
             val friend = document.toObject(Friend::class.java)
             friend?.let {
+                println(it.friendName)
                 listOfFriends.add(friend)
             }
         }

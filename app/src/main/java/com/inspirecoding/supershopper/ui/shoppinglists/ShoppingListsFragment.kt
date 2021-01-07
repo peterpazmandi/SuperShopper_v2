@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -38,6 +39,7 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         binding = ShoppingListsFragmentBinding.bind(view)
 
         setupCurrentUserObserver()
+        viewModel.getCurrentUserShoppingListsRealTime()
         setupRecyclerView()
         setupEvents()
         setupShoppingListObserver()
@@ -136,6 +138,15 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         binding.rvShoppingLists.setItemViewCacheSize(20)
 
         binding.rvShoppingLists.adapter = adapter
+
+        binding.rvShoppingLists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if(!recyclerView.canScrollVertically(1)) {
+                    viewModel.getCurrentUserShoppingListsRealTime()
+                }
+            }
+        })
     }
 
     private fun setupEvents() {
@@ -162,10 +173,6 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
     private fun setupCurrentUserObserver() {
         viewModel.currentUser.observe(viewLifecycleOwner, { _currentUser ->
-            // Get shopping list of currently logged in user
-            viewModel.getCurrentUserShoppingListsRealTime(_currentUser)
-
-            // Setup profile header
             setupLoggedInUsersProfile(_currentUser)
         })
     }

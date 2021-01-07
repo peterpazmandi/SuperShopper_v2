@@ -40,50 +40,51 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     private val _shoppingListsFragmentsEventChannel = Channel<ShoppingListsFragmentsEvent>()
     val shoppingListsFragmentsEventChannel = _shoppingListsFragmentsEventChannel.receiveAsFlow()
 
+    private val __shoppingLists = mutableListOf<ShoppingList>()
     private val _shoppingLists = MutableLiveData<Resource<List<ShoppingList>>>()
     val shoppingLists : LiveData<Resource<List<ShoppingList>>> = _shoppingLists
 
 
-    fun getCurrentUserShoppingListsRealTime(currentUser: User) {
+    fun getCurrentUserShoppingListsRealTime() {
         viewModelScope.launch {
-            shoppingListRepository.getCurrentUserShoppingListsRealTime(currentUser, viewModelScope).collect { result ->
-                Log.d(TAG, "$result")
-                val shoppingLists = mutableListOf<ShoppingList>()
-                when(result.status)
-                {
-                    Status.LOADING -> {
-                        _shoppingLists.postValue(Resource.Loading(true))
-                    }
-                    Status.SUCCESS -> {
-                        result.data?.map { _shoppingList ->
-                            _shoppingList.friendsSharedWith.map { friendId ->
-                                userRepository.getUserFromFirestore(friendId).collect { userResult ->
-                                    when(userResult.status)
-                                    {
-                                        Status.LOADING -> {
-                                            _shoppingLists.postValue(Resource.Loading(true))
-                                        }
-                                        Status.SUCCESS -> {
-                                            userResult.data?.let {
-                                                _shoppingList.usersSharedWith.add(it)
+            currentUser.value?.let { _currentUser ->
+                shoppingListRepository.getCurrentUserShoppingListsRealTime(_currentUser, viewModelScope).collect { result ->
+                    when(result.status)
+                    {
+                        Status.LOADING -> {
+                            _shoppingLists.postValue(Resource.Loading(true))
+                        }
+                        Status.SUCCESS -> {
+                            result.data?.map { _shoppingList ->
+                                _shoppingList.friendsSharedWith.map { friendId ->
+                                    userRepository.getUserFromFirestore(friendId).collect { userResult ->
+                                        when(userResult.status)
+                                        {
+                                            Status.LOADING -> {
+                                                _shoppingLists.postValue(Resource.Loading(true))
                                             }
-                                        }
-                                        Status.ERROR -> {
-                                            result.message?.let {
-                                                _shoppingLists.postValue(Resource.Error(it))
+                                            Status.SUCCESS -> {
+                                                userResult.data?.let {
+                                                    _shoppingList.usersSharedWith.add(it)
+                                                }
+                                            }
+                                            Status.ERROR -> {
+                                                result.message?.let {
+                                                    _shoppingLists.postValue(Resource.Error(it))
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                __shoppingLists.add(_shoppingList)
                             }
-                            shoppingLists.add(_shoppingList)
-                        }
 
-                        _shoppingLists.postValue(Resource.Success(shoppingLists))
-                    }
-                    Status.ERROR -> {
-                        result.message?.let {
-                            _shoppingLists.postValue(Resource.Error(it))
+                            _shoppingLists.postValue(Resource.Success(__shoppingLists))
+                        }
+                        Status.ERROR -> {
+                            result.message?.let {
+                                _shoppingLists.postValue(Resource.Error(it))
+                            }
                         }
                     }
                 }
@@ -171,4 +172,9 @@ class ShoppingListsViewModel @ViewModelInject constructor(
         data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
     }
 
+
+    override fun onCleared() {
+        super.onCleared()
+        shoppingListRepository.clearShoppingListResult()
+    }
 }

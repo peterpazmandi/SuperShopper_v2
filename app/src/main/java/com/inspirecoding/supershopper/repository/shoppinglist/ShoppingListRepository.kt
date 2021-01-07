@@ -19,4 +19,6 @@ interface ShoppingListRepository {
 
     suspend fun insertShoppingList(shoppingList: ShoppingList): Flow<Resource<Nothing>>
     suspend fun deleteShoppingList(shoppingList: ShoppingList): Flow<Resource<Nothing>>
+
+    fun clearShoppingListResult()
 }

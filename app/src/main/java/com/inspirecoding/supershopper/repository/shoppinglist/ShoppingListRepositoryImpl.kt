@@ -1,13 +1,11 @@
 package com.inspirecoding.supershopper.repository.shoppinglist
 
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.inspirecoding.supershopper.data.ListItem
-import com.inspirecoding.supershopper.data.Resource
-import com.inspirecoding.supershopper.data.ShoppingList
-import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.data.*
+import com.inspirecoding.supershopper.utils.Status
+import com.inspirecoding.supershopper.utils.Status.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,32 +27,56 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
     private val DUEDATE = "dueDate"
     private val LISTOFITEMS = "listOfItems"
 
+    private val LIMIT_10: Long = 10
+    private val LIMIT_20: Long = 20
+
     // COLLECTIONS
-    private val shoppingListsCollectionReference = FirebaseFirestore.getInstance().collection(SHOPPINGLIST_COLLECTION_NAME)
+    private val shoppingListsCollectionReference =
+        FirebaseFirestore.getInstance().collection(SHOPPINGLIST_COLLECTION_NAME)
+
+    private var lastShoppingListResult: DocumentSnapshot? = null
+    private var lastShoppingList: ShoppingList? = null
+
+
+
+
+
 
     override suspend fun getCurrentUserShoppingListsRealTime(
         currentUser: User, coroutineScope: CoroutineScope
     ) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
-
         offer(Resource.Loading(true))
 
-        val subscription = shoppingListsCollectionReference
-            .whereArrayContains(FRIENDSSHAREDWITH, currentUser.id)
-            .orderBy(DUEDATE, Query.Direction.DESCENDING)
+        val query = if(lastShoppingListResult == null) {
+            shoppingListsCollectionReference
+                .whereArrayContains(FRIENDSSHAREDWITH, currentUser.id)
+                .orderBy(DUEDATE, Query.Direction.DESCENDING)
+                .limit(LIMIT_10)
+        } else {
+            shoppingListsCollectionReference
+                .whereArrayContains(FRIENDSSHAREDWITH, currentUser.id)
+                .orderBy(DUEDATE, Query.Direction.DESCENDING)
+                .limit(LIMIT_10)
+                .startAfter(lastShoppingListResult as DocumentSnapshot)
+        }
+
+        val subscription = query
             .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
                 coroutineScope.launch {
-
                     val shoppingLists = querySnapshot?.documents?.mapNotNull {
+                        lastShoppingListResult = it as DocumentSnapshot
                         it.toObject(ShoppingList::class.java)
                     }?.toMutableList()
-
+                    println("lastShoppingListResult -> $lastShoppingListResult")
                     shoppingLists?.let {
                         offer(Resource.Success(it))
                     }
                 }
             }
 
-        awaitClose { subscription.remove() }
+        awaitClose {
+            subscription.remove()
+        }
 
     }.catch { exception ->
 
@@ -69,7 +91,8 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
 
         offer(Resource.Loading(true))
 
-        val subscription = shoppingListsCollectionReference.document(shoppingListId)
+        val subscription = shoppingListsCollectionReference
+            .document(shoppingListId)
             .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                 coroutineScope.launch {
                     val shoppingList = documentSnapshot?.let { it.toObject(ShoppingList::class.java) }
@@ -80,7 +103,9 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             }
 
 
-        awaitClose { subscription.remove() }
+        awaitClose {
+            subscription.remove()
+        }
 
     }.catch { exception ->
         exception.message?.let { message ->
@@ -182,4 +207,8 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             emit(Resource.Error(message))
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun clearShoppingListResult() {
+        lastShoppingListResult = null
+    }
 }

@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.CurrentUserProfileFragmentBinding
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
+import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import com.squareup.picasso.Picasso
@@ -50,7 +53,7 @@ class CurrentUserProfileFragment : Fragment(R.layout.current_user_profile_fragme
         setupEvents()
 
         binding.ivBackButton.setOnClickListener {
-            findNavController().popBackStack()
+            viewModel.onNavigateBackWithCurrentUser()
         }
 
         binding.ivUpdatePhoto.setOnClickListener {
@@ -116,6 +119,9 @@ class CurrentUserProfileFragment : Fragment(R.layout.current_user_profile_fragme
                     }
                     CurrentUserProfileViewModel.FragmentEvent.LogOut -> {
                         navigateToSplashFragment()
+                    }
+                    is CurrentUserProfileViewModel.FragmentEvent.NavigateBackWithCurrentUser -> {
+                        navigateBackWithCurrentUser(event.currentUser)
                     }
                     is CurrentUserProfileViewModel.FragmentEvent.ShowErrorMessage -> {
                         binding.progressBar.makeItInVisible()
@@ -188,6 +194,14 @@ class CurrentUserProfileFragment : Fragment(R.layout.current_user_profile_fragme
     private fun navigateToSplashFragment() {
         findNavController().popBackStack(R.id.shoppingListsFragment, true)
         findNavController().navigate(R.id.splashFragment)
+    }
+
+    private fun navigateBackWithCurrentUser(currentUser: User) {
+        setFragmentResult(
+            ShoppingListsViewModel.ARG_KEY_USER,
+            bundleOf(ShoppingListsViewModel.ARG_KEY_USER to currentUser)
+        )
+        findNavController().popBackStack()
     }
 
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {

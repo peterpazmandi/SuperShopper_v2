@@ -25,6 +25,7 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
     private val FRIENDSSHAREDWITH = "friendsSharedWith"
     private val SHOPPINGLISTID = "shoppingListId"
     private val DUEDATE = "dueDate"
+    private val NAME = "name"
     private val LISTOFITEMS = "listOfItems"
 
     private val LIMIT_10: Long = 10
@@ -166,6 +167,26 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         shoppingListsCollectionReference
             .document(shoppingListId)
             .update(DUEDATE, dueDate)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun updateShoppingListTitle(
+        shoppingListId: String, title: String
+    ) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        shoppingListsCollectionReference
+            .document(shoppingListId)
+            .update(NAME, title)
             .await()
 
         emit(Resource.Success(null))

@@ -47,6 +47,10 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
         setupTabSelectedListener()
         setupEventHandler()
 
+        binding.tvShoppingListName.setOnClickListener {
+            viewModel.onNavigateToUpdateUserProfileBottomSheetFragment()
+        }
+
         setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_DUEDATE) { _, bundle ->
             bundle.getLong(OpenedShoppingListViewModel.ARG_KEY_DUEDATE).let { dueDate ->
                 viewModel.updateShoppingListDueDate(dueDate)
@@ -56,6 +60,12 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
         setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH) { _, bundle ->
             bundle.getStringArrayList(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH)?.let { listOfFriends ->
                 viewModel.updateShoppingListsSharedWithFriends(listOfFriends.toList())
+            }
+        }
+
+        setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_TITLE) { _, bundle ->
+            bundle.getString(OpenedShoppingListViewModel.ARG_KEY_TITLE)?.let { newTitle ->
+                viewModel.updateShoppingListsTitle(newTitle)
             }
         }
 
@@ -127,11 +137,17 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
             viewModel.listItemEventChannel.collect { event ->
                 when(event)
                 {
-                    is OpenedShoppingListViewModel.ListItemEvent.ShowErrorMessage -> {
-                        navigateToErrorBottomDialogFragment(event.message)
+                    is OpenedShoppingListViewModel.ListItemEvent.NavigateToUpdateUserProfileBottomSheetFragment -> {
+                        navigateToUpdateUserProfileBottomSheetFragment(event.title)
                     }
                     OpenedShoppingListViewModel.ListItemEvent.NavigateBackWithoutResult -> {
                         navigateBackWithoutResult()
+                    }
+                    OpenedShoppingListViewModel.ListItemEvent.ShowLoading -> {
+
+                    }
+                    is OpenedShoppingListViewModel.ListItemEvent.ShowErrorMessage -> {
+                        navigateToErrorBottomDialogFragment(event.message)
                     }
                 }
             }
@@ -141,6 +157,10 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
 
 
     /** Navigation methods **/
+    private fun navigateToUpdateUserProfileBottomSheetFragment(title: String) {
+        val action = OpenedShoppingListFragmentDirections.actionOpenedShoppingListFragmentToUpdateShoppingListTitleBottomSheetFragment(title)
+        findNavController().navigate(action)
+    }
     private fun navigateBackWithoutResult() {
         findNavController().popBackStack()
     }

@@ -34,7 +34,6 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     var shoppingListName: String? = null
 
-    val user = state.getLiveData<User>(ARG_KEY_USER)
     val currentUser = state.getLiveData<User>(ARG_KEY_USER)
 
     private val _shoppingListsFragmentsEventChannel = Channel<ShoppingListsFragmentsEvent>()
@@ -134,6 +133,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
             }
         }
     }
+
     private fun createShoppingListObject(): ShoppingList {
         return ShoppingList(
             shoppingListId =  UUID.randomUUID().toString(),
@@ -141,12 +141,14 @@ class ShoppingListsViewModel @ViewModelInject constructor(
             dueDate = Date(),
             timeStamp = Date().time,
             shoppingListStatus = OPEN,
-            friendsSharedWith = mutableListOf((user.value as User).id)
+            friendsSharedWith = mutableListOf((currentUser.value as User).id)
         )
     }
 
 
-
+    fun updateCurrentUser(currentUser: User) {
+        this.currentUser.postValue(currentUser)
+    }
 
 
     /** Events **/

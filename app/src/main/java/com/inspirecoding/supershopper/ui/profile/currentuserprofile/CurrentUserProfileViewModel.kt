@@ -210,6 +210,13 @@ class CurrentUserProfileViewModel @ViewModelInject constructor(
             _fragmentEvent.send(FragmentEvent.NavigateToUpdatePassword(PASSWORD))
         }
     }
+    fun onNavigateBackWithCurrentUser() {
+        viewModelScope.launch {
+            currentUser.value?.let { user ->
+                _fragmentEvent.send(FragmentEvent.NavigateBackWithCurrentUser(user))
+            }
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _fragmentEvent.send(FragmentEvent.ShowErrorMessage(message))
@@ -228,6 +235,7 @@ class CurrentUserProfileViewModel @ViewModelInject constructor(
         data class NavigateToUpdatePassword(val fieldToChange: String): FragmentEvent()
         object LogOut: FragmentEvent()
         object ShowResult: FragmentEvent()
+        data class NavigateBackWithCurrentUser(val currentUser: User): FragmentEvent()
         data class ShowErrorMessage(val message: String): FragmentEvent()
     }
 }

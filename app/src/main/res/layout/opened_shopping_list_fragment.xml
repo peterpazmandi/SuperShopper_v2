@@ -21,6 +21,8 @@
         android:id="@+id/tv_shoppingListName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/white"

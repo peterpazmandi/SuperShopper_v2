@@ -3,25 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_shoppingCart"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_app_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"/>
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:drawablePadding="@dimen/margin_small"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/change_password"
+        android:text="@string/change_title"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
         android:textAlignment="center"
         android:textColor="@color/dark_blue"
         android:textSize="@dimen/textSize_xlarge"
         android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_lock_blue"
+        app:drawableTint="@color/blue"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/iv_shoppingCart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:drawableTint="@color/blue" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <View
         android:id="@+id/horizontalLine"

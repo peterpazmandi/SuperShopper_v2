@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -84,6 +85,12 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         }
         binding.tvUsername.setOnClickListener {
             viewModel.onOpenCurrentUserProfile()
+        }
+
+        setFragmentResultListener(ShoppingListsViewModel.ARG_KEY_USER) { _, bundle ->
+            bundle.getParcelable<User>(ShoppingListsViewModel.ARG_KEY_USER)?.let { user ->
+                viewModel.updateCurrentUser(user)
+            }
         }
     }
 

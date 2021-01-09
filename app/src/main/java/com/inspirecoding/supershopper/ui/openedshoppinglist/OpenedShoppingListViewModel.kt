@@ -12,6 +12,7 @@ import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.openedshoppinglist.details.leavedeleteshoppinglist.LeaveDeleteShoppingListBottomSheetViewModel
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status
+import com.inspirecoding.supershopper.utils.Status.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -31,6 +32,7 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
         const val ARG_KEY_DUEDATE = "dueDate"
         const val ARG_KEY_FRIENDSSHAREDWITH = "friendsSharedWith"
         const val ARG_KEY_LEAVEDELETE = "leaveDelete"
+        const val ARG_KEY_TITLE = "title"
     }
 
     private val _listItemEventChannel = Channel<ListItemEvent>()
@@ -64,6 +66,34 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
         }
     }
 
+    fun updateShoppingListsTitle(newTitle: String) {
+        openedShoppingList.value?.let { shoppingList ->
+            viewModelScope.launch {
+                shoppingListRepository.updateShoppingListTitle(
+                    shoppingListId = shoppingList.shoppingListId,
+                    title = newTitle
+                ).collect{ result ->
+                    when(result.status)
+                    {
+                        SUCCESS -> {
+                            shoppingList.name = newTitle
+                            openedShoppingList.postValue(shoppingList)
+                        }
+                        LOADING -> {
+                            onShowLoading()
+                        }
+                        ERROR -> {
+                            result.message?.let {
+                                onShowErrorMessage(it)
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
     fun leaveShoppingList() {
         openedShoppingList.value?.let { _shoppingList ->
             currentUser.value?.let { _currentUser ->
@@ -74,12 +104,12 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                         friendsSharedWith = _shoppingList.friendsSharedWith
                     ).collect { result ->
                         when (result.status) {
-                            Status.LOADING -> {
+                            LOADING -> {
                             }
-                            Status.SUCCESS -> {
+                            SUCCESS -> {
                                 onNavigateBackWithoutResult()
                             }
-                            Status.ERROR -> {
+                            ERROR -> {
                                 result.message?.let {
                                     onShowErrorMessage(it)
                                 }
@@ -98,12 +128,12 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                     shoppingList = _shoppingList
                 ).collect { result ->
                     when (result.status) {
-                        Status.LOADING -> {
+                        LOADING -> {
                         }
-                        Status.SUCCESS -> {
+                        SUCCESS -> {
                             onNavigateBackWithoutResult()
                         }
-                        Status.ERROR -> {
+                        ERROR -> {
                             result.message?.let {
                                 onShowErrorMessage(it)
                             }
@@ -116,12 +146,23 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
 
 
     /** Events **/
+    fun onNavigateToUpdateUserProfileBottomSheetFragment() {
+        openedShoppingList.value?.let { _shoppingList ->
+            viewModelScope.launch {
+                _listItemEventChannel.send(ListItemEvent.NavigateToUpdateUserProfileBottomSheetFragment(_shoppingList.name))
+            }
+        }
+    }
     private fun onNavigateBackWithoutResult() {
         viewModelScope.launch {
             _listItemEventChannel.send(ListItemEvent.NavigateBackWithoutResult)
         }
     }
-
+    fun onShowLoading() {
+        viewModelScope.launch {
+            _listItemEventChannel.send(ListItemEvent.ShowLoading)
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _listItemEventChannel.send(ListItemEvent.ShowErrorMessage(message))
@@ -130,7 +171,9 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
 
 
     sealed class ListItemEvent {
+        data class NavigateToUpdateUserProfileBottomSheetFragment(val title: String) : ListItemEvent()
         object NavigateBackWithoutResult : ListItemEvent()
+        object ShowLoading: ListItemEvent()
         data class ShowErrorMessage(val message: String) : ListItemEvent()
     }
 

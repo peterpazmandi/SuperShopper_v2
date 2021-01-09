@@ -255,5 +255,6 @@
     <string name="change_name">Change name</string>
     <string name="change_email">Change email</string>
     <string name="change">Change</string>
+    <string name="change_title">Change title</string>
 
 </resources>

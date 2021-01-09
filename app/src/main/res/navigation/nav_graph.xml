@@ -220,6 +220,9 @@
         <action
             android:id="@+id/action_openedShoppingListFragment_to_leaveDeleteShoppingListBottomSheetFragment"
             app:destination="@id/leaveDeleteShoppingListBottomSheetFragment" />
+        <action
+            android:id="@+id/action_openedShoppingListFragment_to_updateShoppingListTitleBottomSheetFragment"
+            app:destination="@id/updateShoppingListTitleBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/openedShoppingListItemsFragment"
@@ -473,5 +476,14 @@
         <action
             android:id="@+id/action_currentUserProfileFragment_to_errorBottomDialogFragment"
             app:destination="@id/errorBottomDialogFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/updateShoppingListTitleBottomSheetFragment"
+        android:name="com.inspirecoding.supershopper.ui.openedshoppinglist.changetitle.UpdateShoppingListTitleBottomSheetFragment"
+        android:label="update_shopping_list_title_bottom_sheet_fragment"
+        tools:layout="@layout/update_shopping_list_title_bottom_sheet_fragment" >
+        <argument
+            android:name="title"
+            app:argType="string"/>
     </dialog>
 </navigation>

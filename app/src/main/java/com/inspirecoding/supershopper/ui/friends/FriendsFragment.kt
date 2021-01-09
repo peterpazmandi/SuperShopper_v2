@@ -99,14 +99,17 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
             when (result.status) {
                 LOADING -> {
                     binding.progressBar.makeItVisible()
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
                 SUCCESS -> {
                     binding.progressBar.makeItInVisible()
+                    binding.swipeRefreshLayout.isRefreshing = false
                     result.data?.let { listOfFriends ->
                         if(listOfFriends.isEmpty()) {
                             binding.clNoFriends.makeItVisible()
                         } else {
                             binding.clNoFriends.makeItInVisible()
+                            binding.swipeRefreshLayout.isRefreshing = false
                         }
 
                         val listOfUserObjects = viewModel.createListOfFriendsItem(listOfFriends)
@@ -115,6 +118,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                 }
                 ERROR -> {
                     binding.progressBar.makeItInVisible()
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
         })

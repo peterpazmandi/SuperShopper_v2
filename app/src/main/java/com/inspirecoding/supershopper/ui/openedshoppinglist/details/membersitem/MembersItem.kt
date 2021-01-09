@@ -25,12 +25,14 @@ data class MembersItem(val user: User): BaseItem<LayoutMemberItemBinding> {
 
         binding.tvName.text = user.name
 
-        Picasso
-            .get()
-            .load(user.profilePicture)
-            .fit()
-            .placeholder(R.drawable.ic_default_profile_picture)
-            .into(binding.ivProfilePhoto)
+        if(user.profilePicture.isNotEmpty()) {
+            Picasso
+                .get()
+                .load(user.profilePicture)
+                .fit()
+                .placeholder(R.drawable.ic_default_profile_picture)
+                .into(binding.ivProfilePhoto)
+        }
 
     }
 }

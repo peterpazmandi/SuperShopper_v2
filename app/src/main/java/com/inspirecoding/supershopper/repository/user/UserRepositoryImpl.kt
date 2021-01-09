@@ -3,6 +3,7 @@ package com.inspirecoding.supershopper.repository.user
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -21,13 +22,11 @@ import com.google.firebase.auth.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import com.inspirecoding.supershopper.R
-import com.inspirecoding.supershopper.data.Friend
-import com.inspirecoding.supershopper.data.FriendRequest
-import com.inspirecoding.supershopper.data.Resource
-import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.data.*
 import com.inspirecoding.supershopper.utils.ObjectFactory.createUserObject
-import com.inspirecoding.supershopper.utils.Status
+import com.inspirecoding.supershopper.utils.Status.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +34,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -58,6 +58,9 @@ class UserRepositoryImpl @Inject constructor(
         FirebaseFirestore.getInstance().collection(FRIENDS_COLLECTION_NAME)
     private val friendsRequestCollection  =
         FirebaseFirestore.getInstance().collection(FRIENDSREQUEST_COLLECTION_NAME)
+
+    // STORAGE
+    private var imageStorage  = FirebaseStorage.getInstance()
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -176,10 +179,10 @@ class UserRepositoryImpl @Inject constructor(
                         if (firebaseUser?.displayName != null) {
                             getUserFromFirestore(firebaseUser.uid).collect { result ->
                                 when (result.status) {
-                                    Status.LOADING -> {
+                                    LOADING -> {
                                         _userResource.send(Resource.Loading(true))
                                     }
-                                    Status.SUCCESS -> {
+                                    SUCCESS -> {
                                         if (result.data != null) {
                                             _userResource.send(result)
                                         } else {
@@ -193,7 +196,7 @@ class UserRepositoryImpl @Inject constructor(
 
                                         }
                                     }
-                                    Status.ERROR -> {
+                                    ERROR -> {
                                         result.message?.let { message ->
                                             _userResource.send(Resource.Error(message))
                                         }
@@ -250,10 +253,10 @@ class UserRepositoryImpl @Inject constructor(
             if (firebaseUser?.displayName != null) {
                 getUserFromFirestore(firebaseUser.uid).collect { result ->
                     when (result.status) {
-                        Status.LOADING -> {
+                        LOADING -> {
                             _userResource.send(Resource.Loading(true))
                         }
-                        Status.SUCCESS -> {
+                        SUCCESS -> {
                             if (result.data != null) {
                                 _userResource.send(result)
                             } else {
@@ -267,7 +270,7 @@ class UserRepositoryImpl @Inject constructor(
 
                             }
                         }
-                        Status.ERROR -> {
+                        ERROR -> {
                             result.message?.let { message ->
                                 _userResource.send(Resource.Error(message))
                             }
@@ -319,10 +322,86 @@ class UserRepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun signOut() {
+    override suspend fun logOut() {
         firebaseAuth.signOut()
     }
 
+    override suspend fun updateProfilePictureOfUserInFirestore(user: User) = flow<Resource<Void?>> {
+
+        emit(Resource.Loading(true))
+
+        usersCollectionReference
+            .document(user.id)
+            .update("profilePicture", user.profilePicture)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun updateNameOFUserInFirestore(user: User) = flow<Resource<Void?>> {
+
+        emit(Resource.Loading(true))
+
+        usersCollectionReference
+            .document(user.id)
+            .update("name", user.name)
+            .await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun uploadProfilePictureOfUserToStorage(user: User) = flow<Resource<User>> {
+
+        emit(Resource.Loading(true))
+
+        val image = Uri.fromFile(File(user.profilePicture))
+        val storageRef = imageStorage.reference
+        val profileImageReference = storageRef.child("profileImages/${image.lastPathSegment}")
+        val taskSnapshot = profileImageReference.putFile(image).await()
+
+        taskSnapshot.metadata?.reference?.downloadUrl?.await()?.let {
+            user.profilePicture = it.toString()
+        }
+
+        updateProfilePictureOfUserInFirestore(user).collect { result ->
+            when(result.status)
+            {
+                SUCCESS -> {
+                    emit(Resource.Success(user))
+                }
+                LOADING -> {
+                    emit(Resource.Loading(true))
+                }
+                ERROR -> {
+                    result.message?.let { message ->
+                        emit(Resource.Error(message))
+                    }
+                }
+            }
+
+        }
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
 
     override fun createUserInFirestore(user: User) = flow<Resource<User>> {
 
@@ -342,6 +421,9 @@ class UserRepositoryImpl @Inject constructor(
 
         val documentSnapshot = usersCollectionReference.document(userId).get().await()
         val user = documentSnapshot.toObject(User::class.java)
+        firebaseAuth.currentUser?.email?.let { _email ->
+            user?.emailAddress = _email
+        }
 
         emit(Resource.Success(user))
 
@@ -352,6 +434,39 @@ class UserRepositoryImpl @Inject constructor(
         }
 
     }.flowOn(Dispatchers.IO)
+
+    override fun updateCurrentUserEmail(email: String) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        firebaseAuth.currentUser?.updateEmail(email)?.await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun updateCurrentUserPassword(password: String) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        firebaseAuth.currentUser?.updatePassword(password)?.await()
+
+        emit(Resource.Success(null))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
 
 
     override fun getFriendsAlphabeticalList(
@@ -401,6 +516,39 @@ class UserRepositoryImpl @Inject constructor(
 
     }.flowOn(Dispatchers.IO)
 
+    override fun getAllFriends(
+        user: User
+    ) = flow<Resource<List<Friend>>> {
+
+        emit(Resource.Loading(true))
+
+        val result = friendsCollection
+            .whereEqualTo("friendId", user.id)
+            .get()
+            .await()
+
+        val documentsList = result.documents
+        val listOfFriends = mutableListOf<Friend>()
+        for (document in documentsList) {
+            val friend = document.toObject(Friend::class.java)
+            friend?.let {
+                println(it.friendName)
+                listOfFriends.add(friend)
+            }
+        }
+
+        emit(Resource.Success(listOfFriends))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+
+
     override fun searchFriends(searchText: String) = flow<Resource<List<User>>> {
 
         emit(Resource.Loading(true))
@@ -422,6 +570,25 @@ class UserRepositoryImpl @Inject constructor(
         }
 
         emit(Resource.Success(listOfUsers))
+
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun updateFriendName(friendId: String, newName: String) = flow<Resource<Nothing>> {
+
+        emit(Resource.Loading(true))
+
+        friendsCollection
+            .document(friendId)
+            .update("friendName", newName)
+            .await()
+
+        emit(Resource.Success(null))
 
     }.catch { exception ->
 

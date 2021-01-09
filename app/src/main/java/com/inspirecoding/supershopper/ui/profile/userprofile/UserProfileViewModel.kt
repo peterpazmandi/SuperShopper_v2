@@ -1,4 +1,4 @@
-package com.inspirecoding.supershopper.ui.userprofile
+package com.inspirecoding.supershopper.ui.profile.userprofile
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject

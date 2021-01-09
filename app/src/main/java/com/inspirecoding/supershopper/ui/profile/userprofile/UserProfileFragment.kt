@@ -1,4 +1,4 @@
-package com.inspirecoding.supershopper.ui.userprofile
+package com.inspirecoding.supershopper.ui.profile.userprofile
 
 import android.os.Bundle
 import android.view.View
@@ -9,9 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.UserProfileFragmentBinding
-import com.inspirecoding.supershopper.ui.friends.searchfriends.SearchFriendsFragmentDirections
-import com.inspirecoding.supershopper.ui.friends.searchfriends.SearchFriendsViewModel
-import com.inspirecoding.supershopper.utils.enums.FriendshipStatus
 import com.inspirecoding.supershopper.utils.enums.FriendshipStatus.*
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible

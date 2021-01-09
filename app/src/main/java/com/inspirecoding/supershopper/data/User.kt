@@ -7,10 +7,11 @@ import java.util.*
 @Parcelize
 data class User(
     val id : String = "",
-    val name : String = "",
-    val profilePicture : String = "",
+    var name : String = "",
+    var profilePicture : String = "",
+    var emailAddress : String = "",
     val dateOfRegistration : Date = Date(),
     val numberOfFriends : Int = 0,
     val shoppingListCount : Int = 0,
-    val hasSubscription : Boolean = false,
+    var hasSubscription : Boolean = false,
 ) : Parcelable

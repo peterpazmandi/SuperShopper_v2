@@ -42,6 +42,13 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
 
 
 
+
+
+
+
+
+
+
     override suspend fun getCurrentUserShoppingListsRealTime(
         currentUser: User, coroutineScope: CoroutineScope
     ) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
@@ -67,7 +74,6 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
                         lastShoppingListResult = it as DocumentSnapshot
                         it.toObject(ShoppingList::class.java)
                     }?.toMutableList()
-                    println("lastShoppingListResult -> $lastShoppingListResult")
                     shoppingLists?.let {
                         offer(Resource.Success(it))
                     }
@@ -84,6 +90,26 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             emit(Resource.Error(message))
         }
     }.flowOn(Dispatchers.IO)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     override suspend fun getShoppingListRealTime(
         shoppingListId: String, coroutineScope: CoroutineScope

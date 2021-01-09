@@ -78,6 +78,13 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         binding.fabFriends.setOnClickListener {
             viewModel.onOpenFriends()
         }
+
+        binding.ivProfilePhoto.setOnClickListener {
+            viewModel.onOpenCurrentUserProfile()
+        }
+        binding.tvUsername.setOnClickListener {
+            viewModel.onOpenCurrentUserProfile()
+        }
     }
 
     private fun setupShoppingListObserver() {
@@ -160,11 +167,14 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToFriendsFragment -> {
                         navigateToFriendsListFragment(event.currentUser)
                     }
-                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.ShowErrorMessage -> {
-                        navigateToErrorBottomDialogFragment(event.message)
-                    }
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.OpenSelectedShoppingList -> {
                         navigateToOpenShoppingListsFragment(event.shoppingList)
+                    }
+                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToCurrentUserProfileFragment -> {
+                        navigateToCurrentUserProfileFragment(event.currentUser)
+                    }
+                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.ShowErrorMessage -> {
+                        navigateToErrorBottomDialogFragment(event.message)
                     }
                 }
             }
@@ -222,6 +232,10 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
     /** Navigation methods **/
     private fun navigateToFriendsListFragment(currentUser: User) {
         val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToFriendsFragment(currentUser)
+        findNavController().navigate(action)
+    }
+    private fun navigateToCurrentUserProfileFragment(currentUser: User) {
+        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToCurrentUserProfileFragment(currentUser)
         findNavController().navigate(action)
     }
     private fun navigateToSettingsFragment() {

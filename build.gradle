@@ -15,6 +15,7 @@ buildscript {
         // App dependencies
         app_compat_version = "1.2.0"
         constraintLayout_version = "2.0.4"
+        crop_image = '2.8.0'
         espresso_version = "3.3.0"
         facebook_android_sdk = '[5,6)'
         firebase_auth_version = "20.0.1"

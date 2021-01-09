@@ -5,6 +5,9 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.storage.UploadTask
 import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.FriendRequest
 import com.inspirecoding.supershopper.data.Resource
@@ -39,12 +42,20 @@ interface UserRepository {
 
     fun createUserInFirestore(user: User): Flow<Resource<User>>
     fun getUserFromFirestore(userId: String): Flow<Resource<User>>
+    fun updateCurrentUserEmail(email: String): Flow<Resource<Nothing>>
+    fun updateCurrentUserPassword(password: String): Flow<Resource<Nothing>>
 
     fun sendPasswordResetEmail(email: String): Flow<Resource<Nothing>>
-    suspend fun signOut()
+    suspend fun logOut()
+
+    suspend fun updateProfilePictureOfUserInFirestore(user: User): Flow<Resource<Void?>>
+    suspend fun updateNameOFUserInFirestore(user: User): Flow<Resource<Void?>>
+    suspend fun uploadProfilePictureOfUserToStorage(user: User): Flow<Resource<User>>
 
     fun getFriendsAlphabeticalList(user: User): Flow<Resource<List<Friend>>>
+    fun getAllFriends(user: User): Flow<Resource<List<Friend>>>
     fun searchFriends(searchText: String): Flow<Resource<List<User>>>
+    fun updateFriendName(friendId: String, newName: String): Flow<Resource<Nothing>>
     fun clearLastResultOfFriends()
 
     fun createFriend(friend: Friend): Flow<Resource<Nothing>>

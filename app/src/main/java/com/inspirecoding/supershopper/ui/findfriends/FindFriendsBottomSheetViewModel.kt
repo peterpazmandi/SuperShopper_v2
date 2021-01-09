@@ -34,54 +34,48 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
     val openedShoppingList = state.getLiveData<ShoppingList>(OpenedShoppingListViewModel.ARG_KEY_OPENEDSHOPPINGLIST)
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
 
-    private val usersSharedWith = arrayListOf<User>()
+
+    private val listOfUserObjects = mutableListOf<User>()
     private val _listOfFriends = MutableLiveData<Resource<List<User>>>()
     val listOfFriends: LiveData<Resource<List<User>>> = _listOfFriends
 
     fun getFriendsAlphabeticalList() {
         viewModelScope.launch {
-            currentUser.value?.let { _currentUser ->
-                usersSharedWith.add(_currentUser)
-                val listOfUsers = arrayListOf<User>()
-                userRepository.getFriendsAlphabeticalList(_currentUser).collect { result ->
+            currentUser.value?.let { user ->
+                userRepository.getFriendsAlphabeticalList(user).collect { result ->
                     when(result.status)
                     {
-                        Status.SUCCESS ->  {
-
+                        Status.LOADING -> {
+                            _listOfFriends.postValue(Resource.Loading(true))
+                        }
+                        Status.SUCCESS -> {
                             result.data?.let { listOfFriends ->
-                                for (friend in listOfFriends) {
-                                    openedShoppingList.value?.friendsSharedWith?.let { listOfFriendsIds ->
-
-                                        if(!listOfFriendsIds.contains(friend.friendId)) {
-                                            userRepository.getUserFromFirestore(friend.friendId).collect { result ->
-                                                when(result.status)
-                                                {
-                                                    Status.SUCCESS -> {
-                                                        result.data?.let { user ->
-                                                            listOfUsers.add(user)
-                                                            _listOfFriends.postValue(Resource.Success(listOfUsers))
-                                                        }
-                                                    }
-                                                    Status.LOADING ->  {
-                                                        _listOfFriends.postValue(Resource.Loading(true))
-                                                    }
-                                                    Status.ERROR -> {
-                                                        result.message?.let {
-                                                            _listOfFriends.postValue(Resource.Error(it))
-                                                        }
-                                                    }
+                                listOfFriends.forEach {
+                                    userRepository.getUserFromFirestore(it.friendId).collect { result ->
+                                        when (result.status) {
+                                            Status.LOADING -> {
+                                                _listOfFriends.postValue(Resource.Loading(true))
+                                            }
+                                            Status.SUCCESS -> {
+                                                result.data?.let { user ->
+                                                    listOfUserObjects.add(user)
+                                                }
+                                            }
+                                            Status.ERROR -> {
+                                                result.message?.let { _message ->
+                                                    onShowErrorMessage(_message)
+                                                    _listOfFriends.postValue(Resource.Error(_message))
                                                 }
                                             }
                                         }
                                     }
                                 }
+                                _listOfFriends.postValue(Resource.Success(listOfUserObjects))
                             }
-                        }
-                        Status.LOADING -> {
-                            _listOfFriends.postValue(Resource.Loading(true))
                         }
                         Status.ERROR -> {
                             result.message?.let {
+                                onShowErrorMessage(it)
                                 _listOfFriends.postValue(Resource.Error(it))
                             }
                         }
@@ -96,12 +90,10 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
     }
 
     fun addToListOfFriends(user: User) {
-        usersSharedWith.add(user)
-        println("addToListOfFriends - ${user}")
+        listOfUserObjects.add(user)
     }
     fun removeFromListOfFriends(user: User) {
-        usersSharedWith.remove(user)
-        println("removeFromListOfFriends - ${user}")
+        listOfUserObjects.remove(user)
     }
 
 
@@ -109,10 +101,10 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
     /** Events **/
     fun onNavigateBackWithResult() {
         viewModelScope.launch {
-            val friendsIds = usersSharedWith.map {
+            val friendsIds = listOfUserObjects.map {
                 it.id
             } as ArrayList<String>
-            println("${friendsIds}")
+
             _findFriendsEventChannel.send(FindFriendsEvent.NavigateBackWithResult(friendsIds))
         }
     }

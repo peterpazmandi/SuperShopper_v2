@@ -13,6 +13,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -109,6 +110,15 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         binding.rvUsersList.adapter = adapter
+
+        binding.rvUsersList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if(!recyclerView.canScrollVertically(1)) {
+                    viewModel.getFriendsAlphabeticalList()
+                }
+            }
+        })
     }
 
     private fun createListOfUserItems(listOfFriends: List<User>): MutableList<BaseItem<*>> {

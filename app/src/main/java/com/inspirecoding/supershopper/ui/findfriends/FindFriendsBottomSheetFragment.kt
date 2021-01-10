@@ -83,7 +83,7 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
                 }
                 Status.SUCCESS -> {
                     result.data?.let { listOfFriends ->
-                        val listOfUserItems = createListOfUserItems(listOfFriends)
+                        val listOfUserItems = viewModel.createListOfUserItems(listOfFriends)
                         adapter.submitList(listOfUserItems)
                     }
                     binding.progressBar.makeItInVisible()
@@ -119,14 +119,6 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
         })
-    }
-
-    private fun createListOfUserItems(listOfFriends: List<User>): MutableList<BaseItem<*>> {
-        val listOfUserItems = mutableListOf<BaseItem<*>>()
-        for (friend in listOfFriends) {
-            listOfUserItems.add(UserItem(friend))
-        }
-        return listOfUserItems
     }
 
     private fun setupEventHandler() {

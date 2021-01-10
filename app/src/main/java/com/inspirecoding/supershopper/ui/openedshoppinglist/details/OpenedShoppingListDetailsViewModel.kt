@@ -29,12 +29,12 @@ class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
     val listItemEventChannel = _listDetailsEventChannel.receiveAsFlow()
 
     val openedShoppingList = state.getLiveData<ShoppingList>(OpenedShoppingListViewModel.ARG_KEY_OPENEDSHOPPINGLIST).switchMap {
-        getShoppingList(it.shoppingListId)
+        getShoppingListRealTime(it.shoppingListId)
     }
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
 
 
-    private fun getShoppingList(shoppingListId: String) = liveData<Resource<ShoppingList>> {
+    private fun getShoppingListRealTime(shoppingListId: String) = liveData<Resource<ShoppingList>> {
         shoppingListRepository.getShoppingListRealTime(shoppingListId, viewModelScope).collect {  shoppingList ->
 
             when(shoppingList.status)

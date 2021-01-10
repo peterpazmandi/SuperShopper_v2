@@ -1,14 +1,20 @@
 package com.inspirecoding.supershopper.ui.openedshoppinglist
 
+import android.content.Context
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.notification.NotificationData
+import com.inspirecoding.supershopper.notification.NotificationRepositoryImpl
+import com.inspirecoding.supershopper.notification.PushNotification
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status.*
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -18,6 +24,8 @@ import java.util.*
 class OpenedShoppingListViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
     private val shoppingListRepository: ShoppingListRepository,
+    private val notificationRepositoryImpl: NotificationRepositoryImpl,
+    @ApplicationContext private val appContext: Context,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
@@ -40,31 +48,6 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
 
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
 
-//    private fun getFriends(shoppingList: ShoppingList) = liveData<ShoppingList> {
-//        shoppingList.friendsSharedWith.forEach { userId ->
-//            userRepository.getUserFromFirestore(userId).collect { result ->
-//                when(result.status)
-//                {
-//                    SUCCESS -> {
-//                        result.data?.let {
-//                            println(shoppingList.usersSharedWith.size)
-////                            shoppingList.usersSharedWith.add(it)
-//                            if(shoppingList.usersSharedWith.size == shoppingList.friendsSharedWith.size) {
-//                                println(shoppingList.usersSharedWith)
-//                                emit(shoppingList)
-//                            }
-//                        }
-//                    }
-//                    LOADING -> onShowLoading()
-//                    ERROR -> {
-//                        result.message?.let {
-//                            onShowErrorMessage(it)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     fun updateShoppingListDueDate(dueDate: Long) {
         openedShoppingList.value?.let { shoppingList ->
@@ -84,7 +67,55 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                 shoppingListRepository.updateShoppingListsSharedWithFriends(
                     shoppingListId = shoppingList.shoppingListId,
                     friendsSharedWith = friendsSharedWith
-                ).collect()
+                ).collect { result ->
+                    when(result.status)
+                    {
+                        SUCCESS -> {
+                            friendsSharedWith.forEach { userId ->
+                                if (!shoppingList.friendsSharedWith.contains(userId)) {
+                                    userRepository.getUserFromFirestore(userId)
+                                        .collect { resultGetUser ->
+                                            when (resultGetUser.status)
+                                            {
+                                                SUCCESS -> {
+                                                    resultGetUser.data?.firebaseInstanceToken?.forEach { token ->
+                                                        notificationRepositoryImpl.postNotification(
+                                                            PushNotification(
+                                                                data = NotificationData(
+                                                                    title = appContext.getString(R.string.you_got_a_new_shopping_list),
+                                                                    message = appContext.getString(
+                                                                        R.string.shopping_list_has_been_shared_with_you,
+                                                                        shoppingList.name
+                                                                    )
+                                                                ),
+                                                                to = token
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                                LOADING -> {
+                                                    onShowLoading()
+                                                }
+                                                ERROR -> {
+                                                    result.message?.let {
+                                                        onShowErrorMessage(it)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                        LOADING -> {
+                            onShowLoading()
+                        }
+                        ERROR -> {
+                            result.message?.let {
+                                onShowErrorMessage(it)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

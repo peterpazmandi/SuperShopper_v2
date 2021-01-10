@@ -263,6 +263,8 @@
     <string name="user_has_accepted_your_friend_request">%1$s has accepted your friend request.</string>
     <string name="finished_shopping_list">Finished shopping list</string>
     <string name="shopping_list_has_been_completed">%1$s has been completed!</string>
+    <string name="you_got_a_new_shopping_list">You got a new shopping list</string>
+    <string name="shopping_list_has_been_shared_with_you">%1$s has been shared with you!</string>
 
 
 </resources>

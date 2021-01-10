@@ -14,4 +14,5 @@ data class User(
     val numberOfFriends : Int = 0,
     val shoppingListCount : Int = 0,
     var hasSubscription : Boolean = false,
+    var firebaseInstanceToken: MutableList<String> = mutableListOf<String>()
 ) : Parcelable

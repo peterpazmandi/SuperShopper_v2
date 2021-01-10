@@ -1,6 +1,5 @@
 package com.inspirecoding.supershopper.ui.shoppinglists
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*

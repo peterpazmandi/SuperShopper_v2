@@ -1,16 +1,23 @@
 package com.inspirecoding.supershopper.ui.profile.userprofile
 
+import android.app.Application
+import android.content.Context
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.FriendRequest
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.notification.NotificationData
+import com.inspirecoding.supershopper.notification.NotificationRepositoryImpl
+import com.inspirecoding.supershopper.notification.PushNotification
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status.*
 import com.inspirecoding.supershopper.utils.enums.FriendshipStatus
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -20,6 +27,8 @@ import java.util.*
 
 class UserProfileViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
+    private val notificationRepositoryImpl: NotificationRepositoryImpl,
+    @ApplicationContext private val appContext: Context,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
 
@@ -190,11 +199,20 @@ class UserProfileViewModel @ViewModelInject constructor(
                                 userRepository.sendFriendRequest(receiverFriendRequest as FriendRequest).collect { resultReceiver ->
                                     when(resultReceiver.status)
                                     {
+                                        SUCCESS -> {
+                                            _selectedUser.firebaseInstanceToken.forEach { token ->
+                                                notificationRepositoryImpl.postNotification(
+                                                    PushNotification(
+                                                        data = NotificationData(
+                                                            title = appContext.getString(R.string.new_friend_request),
+                                                            message = appContext.getString(R.string.user_has_sent_you_a_friend_request, _selectedUser.name)),
+                                                        to = token)
+                                                )
+                                            }
+                                            onShowResult(FriendshipStatus.SENDER)
+                                        }
                                         LOADING -> {
                                             onShowLoading()
-                                        }
-                                        SUCCESS -> {
-                                            onShowResult(FriendshipStatus.SENDER)
                                         }
                                         ERROR -> {
                                             resultReceiver.message?.let {
@@ -215,7 +233,6 @@ class UserProfileViewModel @ViewModelInject constructor(
             }
         }
     }
-
     fun onAcceptFriendRequest() {
         viewModelScope.launch {
             if(senderFriendRequest != null && receiverFriendRequest != null) {
@@ -262,6 +279,18 @@ class UserProfileViewModel @ViewModelInject constructor(
                                                                     userRepository.createFriend(friend).collect { resultFriend ->
                                                                         when(resultFriend.status)
                                                                         {
+                                                                            SUCCESS -> {
+                                                                                _selectedUser.firebaseInstanceToken.forEach { token ->
+                                                                                    notificationRepositoryImpl.postNotification(
+                                                                                        PushNotification(
+                                                                                            data = NotificationData(
+                                                                                                title = appContext.getString(R.string.friend_request_accepted),
+                                                                                                message = appContext.getString(R.string.user_has_accepted_your_friend_request, _currentUser.name)),
+                                                                                            to = token)
+                                                                                    )
+                                                                                }
+                                                                                onShowResult(FriendshipStatus.FRIENDS)
+                                                                            }
                                                                             LOADING -> {
                                                                                 onShowLoading()
                                                                             }
@@ -269,9 +298,6 @@ class UserProfileViewModel @ViewModelInject constructor(
                                                                                 resultReceiver.message?.let {
                                                                                     onShowErrorMessage(it)
                                                                                 }
-                                                                            }
-                                                                            SUCCESS -> {
-                                                                                onShowResult(FriendshipStatus.FRIENDS)
                                                                             }
                                                                         }
                                                                     }
@@ -371,6 +397,7 @@ class UserProfileViewModel @ViewModelInject constructor(
             }
         }
     }
+
     private fun onShowLoading() {
         viewModelScope.launch {
             currentUser.value?.let {

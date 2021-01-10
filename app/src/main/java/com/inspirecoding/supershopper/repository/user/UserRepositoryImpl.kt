@@ -22,6 +22,7 @@ import com.google.firebase.auth.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.*
@@ -360,6 +361,49 @@ class UserRepositoryImpl @Inject constructor(
 
         exception.message?.let { message ->
             emit(Resource.Error(message))
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun getFirebaseInstanceToken() = flow<String> {
+        val token = FirebaseMessaging.getInstance().token.await()
+        emit(token)
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            emit(message)
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    override fun updateFirebaseInstanceTokenOFUserInFirestore(
+        user: User, coroutineScope: CoroutineScope
+    ) = flow<Resource<Void?>> {
+        _userResource.send(Resource.Loading(true))
+
+        try {
+            coroutineScope.launch {
+
+                val token = FirebaseMessaging.getInstance().token.await()
+
+                user.firebaseInstanceToken.add(token)
+                usersCollectionReference
+                    .document(user.id)
+                    .update("firebaseInstanceToken", user.firebaseInstanceToken)
+                    .await()
+
+                _userResource.send(Resource.Success(user))
+
+            }
+        } catch (exception: Exception) {
+            exception.message?.let {
+                _userResource.send(Resource.Error(it))
+            }
+        }
+    }.catch { exception ->
+
+        exception.message?.let { message ->
+            _userResource.send(Resource.Error(message))
         }
 
     }.flowOn(Dispatchers.IO)

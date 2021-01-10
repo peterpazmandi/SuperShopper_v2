@@ -40,6 +40,20 @@ class SplashViewModel @ViewModelInject constructor(
         }
     }
 
+    fun updateFirebaseInstanceTokenOFUserInFirestore(
+        user: User
+    ) {
+        viewModelScope.launch {
+            userRepository.getFirebaseInstanceToken().collect { token ->
+                if(user.firebaseInstanceToken.contains(token)) {
+                    onNavigateToShoppingListsFragment(user)
+                } else {
+                    userRepository.updateFirebaseInstanceTokenOFUserInFirestore(user, viewModelScope).collect()
+                }
+            }
+        }
+    }
+
     /** Events **/
     fun onLoginSelected() {
         viewModelScope.launch {

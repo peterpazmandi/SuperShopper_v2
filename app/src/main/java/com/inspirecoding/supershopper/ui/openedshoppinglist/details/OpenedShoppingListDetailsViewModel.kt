@@ -3,7 +3,6 @@ package com.inspirecoding.supershopper.ui.openedshoppinglist.details
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -16,7 +15,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.util.*
 
 class OpenedShoppingListDetailsViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,

@@ -2,7 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "kotlin-kapt"
-    id 'kotlin-android-extensions'
+    id "kotlin-android-extensions"
     id "androidx.navigation.safeargs"
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
@@ -58,8 +58,16 @@ dependencies {
 
 
 
+    /** Retrofit **/
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    /** OkHttp Logging interceptor **/
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
+
+
     /** Fragment **/
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
 
     /** Firebase Auth **/
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
@@ -67,11 +75,15 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:$firebase_firestore_version"
     /** Firebase Storage **/
     implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
+    /** Firebase Storage **/
+    implementation "com.google.firebase:firebase-messaging:$firebase_cloud_messaging_version"
+
 
     /** Facebook auth **/
     implementation "com.facebook.android:facebook-android-sdk:$facebook_android_sdk"
     /** Google auth **/
     implementation "com.google.android.gms:play-services-auth:$google_auth"
+
 
     /** Kotlin Coroutines **/
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
@@ -84,6 +96,10 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidX_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_androidX_version"
+
+
+    /** DataStore **/
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
 
 
     /** Lifecycle components **/
@@ -104,7 +120,7 @@ dependencies {
 
 
     /** Picasso **/
-    implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
 
     /** Room **/

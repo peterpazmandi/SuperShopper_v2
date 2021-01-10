@@ -257,4 +257,10 @@
     <string name="change">Change</string>
     <string name="change_title">Change title</string>
 
+    <string name="new_friend_request">New Friend Request</string>
+    <string name="user_has_sent_you_a_friend_request">%1$s has sent you a friend request.</string>
+    <string name="friend_request_accepted">Friend request accepted</string>
+    <string name="user_has_accepted_your_friend_request">%1$s has accepted your friend request.</string>
+
+
 </resources>

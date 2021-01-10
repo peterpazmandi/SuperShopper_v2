@@ -3,15 +3,10 @@ package com.inspirecoding.supershopper.ui.openedshoppinglist
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.inspirecoding.supershopper.data.ListItem
-import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
-import com.inspirecoding.supershopper.repository.user.UserRepository
-import com.inspirecoding.supershopper.ui.openedshoppinglist.details.leavedeleteshoppinglist.LeaveDeleteShoppingListBottomSheetViewModel
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
-import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.Status.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect

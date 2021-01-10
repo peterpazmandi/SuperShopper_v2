@@ -50,6 +50,8 @@ interface UserRepository {
 
     suspend fun updateProfilePictureOfUserInFirestore(user: User): Flow<Resource<Void?>>
     suspend fun updateNameOFUserInFirestore(user: User): Flow<Resource<Void?>>
+    fun updateFirebaseInstanceTokenOFUserInFirestore(user: User, coroutineScope: CoroutineScope): Flow<Resource<Void?>>
+    fun getFirebaseInstanceToken(): Flow<String>
     suspend fun uploadProfilePictureOfUserToStorage(user: User): Flow<Resource<User>>
 
     fun getFriendsAlphabeticalList(user: User): Flow<Resource<List<Friend>>>

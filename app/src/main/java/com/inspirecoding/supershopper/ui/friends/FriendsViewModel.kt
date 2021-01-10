@@ -4,6 +4,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.inspirecoding.supershopper.data.*
+import com.inspirecoding.supershopper.notification.NotificationRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.friends.listitems.FriendsListItem
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel

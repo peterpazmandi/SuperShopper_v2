@@ -17,7 +17,6 @@ import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.LeaveDeleteShoppingListBottomSheetFragmentBinding
 import com.inspirecoding.supershopper.ui.findfriends.FindFriendsBottomSheetFragmentDirections
-import com.inspirecoding.supershopper.ui.findfriends.FindFriendsBottomSheetViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

@@ -17,6 +17,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import com.inspirecoding.supershopper.notification.Constants.Companion.TOPIC
+import com.inspirecoding.supershopper.notification.FirebaseService
 import com.inspirecoding.supershopper.utils.ObjectFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
@@ -40,6 +44,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        FirebaseInstanceId.getInstance().token?.let {
+            println("refreshedToken -> $it")
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

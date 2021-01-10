@@ -10,6 +10,7 @@ import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.SplashFragmentBinding
+import com.inspirecoding.supershopper.notification.FirebaseService
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
@@ -51,8 +52,14 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
                 when(userResource.status)
                 {
                     Status.SUCCESS ->  {
-                        handleUserLoggedInResult(userResource.data)
-                        binding.progressBar.makeItInVisible()
+                        val currentUser = userResource.data
+
+                        if(currentUser != null) {
+                            viewModel.updateFirebaseInstanceTokenOFUserInFirestore(currentUser)
+                        } else {
+                            binding.motionLayout.transitionToState(R.id.end)
+                            binding.progressBar.makeItInVisible()
+                        }
                     }
                     Status.LOADING ->  {
                         binding.progressBar.makeItVisible()
@@ -65,14 +72,6 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
                     }
                 }
             }
-        }
-    }
-
-    private fun handleUserLoggedInResult(user: User?) {
-        if (user != null) {
-            viewModel.onNavigateToShoppingListsFragment(user)
-        } else {
-            binding.motionLayout.transitionToState(R.id.end)
         }
     }
 

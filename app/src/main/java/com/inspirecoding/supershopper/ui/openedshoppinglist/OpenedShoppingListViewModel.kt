@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
+import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status.*
 import kotlinx.coroutines.channels.Channel
@@ -15,8 +16,9 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class OpenedShoppingListViewModel @ViewModelInject constructor(
-    @Assisted private val state: SavedStateHandle,
-    private val shoppingListRepository: ShoppingListRepository
+    private val userRepository: UserRepository,
+    private val shoppingListRepository: ShoppingListRepository,
+    @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
 
     // CONST
@@ -35,8 +37,34 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
 
     // ARGUMENTS
     val openedShoppingList = state.getLiveData<ShoppingList>(ARG_KEY_OPENEDSHOPPINGLIST)
+
     val currentUser = state.getLiveData<User>(ShoppingListsViewModel.ARG_KEY_USER)
 
+//    private fun getFriends(shoppingList: ShoppingList) = liveData<ShoppingList> {
+//        shoppingList.friendsSharedWith.forEach { userId ->
+//            userRepository.getUserFromFirestore(userId).collect { result ->
+//                when(result.status)
+//                {
+//                    SUCCESS -> {
+//                        result.data?.let {
+//                            println(shoppingList.usersSharedWith.size)
+////                            shoppingList.usersSharedWith.add(it)
+//                            if(shoppingList.usersSharedWith.size == shoppingList.friendsSharedWith.size) {
+//                                println(shoppingList.usersSharedWith)
+//                                emit(shoppingList)
+//                            }
+//                        }
+//                    }
+//                    LOADING -> onShowLoading()
+//                    ERROR -> {
+//                        result.message?.let {
+//                            onShowErrorMessage(it)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     fun updateShoppingListDueDate(dueDate: Long) {
         openedShoppingList.value?.let { shoppingList ->
@@ -72,7 +100,6 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                     {
                         SUCCESS -> {
                             shoppingList.name = newTitle
-                            openedShoppingList.postValue(shoppingList)
                         }
                         LOADING -> {
                             onShowLoading()

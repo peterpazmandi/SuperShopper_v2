@@ -13,11 +13,12 @@ data class ShoppingList(
     var timeStamp: Long = 0,
     var shoppingListStatus: String = "",
     val friendsSharedWith: MutableList<String> = mutableListOf<String>(),
+    val usersSharedWith: MutableList<User> = mutableListOf(),
     var listOfItems: MutableList<ListItem> = mutableListOf<ListItem>(),
     val comment: String = ""
 ): Parcelable {
 
-    val usersSharedWith: MutableList<User> = mutableListOf()
+
 
     fun calculateProgress(): Int {
         val itemsCount = listOfItems.size

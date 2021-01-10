@@ -48,6 +48,7 @@
         android:layout_marginStart="@dimen/margin_5xlarge"
         android:layout_marginEnd="@dimen/margin_5xlarge"
         android:src="@drawable/ic_empty_shopping_list"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +64,7 @@
         android:textColor="@color/dark_blue"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_emptyCartIllustration" />

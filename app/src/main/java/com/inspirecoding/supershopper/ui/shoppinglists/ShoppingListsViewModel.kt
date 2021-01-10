@@ -54,27 +54,6 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                         }
                         Status.SUCCESS -> {
                             result.data?.map { _shoppingList ->
-                                _shoppingList.friendsSharedWith.map { friendId ->
-                                    userRepository.getUserFromFirestore(friendId).collect { userResult ->
-                                        when(userResult.status)
-                                        {
-                                            Status.LOADING -> {
-                                                _shoppingLists.postValue(Resource.Loading(true))
-                                            }
-                                            Status.SUCCESS -> {
-                                                userResult.data?.let {
-                                                    _shoppingList.usersSharedWith.add(it)
-                                                }
-                                            }
-                                            Status.ERROR -> {
-                                                result.message?.let {
-                                                    _shoppingLists.postValue(Resource.Error(it))
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
                                 updateShoppingList(_shoppingList)
                             }
 

@@ -122,7 +122,8 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
             .document(shoppingListId)
             .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                 coroutineScope.launch {
-                    val shoppingList = documentSnapshot?.let { it.toObject(ShoppingList::class.java) }
+                    val shoppingList = documentSnapshot?.toObject(ShoppingList::class.java)
+
                     shoppingList?.let {
                         offer(Resource.Success(it))
                     }

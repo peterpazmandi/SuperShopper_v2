@@ -11,6 +11,7 @@ import com.inspirecoding.supershopper.repository.user.UserRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.switchMap
 import kotlinx.coroutines.launch
 
 class SplashViewModel @ViewModelInject constructor(

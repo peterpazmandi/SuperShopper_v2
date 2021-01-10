@@ -65,6 +65,7 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
 
         setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_TITLE) { _, bundle ->
             bundle.getString(OpenedShoppingListViewModel.ARG_KEY_TITLE)?.let { newTitle ->
+                binding.tvShoppingListName.text = newTitle
                 viewModel.updateShoppingListsTitle(newTitle)
             }
         }

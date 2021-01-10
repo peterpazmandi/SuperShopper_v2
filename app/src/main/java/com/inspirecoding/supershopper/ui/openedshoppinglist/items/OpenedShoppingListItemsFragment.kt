@@ -24,6 +24,7 @@ import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
 

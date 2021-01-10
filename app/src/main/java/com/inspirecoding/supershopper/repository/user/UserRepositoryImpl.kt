@@ -463,7 +463,11 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getUserFromFirestore(userId: String) = flow<Resource<User>> {
 
-        val documentSnapshot = usersCollectionReference.document(userId).get().await()
+        val documentSnapshot = usersCollectionReference
+            .document(userId)
+            .get()
+            .await()
+
         val user = documentSnapshot.toObject(User::class.java)
         firebaseAuth.currentUser?.email?.let { _email ->
             user?.emailAddress = _email

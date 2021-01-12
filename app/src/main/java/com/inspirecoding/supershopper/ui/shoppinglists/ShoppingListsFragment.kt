@@ -99,12 +99,16 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
             when(result.status)
             {
                 Status.LOADING -> {
-                    binding.progressBar.makeItVisible()
+                    if(result.isLoading) {
+                        binding.progressBar.makeItVisible()
+                    } else {
+                        binding.progressBar.makeItInVisible()
+                    }
                 }
                 Status.SUCCESS ->  {
-                    binding.progressBar.makeItInVisible()
 
                     result.data?.let {
+                        binding.progressBar.makeItInVisible()
                         val list = createShoppingListWithHeader(it)
                         setUiIfListEmpty(list.size == 0)
                         adapter.submitList(list)
@@ -113,7 +117,6 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                 }
                 Status.ERROR ->  {
                     binding.progressBar.makeItInVisible()
-
 
                     result.message?.let { _errorMessage ->
                         viewModel.onShowErrorMessage(_errorMessage)
@@ -130,11 +133,15 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
 
             binding.ivEmptyCart.makeItVisible()
             binding.tvEmptyCart.makeItVisible()
+            binding.tvCreateOneText.makeItVisible()
+            binding.ivDownArrow.makeItVisible()
 
         } else {
 
             binding.ivEmptyCart.makeItInVisible()
             binding.tvEmptyCart.makeItInVisible()
+            binding.tvCreateOneText.makeItInVisible()
+            binding.ivDownArrow.makeItInVisible()
 
         }
 

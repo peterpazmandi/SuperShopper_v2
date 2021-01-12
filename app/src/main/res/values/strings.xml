@@ -131,7 +131,7 @@
     <string name="oh_oh">Oh oh</string>
     <string name="error_during_registration_please_try_again_later">Error during registration. Please try again later.</string>
     <string name="error_during_login_please_try_again_later">Error during login. Please try again later.</string>
-    <string name="you_currently_have_no_shopping_lists_created">You currently have no shopping lists created.</string>
+    <string name="you_have_no_shopping_lists">You have\nno shopping lists.</string>
     <string name="create_new_shopping_list">Create new shopping list</string>
 
     <string name="the_day_after_tomorrow">The day after tomorrow</string>
@@ -265,6 +265,7 @@
     <string name="shopping_list_has_been_completed">%1$s has been completed!</string>
     <string name="you_got_a_new_shopping_list">You got a new shopping list</string>
     <string name="shopping_list_has_been_shared_with_you">%1$s has been shared with you!</string>
+    <string name="create_one">Create one!</string>
 
 
 </resources>

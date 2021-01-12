@@ -81,6 +81,7 @@
         android:textAlignment="center"
         android:textColor="@color/dark_blue"
         android:textSize="@dimen/textSize_medium"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/fab_addItem"
         app:layout_constraintEnd_toStartOf="@id/fab_addItem"
         app:layout_constraintTop_toTopOf="@+id/fab_addItem" />

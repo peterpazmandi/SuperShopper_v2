@@ -2,9 +2,7 @@ package com.inspirecoding.supershopper.ui.findfriends
 
 import android.app.Dialog
 import android.content.DialogInterface
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,20 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.auth.UserInfo
 import com.inspirecoding.supershopper.R
-import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.FindFriendsBottomSheetFragmentBinding
 import com.inspirecoding.supershopper.ui.categories.listitems.UserItem
-import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListFragmentDirections
-import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel.Companion.ARG_KEY_FRIENDSSHAREDWITH
-import com.inspirecoding.supershopper.ui.openedshoppinglist.details.OpenedShoppingListDetailsViewModel
 import com.inspirecoding.supershopper.utils.Status
-import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
@@ -75,7 +66,7 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupFriendsListObserver() {
-        viewModel.listOfFriends.observe(viewLifecycleOwner, { result ->
+        viewModel.listOfFriendsLD.observe(viewLifecycleOwner, { result ->
             when (result.status)
             {
                 Status.LOADING -> {

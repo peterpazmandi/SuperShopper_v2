@@ -38,7 +38,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     private val _shoppingListsFragmentsEventChannel = Channel<ShoppingListsFragmentsEvent>()
     val shoppingListsFragmentsEventChannel = _shoppingListsFragmentsEventChannel.receiveAsFlow()
 
-    private val __shoppingLists = mutableListOf<ShoppingList>()
+    private var __shoppingLists = mutableListOf<ShoppingList>()
     private val _shoppingLists = MutableLiveData<Resource<List<ShoppingList>>>()
     val shoppingLists : LiveData<Resource<List<ShoppingList>>> = _shoppingLists
 
@@ -50,11 +50,11 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                     when(result.status)
                     {
                         Status.LOADING -> {
-                            _shoppingLists.postValue(Resource.Loading(true))
+                            _shoppingLists.postValue(Resource.Loading(result.isLoading))
                         }
                         Status.SUCCESS -> {
-                            result.data?.map { _shoppingList ->
-                                updateShoppingList(_shoppingList)
+                            result.data?.let { list ->
+                                updateShoppingList(list)
                             }
 
                             _shoppingLists.postValue(Resource.Success(__shoppingLists))
@@ -70,15 +70,30 @@ class ShoppingListsViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun updateShoppingList(shoppingList: ShoppingList) {
-        val index = __shoppingLists.indexOfFirst {
-            shoppingList.shoppingListId == it.shoppingListId
+    private fun updateShoppingList(newShoppingLists: List<ShoppingList>) {
+
+        if(newShoppingLists.isEmpty()) {
+            __shoppingLists.clear()
         }
 
-        if(index != -1) {
-            __shoppingLists[index] = shoppingList
-        } else {
-            __shoppingLists.add(shoppingList)
+        newShoppingLists.map { shoppingList ->
+            when {
+                newShoppingLists.size < __shoppingLists.size -> {
+                    val oldList = mutableListOf<ShoppingList>()
+                    oldList.addAll(__shoppingLists)
+                    oldList.removeAll(newShoppingLists)
+                    __shoppingLists.removeAll(oldList)
+                }
+                newShoppingLists.size == __shoppingLists.size -> {
+                    val index = __shoppingLists.indexOfFirst {
+                        shoppingList.shoppingListId == it.shoppingListId
+                    }
+                    __shoppingLists[index] = shoppingList
+                }
+                else -> {
+                    __shoppingLists.add(shoppingList)
+                }
+            }
         }
     }
 

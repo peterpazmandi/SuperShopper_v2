@@ -54,6 +54,7 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         currentUser: User, coroutineScope: CoroutineScope
     ) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
         offer(Resource.Loading(true))
+        println("Resource.Loading(true)")
 
         val query = if(lastShoppingListResult == null) {
             shoppingListsCollectionReference
@@ -71,12 +72,19 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         val subscription = query
             .addSnapshotListener{ querySnapshot, _ ->
                 coroutineScope.launch {
-                    val shoppingLists = querySnapshot?.documents?.mapNotNull {
-                        lastShoppingListResult = it as DocumentSnapshot
-                        it.toObject(ShoppingList::class.java)
-                    }?.toMutableList()
-                    shoppingLists?.let {
-                        offer(Resource.Success(it))
+                    println("${querySnapshot?.documentChanges}")
+                    if(!querySnapshot?.documentChanges.isNullOrEmpty()) {
+                        val shoppingLists = querySnapshot?.documents?.mapNotNull {
+                            lastShoppingListResult = it as DocumentSnapshot
+                            it.toObject(ShoppingList::class.java)
+                        }?.toMutableList()
+
+                        shoppingLists?.let { _shoppingLists ->
+                            println("Repo -> ${_shoppingLists.size}")
+                            offer(Resource.Success(_shoppingLists))
+                        }
+                    } else {
+                        offer(Resource.Loading(false))
                     }
                 }
             }

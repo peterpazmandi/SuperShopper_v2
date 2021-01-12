@@ -3,7 +3,6 @@ package com.inspirecoding.supershopper.ui.findfriends
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.inspirecoding.supershopper.data.Friend
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -11,8 +10,6 @@ import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListReposi
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.categories.listitems.UserItem
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
-import com.inspirecoding.supershopper.ui.openedshoppinglist.details.OpenedShoppingListDetailsViewModel
-import com.inspirecoding.supershopper.ui.selectduedate.SelectDueDateBottomSheetViewModel
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
@@ -39,9 +36,9 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
 
     private val listOfSelectedUsers = mutableListOf<User>()
 
-    private val listOfUserObjects = mutableListOf<User>()
-    private val _listOfFriends = MutableLiveData<Resource<List<User>>>()
-    val listOfFriends: LiveData<Resource<List<User>>> = _listOfFriends
+    private val listOfFriends = mutableListOf<User>()
+    private val _listOfFriendsMLD = MutableLiveData<Resource<List<User>>>()
+    val listOfFriendsLD: LiveData<Resource<List<User>>> = _listOfFriendsMLD
 
     fun getFriendsAlphabeticalList() {
         viewModelScope.launch {
@@ -50,46 +47,72 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
                     when(result.status)
                     {
                         Status.LOADING -> {
-                            _listOfFriends.postValue(Resource.Loading(true))
+                            _listOfFriendsMLD.postValue(Resource.Loading(true))
                         }
                         Status.SUCCESS -> {
-                            result.data?.let { listOfFriends ->
-                                listOfFriends.forEach {
-                                    if(_currentUser.id != it.friendId) {
-                                        userRepository.getUserFromFirestore(it.friendId).collect { result ->
-                                            when (result.status) {
-                                                Status.SUCCESS -> {
-                                                    result.data?.let { user ->
-                                                        listOfUserObjects.add(user)
-                                                    }
+                            result.data?.let { _listOfFriends ->
+                                _listOfFriends.forEach { friend ->
+                                    userRepository.getUserFromFirestore(friend.friendId).collect { result ->
+                                        when (result.status) {
+                                            Status.SUCCESS -> {
+                                                result.data?.let { user ->
+                                                    prepareLists(user)
                                                 }
-                                                Status.LOADING -> {
-                                                    _listOfFriends.postValue(Resource.Loading(true))
-                                                }
-                                                Status.ERROR -> {
-                                                    result.message?.let { _message ->
-                                                        onShowErrorMessage(_message)
-                                                        _listOfFriends.postValue(Resource.Error(_message))
-                                                    }
+                                            }
+                                            Status.LOADING -> {
+                                                _listOfFriendsMLD.postValue(Resource.Loading(true))
+                                            }
+                                            Status.ERROR -> {
+                                                result.message?.let { _message ->
+                                                    onShowErrorMessage(_message)
+                                                    _listOfFriendsMLD.postValue(Resource.Error(_message))
                                                 }
                                             }
                                         }
-                                    } else {
-                                        listOfSelectedUsers.add(_currentUser)
                                     }
-
                                 }
-                                _listOfFriends.postValue(Resource.Success(listOfUserObjects))
+                                listOfSelectedUsers.add(_currentUser)
+                                reorderListOfFriends()
+                                _listOfFriendsMLD.postValue(Resource.Success(listOfFriends.toList()))
                             }
                         }
                         Status.ERROR -> {
                             result.message?.let {
                                 onShowErrorMessage(it)
-                                _listOfFriends.postValue(Resource.Error(it))
+                                _listOfFriendsMLD.postValue(Resource.Error(it))
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun prepareLists(user: User) {
+        openedShoppingList.value?.let { _shoppingList ->
+            if(_shoppingList.friendsSharedWith.contains(user.id)) {
+                listOfSelectedUsers.add(user)
+            } else {
+                listOfFriends.add(user)
+            }
+        }
+    }
+
+    private fun reorderListOfFriends() {
+        openedShoppingList.value?.let { _shoppingList ->
+            if(_shoppingList.friendsSharedWith.size == listOfSelectedUsers.size) {
+                _shoppingList.friendsSharedWith.forEachIndexed { index, friendId ->
+                    val user = listOfSelectedUsers.find { user ->
+                        user.id == friendId
+                    }
+                    listOfSelectedUsers.removeIf { user ->
+                        user.id == friendId
+                    }
+                    user?.let {
+                        listOfSelectedUsers.add(index, user)
+                    }
+                }
+                println("listOfSelectedUsers -> ${listOfSelectedUsers.map { it.id }}" )
             }
         }
     }

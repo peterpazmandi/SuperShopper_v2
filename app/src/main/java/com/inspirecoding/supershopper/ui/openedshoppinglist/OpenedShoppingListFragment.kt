@@ -59,6 +59,7 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
 
         setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH) { _, bundle ->
             bundle.getStringArrayList(OpenedShoppingListViewModel.ARG_KEY_FRIENDSSHAREDWITH)?.let { listOfFriends ->
+                println(listOfFriends)
                 viewModel.updateShoppingListsSharedWithFriends(listOfFriends.toList())
             }
         }

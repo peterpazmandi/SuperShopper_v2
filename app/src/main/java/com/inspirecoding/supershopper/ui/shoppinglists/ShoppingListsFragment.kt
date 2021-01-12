@@ -40,10 +40,11 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         binding = ShoppingListsFragmentBinding.bind(view)
 
         setupCurrentUserObserver()
-        viewModel.getCurrentUserShoppingListsRealTime()
+        println("ShoppingLists - $TAG - onViewCreated")
         setupRecyclerView()
         setupEvents()
         setupShoppingListObserver()
+        viewModel.getCurrentUserShoppingListsRealTime()
 
         binding.fabSettings.setOnClickListener {
             viewModel.onOpenSettings()
@@ -110,6 +111,7 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
                     result.data?.let {
                         binding.progressBar.makeItInVisible()
                         val list = createShoppingListWithHeader(it)
+                        println("ShoppingLists - $TAG - shoppingLists.observe -> ${list.size}")
                         setUiIfListEmpty(list.size == 0)
                         adapter.submitList(list)
                     }
@@ -148,12 +150,13 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
     }
 
     private fun setupRecyclerView() {
-        adapter = BaseListAdapter { view, selectedItem ->
+        adapter = BaseListAdapter { _, selectedItem ->
             (selectedItem as ShoppingListItemItem).let { shoppingListItem ->
                 val shoppingList = shoppingListItem.shoppingList
                 viewModel.onOpenSelectedShoppingList(shoppingList)
             }
         }
+        println("ShoppingLists - $TAG - setupRecyclerView")
 
         binding.rvShoppingLists.setHasFixedSize(true)
         binding.rvShoppingLists.setItemViewCacheSize(20)
@@ -164,6 +167,7 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(1)) {
+                    println("ShoppingLists - $TAG - rvShoppingLists")
                     viewModel.getCurrentUserShoppingListsRealTime()
                 }
             }

@@ -3,6 +3,8 @@ package com.inspirecoding.supershopper.ui.shoppinglists
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.DocumentChange.Type.*
 import com.inspirecoding.supershopper.data.Resource
 import com.inspirecoding.supershopper.data.ShoppingList
 import com.inspirecoding.supershopper.data.User
@@ -45,8 +47,11 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     fun getCurrentUserShoppingListsRealTime() {
         viewModelScope.launch {
+            println("ShoppingLists - ViewModel -> viewModelScope.launch")
             currentUser.value?.let { _currentUser ->
                 shoppingListRepository.getCurrentUserShoppingListsRealTime(_currentUser, viewModelScope).collect { result ->
+                    println("ShoppingLists - ViewModel -> getCurrentUserShoppingListsRealTime")
+                    println("ShoppingLists - ViewModel - result -> ${result.data?.size}")
                     when(result.status)
                     {
                         Status.LOADING -> {
@@ -54,10 +59,12 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                         }
                         Status.SUCCESS -> {
                             result.data?.let { list ->
+                                println("ShoppingLists - ViewModel - list before -> ${list.size}")
+                                println("ShoppingLists - ViewModel - list before -> ${__shoppingLists.size}")
                                 updateShoppingList(list)
+                                println("ShoppingLists - ViewModel - list after -> ${__shoppingLists.size}")
+                                _shoppingLists.postValue(Resource.Success(__shoppingLists))
                             }
-
-                            _shoppingLists.postValue(Resource.Success(__shoppingLists))
                         }
                         Status.ERROR -> {
                             result.message?.let {
@@ -65,35 +72,45 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                             }
                         }
                     }
+//                    if(__shoppingLists.size > 0) {
+//                        println("ShoppingLists - ViewModel - list after -> ${__shoppingLists.size}")
+//                        _shoppingLists.postValue(Resource.Success(__shoppingLists))
+//                    }
                 }
             }
         }
     }
 
-    private fun updateShoppingList(newShoppingLists: List<ShoppingList>) {
+    private fun updateShoppingList(newShoppingLists: MutableList<Pair<DocumentChange, ShoppingList>>) {
 
-        if(newShoppingLists.isEmpty()) {
-            __shoppingLists.clear()
-        }
-
-        newShoppingLists.map { shoppingList ->
-            when {
-                newShoppingLists.size < __shoppingLists.size -> {
-                    val oldList = mutableListOf<ShoppingList>()
-                    oldList.addAll(__shoppingLists)
-                    oldList.removeAll(newShoppingLists)
-                    __shoppingLists.removeAll(oldList)
-                }
-                newShoppingLists.size == __shoppingLists.size -> {
-                    val index = __shoppingLists.indexOfFirst {
-                        shoppingList.shoppingListId == it.shoppingListId
+        newShoppingLists.forEach { pair ->
+            val shoppingList = pair.second
+            when(pair.first.type)
+            {
+                ADDED -> {
+                    val doesListAlreadyIncluded = __shoppingLists.find {
+                        it.shoppingListId == shoppingList.shoppingListId
                     }
-                    __shoppingLists[index] = shoppingList
+                    if(doesListAlreadyIncluded == null) {
+                        __shoppingLists.add(shoppingList)
+                        println("ShoppingLists - ViewModel - ADDED -> $shoppingList")
+                    }
                 }
-                else -> {
-                    __shoppingLists.add(shoppingList)
+                MODIFIED -> {
+                    println("ShoppingLists - ViewModel - newShoppingLists.size -> ${newShoppingLists.size}")
+                    val index = __shoppingLists.indexOfLast {
+                        it.shoppingListId == shoppingList.shoppingListId
+                    }
+                    println("ShoppingLists - ViewModel - __shoppingLists.indexOfFirst -> $index")
+                    println("ShoppingLists - ViewModel - __shoppingLists.indexOfFirst -> ${shoppingList.name}")
+                    if(index != -1) __shoppingLists[index] = shoppingList
+                }
+                REMOVED -> {
+                    __shoppingLists.remove(shoppingList)
                 }
             }
+
+            __shoppingLists.sortByDescending { it.dueDate }
         }
     }
 
@@ -188,9 +205,11 @@ class ShoppingListsViewModel @ViewModelInject constructor(
         data class ShowErrorMessage(val message: String) : ShoppingListsFragmentsEvent()
     }
 
-
+    fun clearShoppingListResult() {
+        shoppingListRepository.clearShoppingListResult()
+    }
     override fun onCleared() {
         super.onCleared()
-        shoppingListRepository.clearShoppingListResult()
+        clearShoppingListResult()
     }
 }

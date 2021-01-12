@@ -1,5 +1,7 @@
 package com.inspirecoding.supershopper.repository.shoppinglist
 
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.DocumentChange.Type.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -52,9 +54,8 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
 
     override suspend fun getCurrentUserShoppingListsRealTime(
         currentUser: User, coroutineScope: CoroutineScope
-    ) : Flow<Resource<MutableList<ShoppingList>>> = callbackFlow {
+    ) : Flow<Resource<MutableList<Pair<DocumentChange, ShoppingList>>>> = callbackFlow {
         offer(Resource.Loading(true))
-        println("Resource.Loading(true)")
 
         val query = if(lastShoppingListResult == null) {
             shoppingListsCollectionReference
@@ -72,19 +73,18 @@ class ShoppingListRepositoryImpl @Inject constructor() : ShoppingListRepository 
         val subscription = query
             .addSnapshotListener{ querySnapshot, _ ->
                 coroutineScope.launch {
-                    println("${querySnapshot?.documentChanges}")
-                    if(!querySnapshot?.documentChanges.isNullOrEmpty()) {
-                        val shoppingLists = querySnapshot?.documents?.mapNotNull {
-                            lastShoppingListResult = it as DocumentSnapshot
-                            it.toObject(ShoppingList::class.java)
-                        }?.toMutableList()
-
-                        shoppingLists?.let { _shoppingLists ->
-                            println("Repo -> ${_shoppingLists.size}")
-                            offer(Resource.Success(_shoppingLists))
+                    querySnapshot?.let { _querySnapshot ->
+                        val mapOfResult = mutableListOf<Pair<DocumentChange, ShoppingList>>()
+                        for(documentChange in _querySnapshot.documentChanges) {
+                            val shoppingList = documentChange.document.toObject(ShoppingList::class.java)
+                            mapOfResult.add(Pair(documentChange, shoppingList))
                         }
-                    } else {
-                        offer(Resource.Loading(false))
+
+                        if(querySnapshot.documents.isNotEmpty()) {
+                            lastShoppingListResult = querySnapshot.documents.last() as DocumentSnapshot
+                        }
+
+                        offer(Resource.Success(mapOfResult))
                     }
                 }
             }

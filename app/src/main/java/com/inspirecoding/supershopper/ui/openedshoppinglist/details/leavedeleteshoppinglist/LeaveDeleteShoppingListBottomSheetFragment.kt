@@ -98,16 +98,16 @@ class LeaveDeleteShoppingListBottomSheetFragment : BottomSheetDialogFragment() {
 
 
     /** Navigation methods **/
-    private fun navigateBackWithResult(listOfMembers: MutableList<String>, currentUserId: String) {
-        val leaveOrDelete = if(listOfMembers[0] == currentUserId) {
-                getString(R.string.delete_shopping_list)
-            } else {
-                getString(R.string.leave_shopping_list)
-            }
+    private fun navigateBackWithResult(listOfMembers: MutableList<User>, currentUser: User) {
+        val leaveOrDelete = if(listOfMembers[0] == currentUser) {
+            getString(R.string.delete_shopping_list)
+        } else {
+            getString(R.string.leave_shopping_list)
+        }
 
         setFragmentResult(
             OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE,
-            bundleOf(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE to leaveOrDelete)
+            bundleOf(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE to listOfMembers)
         )
         findNavController().popBackStack()
     }

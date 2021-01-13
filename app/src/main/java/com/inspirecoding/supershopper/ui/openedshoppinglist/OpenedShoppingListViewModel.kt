@@ -147,7 +147,19 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun leaveShoppingList() {
+
+    fun leaveOrDeleteShoppingList(listOfUsers: ArrayList<User>) {
+        currentUser.value?.let { _currentUser ->
+            if(listOfUsers[0] == _currentUser) {
+                listOfUsers.remove(_currentUser)
+                deleteShoppingList(listOfUsers, _currentUser)
+            } else {
+                listOfUsers.remove(_currentUser)
+                leaveShoppingList(listOfUsers)
+            }
+        }
+    }
+    private fun leaveShoppingList(listOfUsers: ArrayList<User>) {
         openedShoppingList.value?.let { _shoppingList ->
             currentUser.value?.let { _currentUser ->
                 _shoppingList.friendsSharedWith.remove(_currentUser.id)
@@ -157,11 +169,26 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
                         friendsSharedWith = _shoppingList.friendsSharedWith
                     ).collect { result ->
                         when (result.status) {
-                            LOADING -> {
-                            }
                             SUCCESS -> {
+                                listOfUsers.forEach { user ->
+                                    user.firebaseInstanceToken.forEach { token ->
+                                        notificationRepositoryImpl.postNotification(
+                                            PushNotification(
+                                                data = NotificationData(
+                                                    title = appContext.getString(R.string.name_shopping_list, _shoppingList.name),
+                                                    message = appContext.getString(
+                                                        R.string.user_has_left_the_shopping_list,
+                                                        _currentUser.name
+                                                    )
+                                                ),
+                                                to = token
+                                            )
+                                        )
+                                    }
+                                }
                                 onNavigateBackWithoutResult()
                             }
+                            LOADING -> { onShowLoading() }
                             ERROR -> {
                                 result.message?.let {
                                     onShowErrorMessage(it)
@@ -174,18 +201,33 @@ class OpenedShoppingListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun deleteShoppingList() {
+    private fun deleteShoppingList(listOfUsers: ArrayList<User>, currentUser: User) {
         openedShoppingList.value?.let { _shoppingList ->
             viewModelScope.launch {
                 shoppingListRepository.deleteShoppingList(
                     shoppingList = _shoppingList
                 ).collect { result ->
                     when (result.status) {
-                        LOADING -> {
-                        }
                         SUCCESS -> {
+                            listOfUsers.forEach { user ->
+                                user.firebaseInstanceToken.forEach { token ->
+                                    notificationRepositoryImpl.postNotification(
+                                        PushNotification(
+                                            data = NotificationData(
+                                                title = appContext.getString(R.string.delete_name_shopping_list, _shoppingList.name),
+                                                message = appContext.getString(
+                                                    R.string.user_has_deleted_the_shopping_list,
+                                                    currentUser.name
+                                                )
+                                            ),
+                                            to = token
+                                        )
+                                    )
+                                }
+                            }
                             onNavigateBackWithoutResult()
                         }
+                        LOADING -> { onShowLoading() }
                         ERROR -> {
                             result.message?.let {
                                 onShowErrorMessage(it)

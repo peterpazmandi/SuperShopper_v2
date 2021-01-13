@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.inspirecoding.supershopper.MainActivity
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.ShoppingList
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.OpenedShoppingListFragmentBinding
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel.Companion.ARG_KEY_OPENEDSHOPPINGLIST
 import com.inspirecoding.supershopper.ui.openedshoppinglist.adapter.OpenedShoppingListAdapter
@@ -72,12 +73,8 @@ class OpenedShoppingListFragment : Fragment(R.layout.opened_shopping_list_fragme
         }
 
         setFragmentResultListener(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE) { _, bundle ->
-            bundle.getString(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE)?.let { leaveOrDelete ->
-                if(leaveOrDelete == getString(R.string.delete_shopping_list)) {
-                    viewModel.deleteShoppingList()
-                } else if(leaveOrDelete == getString(R.string.leave_shopping_list)) {
-                    viewModel.leaveShoppingList()
-                }
+            bundle.getParcelableArrayList<User>(OpenedShoppingListViewModel.ARG_KEY_LEAVEDELETE)?.let { leaveOrDelete ->
+                viewModel.leaveOrDeleteShoppingList(leaveOrDelete)
             }
         }
     }

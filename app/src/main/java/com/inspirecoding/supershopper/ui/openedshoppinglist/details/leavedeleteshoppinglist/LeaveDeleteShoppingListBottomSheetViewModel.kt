@@ -37,8 +37,8 @@ class LeaveDeleteShoppingListBottomSheetViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             shoppingListWithCurrentUser.value?.let { pair ->
                 _leaveDeleteEventChannel.send(LeaveDeleteShoppingListEvent.NavigateBackWithResult(
-                        pair.first?.friendsSharedWith, pair.second?.id
-                    )
+                    pair.first?.usersSharedWith, pair.second
+                )
                 )
             }
         }
@@ -51,7 +51,7 @@ class LeaveDeleteShoppingListBottomSheetViewModel @ViewModelInject constructor(
 
 
     sealed class LeaveDeleteShoppingListEvent {
-        data class NavigateBackWithResult(val listOfMembers: MutableList<String>?, val currentUserId: String?): LeaveDeleteShoppingListEvent()
+        data class NavigateBackWithResult(val listOfMembers: MutableList<User>?, val currentUserId: User?): LeaveDeleteShoppingListEvent()
         data class ShowErrorMessage(val message: String) : LeaveDeleteShoppingListEvent()
     }
 

@@ -47,11 +47,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
     fun getCurrentUserShoppingListsRealTime() {
         viewModelScope.launch {
-            println("ShoppingLists - ViewModel -> viewModelScope.launch")
             currentUser.value?.let { _currentUser ->
                 shoppingListRepository.getCurrentUserShoppingListsRealTime(_currentUser, viewModelScope).collect { result ->
-                    println("ShoppingLists - ViewModel -> getCurrentUserShoppingListsRealTime")
-                    println("ShoppingLists - ViewModel - result -> ${result.data?.size}")
                     when(result.status)
                     {
                         Status.LOADING -> {
@@ -59,10 +56,8 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                         }
                         Status.SUCCESS -> {
                             result.data?.let { list ->
-                                println("ShoppingLists - ViewModel - list before -> ${list.size}")
-                                println("ShoppingLists - ViewModel - list before -> ${__shoppingLists.size}")
                                 updateShoppingList(list)
-                                println("ShoppingLists - ViewModel - list after -> ${__shoppingLists.size}")
+                                println("ShoppingLists - $TAG -> ${__shoppingLists.size}")
                                 _shoppingLists.postValue(Resource.Success(__shoppingLists))
                             }
                         }
@@ -72,10 +67,6 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                             }
                         }
                     }
-//                    if(__shoppingLists.size > 0) {
-//                        println("ShoppingLists - ViewModel - list after -> ${__shoppingLists.size}")
-//                        _shoppingLists.postValue(Resource.Success(__shoppingLists))
-//                    }
                 }
             }
         }
@@ -93,20 +84,18 @@ class ShoppingListsViewModel @ViewModelInject constructor(
                     }
                     if(doesListAlreadyIncluded == null) {
                         __shoppingLists.add(shoppingList)
-                        println("ShoppingLists - ViewModel - ADDED -> $shoppingList")
                     }
                 }
                 MODIFIED -> {
-                    println("ShoppingLists - ViewModel - newShoppingLists.size -> ${newShoppingLists.size}")
                     val index = __shoppingLists.indexOfLast {
                         it.shoppingListId == shoppingList.shoppingListId
                     }
-                    println("ShoppingLists - ViewModel - __shoppingLists.indexOfFirst -> $index")
-                    println("ShoppingLists - ViewModel - __shoppingLists.indexOfFirst -> ${shoppingList.name}")
                     if(index != -1) __shoppingLists[index] = shoppingList
                 }
                 REMOVED -> {
-                    __shoppingLists.remove(shoppingList)
+                    __shoppingLists.removeIf {
+                        it.shoppingListId == shoppingList.shoppingListId
+                    }
                 }
             }
 

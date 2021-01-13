@@ -46,35 +46,48 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
                 userRepository.getFriendsAlphabeticalList(_currentUser).collect { result ->
                     when(result.status)
                     {
-                        Status.LOADING -> {
-                            _listOfFriendsMLD.postValue(Resource.Loading(true))
-                        }
                         Status.SUCCESS -> {
                             result.data?.let { _listOfFriends ->
                                 _listOfFriends.forEach { friend ->
-                                    userRepository.getUserFromFirestore(friend.friendId).collect { result ->
-                                        when (result.status) {
-                                            Status.SUCCESS -> {
-                                                result.data?.let { user ->
-                                                    prepareLists(user)
+                                    userRepository.getUserFromFirestore(friend.friendId)
+                                        .collect { result ->
+                                            when (result.status) {
+                                                Status.SUCCESS -> {
+                                                    result.data?.let { user ->
+                                                        if (user != _currentUser) {
+                                                            prepareLists(user)
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                            Status.LOADING -> {
-                                                _listOfFriendsMLD.postValue(Resource.Loading(true))
-                                            }
-                                            Status.ERROR -> {
-                                                result.message?.let { _message ->
-                                                    onShowErrorMessage(_message)
-                                                    _listOfFriendsMLD.postValue(Resource.Error(_message))
+                                                Status.LOADING -> {
+                                                    _listOfFriendsMLD.postValue(
+                                                        Resource.Loading(
+                                                            true
+                                                        )
+                                                    )
+                                                }
+                                                Status.ERROR -> {
+                                                    result.message?.let { _message ->
+                                                        onShowErrorMessage(_message)
+                                                        _listOfFriendsMLD.postValue(
+                                                            Resource.Error(
+                                                                _message
+                                                            )
+                                                        )
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
                                 }
-                                listOfSelectedUsers.add(_currentUser)
+                                if (!listOfSelectedUsers.contains(_currentUser)) {
+                                    listOfSelectedUsers.add(_currentUser)
+                                }
                                 reorderListOfFriends()
                                 _listOfFriendsMLD.postValue(Resource.Success(listOfFriends.toList()))
                             }
+                        }
+                        Status.LOADING -> {
+                            _listOfFriendsMLD.postValue(Resource.Loading(true))
                         }
                         Status.ERROR -> {
                             result.message?.let {
@@ -112,7 +125,6 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
                         listOfSelectedUsers.add(index, user)
                     }
                 }
-                println("listOfSelectedUsers -> ${listOfSelectedUsers.map { it.id }}" )
             }
         }
     }

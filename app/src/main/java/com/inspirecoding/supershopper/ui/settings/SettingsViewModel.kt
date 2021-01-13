@@ -4,13 +4,16 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.inspirecoding.supershopper.repository.datastore.DataStoreRepository
 import com.inspirecoding.supershopper.ui.register.RegisterViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SettingsViewModel @ViewModelInject constructor(
+    private val dataStoreRepository: DataStoreRepository,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
 
@@ -21,8 +24,15 @@ class SettingsViewModel @ViewModelInject constructor(
     val settingsEvents = _settingsEvents.receiveAsFlow()
 
 
+    val notificationsSettingsFromDataStore = dataStoreRepository.readNotificationsSettingFromDataStore.asLiveData()
+    fun saveNotificationsSettingsToDataStore(areTurnedOn: Boolean) = viewModelScope.launch {
+        dataStoreRepository.saveNotificationsSettingToDataStore(areTurnedOn = areTurnedOn)
+    }
 
-
+    val nightModeSettingsFromDataStore = dataStoreRepository.readNightModeSettingFromDataStore.asLiveData()
+    fun saveNightModeSettingsToDataStore(isTurnedOn: Boolean) = viewModelScope.launch {
+        dataStoreRepository.saveNightModeSettingToDataStore(isTurnedOn = isTurnedOn)
+    }
 
 
     /** Events **/

@@ -118,22 +118,8 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
                     val fulfilment = listOfItems.filter {
                         !it.isBought
                     }.size
-                    println(fulfilment)
                     if(fulfilment == 0) {
-                        println(shoppingList.usersSharedWith)
-                        shoppingList.usersSharedWith.forEach { user ->
-                            if(user != _currentUser) {
-                                user.firebaseInstanceToken.forEach { token ->
-                                    notificationRepositoryImpl.postNotification(
-                                        PushNotification(
-                                            data = NotificationData(
-                                                title = appContext.getString(R.string.finished_shopping_list),
-                                                message = appContext.getString(R.string.shopping_list_has_been_completed, shoppingList.name)),
-                                            to = token)
-                                    )
-                                }
-                            }
-                        }
+                        sendOutFinishedNotification(shoppingList, _currentUser)
                     }
                 }
             }
@@ -147,6 +133,21 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
                             onShowErrorMessage(it)
                         }
                     }
+                }
+            }
+        }
+    }
+    private fun sendOutFinishedNotification(shoppingList: ShoppingList, currentUser: User) {
+        shoppingList.usersSharedWith.forEach { user ->
+            if(user != currentUser) {
+                user.firebaseInstanceToken.forEach { token ->
+                    notificationRepositoryImpl.postNotification(
+                        PushNotification(
+                            data = NotificationData(
+                                title = appContext.getString(R.string.finished_shopping_list),
+                                message = appContext.getString(R.string.shopping_list_has_been_completed, shoppingList.name)),
+                            to = token)
+                    )
                 }
             }
         }

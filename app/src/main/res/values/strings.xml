@@ -270,6 +270,8 @@
     <string name="user_has_left_the_shopping_list">%1$s has left the shopping list!</string>
     <string name="delete_name_shopping_list">Delete %1$s shopping list!</string>
     <string name="user_has_deleted_the_shopping_list">%1$s has deleted the shopping list!</string>
+    <string name="shopping_lists">Shopping Lists</string>
+
 
 
 </resources>

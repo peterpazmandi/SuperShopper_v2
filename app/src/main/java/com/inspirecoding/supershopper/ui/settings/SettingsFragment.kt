@@ -26,11 +26,42 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             findNavController().popBackStack()
         }
 
+
+        setupEvents()
+        setupNotificationSettingsObserver()
+        setupNightModeSettingsObserver()
+
         binding.tvCategories.setOnClickListener {
             viewModel.onCategoriesSelected()
         }
 
-        setupEvents()
+        binding.tvTermsAndConditions.setOnClickListener {
+            viewModel.onTermsAndConditionSelected()
+        }
+
+        binding.tvPrivacyPolicy.setOnClickListener {
+            viewModel.onPrivacyPolicySelected()
+        }
+
+        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveNotificationsSettingsToDataStore(isChecked)
+        }
+
+        binding.switchNightMode.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveNightModeSettingsToDataStore(isChecked)
+        }
+    }
+
+    private fun setupNotificationSettingsObserver() {
+        viewModel.notificationsSettingsFromDataStore.observe(viewLifecycleOwner, { areTurnedOn ->
+            binding.switchNotification.isChecked = areTurnedOn
+        })
+    }
+
+    private fun setupNightModeSettingsObserver() {
+        viewModel.nightModeSettingsFromDataStore.observe(viewLifecycleOwner, { areTurnedOn ->
+            binding.switchNightMode.isChecked = areTurnedOn
+        })
     }
 
     private fun setupEvents() {

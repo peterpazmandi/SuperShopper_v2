@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/screen_background"
     tools:context=".ui.openedshoppinglist.OpenedShoppingListFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -25,7 +25,7 @@
         android:paddingBottom="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/white"
+        android:textColor="@color/app_background"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="@id/iv_backButton"
@@ -47,7 +47,7 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/white"
+        app:tabSelectedTextColor="@color/app_background"
         app:tabTextAppearance="@style/TabTextAppearance"
         app:tabTextColor="@color/dark_gray_2" />
 

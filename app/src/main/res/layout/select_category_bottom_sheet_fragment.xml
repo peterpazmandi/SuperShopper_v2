@@ -14,7 +14,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="@string/select_a_category"
         android:textAlignment="center"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/screen_background"
         android:textSize="@dimen/textSize_xlarge"
         android:drawablePadding="@dimen/margin_medium"
         android:textStyle="bold"

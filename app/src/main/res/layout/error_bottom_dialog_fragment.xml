@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/item_background"
     tools:context=".ui.errordialog.ErrorBottomDialogFragment">
 
     <TextView
@@ -44,6 +45,7 @@
         android:text="@string/incorrect_filling"
         android:textAlignment="viewStart"
         android:textSize="@dimen/textSize_regular"
+        android:textColor="@color/main_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

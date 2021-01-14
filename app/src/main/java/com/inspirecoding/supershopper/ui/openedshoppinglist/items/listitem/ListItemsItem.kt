@@ -9,7 +9,6 @@ import com.inspirecoding.supershopper.data.ListItem
 import com.inspirecoding.supershopper.databinding.LayoutListitemItemBinding
 import com.inspirecoding.supershopper.utils.baseclasses.BaseItem
 import com.inspirecoding.supershopper.utils.listOfCategoryIcons
-import com.inspirecoding.supershopper.utils.listOfDefaultCategories
 import com.inspirecoding.supershopper.utils.listOfUnits
 
 data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBinding> {
@@ -74,7 +73,7 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
             binding.ivCategory.alpha = 1f
             binding.chbDone.alpha = 1f
 
-            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.white)
+            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.app_background)
 
         }
     }

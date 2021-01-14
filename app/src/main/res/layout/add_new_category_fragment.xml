@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/app_background"
     tools:context=".ui.categories.CategoriesFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/add_new_category"
-        android:textColor="@color/white"
+        android:textColor="@color/title_text"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="@id/iv_backButton" />
@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/nav_icon" />
 
     <View
         android:id="@+id/whiteBackground"
@@ -60,7 +60,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/name"
         android:textStyle="bold"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/main_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/whiteBackground" />
 
@@ -73,7 +73,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:hint="@string/enter_a_name"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/screen_background"
         android:textSize="@dimen/textSize_medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/icon"
         android:textStyle="bold"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/main_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontalLine_1" />
 

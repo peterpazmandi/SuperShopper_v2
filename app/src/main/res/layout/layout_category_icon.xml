@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.AppCompatImageView
-    android:id="@+id/iv_icon"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:src="@drawable/ic_spice"
-    android:alpha="0.4"
-    android:layout_margin="@dimen/margin_small"
+    android:id="@+id/iv_icon"
     android:layout_width="35dp"
-    android:layout_height="35dp">
+    android:layout_height="35dp"
+    android:layout_margin="@dimen/margin_small"
+    android:alpha="0.4"
+    tools:src="@drawable/ic_spice">
 
 </androidx.appcompat.widget.AppCompatImageView>

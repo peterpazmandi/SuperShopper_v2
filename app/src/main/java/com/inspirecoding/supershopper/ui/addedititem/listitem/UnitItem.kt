@@ -28,7 +28,7 @@ data class UnitItem(@StringRes val unit: Int): BaseItem<LayoutUnitItemBinding> {
 
         if (isSelected) {
             binding.tvUnit.background = ContextCompat.getDrawable(context, R.drawable.shape_roundedallcorners_blue)
-            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.white))
+            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.app_background))
         } else {
             binding.tvUnit.background = ContextCompat.getDrawable(context, R.drawable.shape_roundedallcorners_gray)
             binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.dark_gray_2))

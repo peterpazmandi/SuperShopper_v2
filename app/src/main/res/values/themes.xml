@@ -4,13 +4,13 @@
     <!-- Base application theme. -->
     <style name="Theme.SuperShopper" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/dark_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/app_background</item>
+        <item name="colorPrimaryVariant">@color/screen_background</item>
+        <item name="colorOnPrimary">@color/app_background</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
-        <item name="colorSecondaryVariant">@color/blue</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/secondary_text</item>
+        <item name="colorSecondaryVariant">@color/secondary_text</item>
+        <item name="colorOnSecondary">@color/fab_back</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
@@ -24,21 +24,13 @@
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
     <style name="BaseBottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/dark_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
-        <item name="colorSecondaryVariant">@color/blue</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/item_background</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
     <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/shape_roundedtopcorners_white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/item_background</item>
     </style>
 
     <!-- CircleImageView -->
@@ -51,7 +43,7 @@
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/textSize_medium</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:textColor">@color/secondary_text</item>
         <item name="android:textStyle">bold</item>
     </style>
 

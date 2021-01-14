@@ -5,7 +5,7 @@
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/item_background"
     app:layoutDescription="@xml/login_fragment_scene"
     tools:context=".ui.login.LoginFragment">
 
@@ -24,6 +24,7 @@
         android:layout_width="600dp"
         android:layout_height="600dp"
         android:src="@drawable/ic_app_logo_darkblue"
+        app:tint="@color/screen_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.2"
@@ -40,7 +41,7 @@
         android:layout_marginEnd="@dimen/margin_xlarge"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/log_in"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_4xlarge"
         android:layout_marginEnd="@dimen/margin_4xlarge"
+        android:textColorHint="@color/inv_action_button_text"
         app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +63,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15"
         app:startIconDrawable="@drawable/ic_email_blue"
-        app:startIconTint="@color/blue">
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_emailAddress"
@@ -78,14 +80,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_4xlarge"
         android:layout_marginEnd="@dimen/margin_4xlarge"
+        android:textColorHint="@color/inv_action_button_text"
         app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_emailAddress"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/inv_fab_icon"
         app:startIconDrawable="@drawable/ic_lock_blue"
-        app:startIconTint="@color/blue">
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_password"
@@ -104,7 +108,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/forgot_password"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +127,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/log_in"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +146,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/facebook"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toStartOf="@id/btn_google"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +165,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/google"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_facebook"
@@ -176,7 +180,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/dont_have_an_account_yet_register_now"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

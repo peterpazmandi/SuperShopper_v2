@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/item_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -23,7 +24,7 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_profilePhoto"
@@ -41,7 +42,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/view_profile"
         android:textAllCaps="false"
-        android:textColor="@color/blue"
+        android:textColor="@color/inv_action_button_text"
         android:textSize="@dimen/textSize_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

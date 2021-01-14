@@ -16,7 +16,7 @@
                 app:motionTarget="@+id/til_username"
                 app:framePosition="40"
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"  />
+                app:customColorValue="@color/app_background"  />
         </KeyFrameSet>
     </Transition>
     <Transition
@@ -28,7 +28,7 @@
                 app:motionTarget="@+id/til_emailAddress"
                 app:framePosition="40"
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"  />
+                app:customColorValue="@color/app_background"  />
         </KeyFrameSet>
     </Transition>
     <Transition
@@ -40,7 +40,7 @@
                 app:motionTarget="@+id/til_password"
                 app:framePosition="40"
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"  />
+                app:customColorValue="@color/app_background"  />
         </KeyFrameSet>
     </Transition>
 
@@ -102,7 +102,7 @@
             app:layout_constraintVertical_bias="0.15" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"/>
+                app:customColorValue="@color/app_background"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_emailAddress"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_username">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"/>
+                app:customColorValue="@color/app_background"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_password"
@@ -216,7 +216,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_emailAddress">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/white"/>
+                app:customColorValue="@color/app_background"/>
         </Constraint>
     </ConstraintSet>
 </MotionScene>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/app_background"
     tools:context=".ui.addedititem.AddEditItemFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/add_new_item"
-        android:textColor="@color/white"
+        android:textColor="@color/title_text"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="@id/iv_backButton"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/nav_icon" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_save"
@@ -51,11 +51,11 @@
         android:layout_marginBottom="@dimen/margin_medium"
         android:contentDescription="@string/sort_list"
         android:src="@drawable/ic_save"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/fab_back"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/fab_icon" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -79,7 +79,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/name"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +93,7 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_bold"
                 android:hint="@string/enter_a_name"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/screen_background"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/unit"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_1" />
@@ -150,7 +150,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/quantity"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_2" />
@@ -166,7 +166,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:hint="@string/enter_the_quantity"
                 android:inputType="numberDecimal|numberSigned"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/screen_background"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +189,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/category"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_3" />
@@ -213,7 +213,7 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/category"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/iv_category"
@@ -237,7 +237,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/comment"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/main_text"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_4" />
@@ -252,7 +252,7 @@
                 android:layout_marginBottom="@dimen/margin_large"
                 android:fontFamily="@font/roboto_bold"
                 android:hint="@string/write_some_comment_if_you_want"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/screen_background"
                 android:textSize="@dimen/textSize_regular"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

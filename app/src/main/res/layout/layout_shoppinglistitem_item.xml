@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/app_background">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_date"
@@ -13,7 +13,7 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
-        android:textColor="@color/blue"
+        android:textColor="@color/secondary_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +29,7 @@
         android:fontFamily="@font/roboto_bold"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
+        android:textColor="@color/main_text"
         app:layout_constraintEnd_toStartOf="@id/pb_itemProgress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_date"
@@ -89,7 +90,7 @@
         android:gravity="center"
         android:padding="0dp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/app_background"
         android:textSize="@dimen/textSize_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/iv_profilePhoto_3"
@@ -119,7 +120,7 @@
         android:layout_height="wrap_content"
         android:elevation="1dp"
         android:fontFamily="@font/roboto_regular"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_small"
         app:layout_constraintBottom_toBottomOf="@id/pb_itemProgress"
         app:layout_constraintEnd_toEndOf="@id/pb_itemProgress"

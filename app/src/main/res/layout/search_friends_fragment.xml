@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue">
+    android:background="@color/screen_background">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_backButton"
@@ -64,7 +64,7 @@
             android:layout_height="40dp"
             android:layout_margin="@dimen/margin_medium"
             android:src="@drawable/ic_arrow_up"
-            app:tint="@color/dark_blue" />
+            app:tint="@color/screen_background" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

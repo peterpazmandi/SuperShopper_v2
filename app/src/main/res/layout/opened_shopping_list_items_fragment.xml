@@ -35,11 +35,11 @@
         android:layout_marginBottom="@dimen/margin_medium"
         android:contentDescription="@string/sort_list"
         android:src="@drawable/ic_plus_blue"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/secondary_text"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/app_background" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_emptyCartIllustration"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/your_shopping_list_is_still_empty"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/screen_background"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -79,7 +79,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:text="@string/add_items_using_this_plus_button"
         android:textAlignment="center"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/screen_background"
         android:textSize="@dimen/textSize_medium"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/fab_addItem"

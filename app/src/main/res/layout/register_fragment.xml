@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/item_background"
     app:layoutDescription="@xml/register_fragment_scene"
     tools:context=".ui.register.RegisterFragment">
 
@@ -30,18 +29,19 @@
         app:layout_constraintHorizontal_bias="1.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0"
+        app:tint="@color/screen_background" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_logInText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_4xlarge"
+        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_xlarge"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/create_your_account"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_4xlarge"
         android:layout_marginEnd="@dimen/margin_4xlarge"
+        android:textColorHint="@color/inv_action_button_text"
         app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,15 +63,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15"
         app:startIconDrawable="@drawable/ic_person_blue"
-        app:startIconTint="@color/blue">
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_regular"
             android:hint="@string/username"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,21 +80,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_4xlarge"
         android:layout_marginEnd="@dimen/margin_4xlarge"
+        android:textColorHint="@color/inv_action_button_text"
         app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_username"
         app:startIconDrawable="@drawable/ic_email_blue"
-        app:startIconTint="@color/blue">
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_emailAddress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_regular"
             android:hint="@string/email_address"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -102,33 +104,35 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_4xlarge"
         android:layout_marginEnd="@dimen/margin_4xlarge"
+        android:textColorHint="@color/inv_action_button_text"
         app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_emailAddress"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/inv_fab_icon"
         app:startIconDrawable="@drawable/ic_lock_blue"
-        app:startIconTint="@color/blue">
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_regular"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/chb_terms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/white"
+        android:buttonTint="@color/app_background"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/i_accept_terms_anp_conditions"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,11 +142,11 @@
         android:id="@+id/chb_privacyPolicy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/white"
+        android:buttonTint="@color/app_background"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/i_accept_privacy_policy"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +165,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/register"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +184,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/facebook"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toStartOf="@id/btn_google"
         app:layout_constraintStart_toStartOf="parent"
@@ -199,7 +203,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/google"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_facebook"
@@ -214,7 +218,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/have_an_account_already_log_in"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

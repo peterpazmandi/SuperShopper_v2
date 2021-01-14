@@ -54,13 +54,17 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     private fun setupNotificationSettingsObserver() {
         viewModel.notificationsSettingsFromDataStore.observe(viewLifecycleOwner, { areTurnedOn ->
-            binding.switchNotification.isChecked = areTurnedOn
+            areTurnedOn?.let { _areTurnedOn ->
+                binding.switchNotification.isChecked = _areTurnedOn
+            }
         })
     }
 
     private fun setupNightModeSettingsObserver() {
-        viewModel.nightModeSettingsFromDataStore.observe(viewLifecycleOwner, { areTurnedOn ->
-            binding.switchNightMode.isChecked = areTurnedOn
+        viewModel.nightModeSettingsFromDataStore.observe(viewLifecycleOwner, { isTurnedOn ->
+            isTurnedOn?.let { _isTurnedOn ->
+                binding.switchNightMode.isChecked = _isTurnedOn
+            }
         })
     }
 

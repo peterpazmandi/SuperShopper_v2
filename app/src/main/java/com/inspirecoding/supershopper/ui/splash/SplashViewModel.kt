@@ -2,10 +2,9 @@ package com.inspirecoding.supershopper.ui.splash
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.inspirecoding.supershopper.data.User
+import com.inspirecoding.supershopper.repository.datastore.DataStoreRepository
 import com.inspirecoding.supershopper.repository.local.ShopperRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import kotlinx.coroutines.channels.Channel
@@ -17,6 +16,7 @@ import kotlinx.coroutines.launch
 class SplashViewModel @ViewModelInject constructor(
     private val shopperRepository: ShopperRepository,
     private val userRepository: UserRepository,
+    private val dataStoreRepository: DataStoreRepository,
     @Assisted private val state: SavedStateHandle
 ): ViewModel() {
 
@@ -25,9 +25,34 @@ class SplashViewModel @ViewModelInject constructor(
 
     val userResource = userRepository.userResource
 
+    private val notificationsSettingsFromDataStore = dataStoreRepository.readNotificationsSettingFromDataStore
+    private val nightModeSettingsFromDataStore = dataStoreRepository.readNightModeSettingFromDataStore
+
     init {
         getListOfCategories()
+
+        /** At the first run init the preferences DataStore **/
+        viewModelScope.launch {
+            notificationsSettingsFromDataStore.collect { areTurnedOn ->
+                if(areTurnedOn == null) {
+                    saveNotificationsSettingsToDataStore(true)
+                }
+            }
+            nightModeSettingsFromDataStore.collect { isTurnedON ->
+                if(isTurnedON == null) {
+                    saveNightModeSettingsToDataStore(false)
+                }
+            }
+        }
     }
+    private fun saveNotificationsSettingsToDataStore(areTurnedOn: Boolean) = viewModelScope.launch {
+        dataStoreRepository.saveNotificationsSettingToDataStore(areTurnedOn = areTurnedOn)
+    }
+    private fun saveNightModeSettingsToDataStore(isTurnedOn: Boolean) = viewModelScope.launch {
+        dataStoreRepository.saveNightModeSettingToDataStore(isTurnedOn = isTurnedOn)
+    }
+
+
 
     private fun getListOfCategories() {
         viewModelScope.launch {

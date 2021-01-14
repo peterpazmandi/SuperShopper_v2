@@ -9,8 +9,8 @@ interface DataStoreRepository {
     val PREFERENCES_NAME: String
 
     val dataStore: DataStore<Preferences>
-    val readNotificationsSettingFromDataStore: Flow<Boolean>
-    val readNightModeSettingFromDataStore: Flow<Boolean>
+    val readNotificationsSettingFromDataStore: Flow<Boolean?>
+    val readNightModeSettingFromDataStore: Flow<Boolean?>
 
     suspend fun saveNotificationsSettingToDataStore(areTurnedOn: Boolean)
     suspend fun saveNightModeSettingToDataStore(isTurnedOn: Boolean)

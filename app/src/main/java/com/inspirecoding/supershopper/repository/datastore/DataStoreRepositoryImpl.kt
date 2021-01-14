@@ -33,7 +33,7 @@ class DataStoreRepositoryImpl @Inject constructor(
             preferences[PreferenceKeys.notificationsSetting] = areTurnedOn
         }
     }
-    override val readNotificationsSettingFromDataStore: Flow<Boolean> =
+    override val readNotificationsSettingFromDataStore: Flow<Boolean?> =
         dataStore.data
         .catch { exception ->
             if(exception is IOException) {
@@ -44,7 +44,7 @@ class DataStoreRepositoryImpl @Inject constructor(
             }
         }
         .map { preferences ->
-            preferences[PreferenceKeys.notificationsSetting] ?: false
+            preferences[PreferenceKeys.notificationsSetting]
         }
 
 
@@ -54,7 +54,7 @@ class DataStoreRepositoryImpl @Inject constructor(
             preferences[PreferenceKeys.nightModeSetting] = isTurnedOn
         }
     }
-    override val readNightModeSettingFromDataStore: Flow<Boolean> =
+    override val readNightModeSettingFromDataStore: Flow<Boolean?> =
         dataStore.data
             .catch { exception ->
                 if(exception is IOException) {
@@ -65,7 +65,7 @@ class DataStoreRepositoryImpl @Inject constructor(
                 }
             }
             .map { preferences ->
-                preferences[PreferenceKeys.nightModeSetting] ?: false
+                preferences[PreferenceKeys.nightModeSetting]
             }
 
 

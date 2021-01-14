@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/splash_fragment_scene"
-    tools:context=".ui.splash.SplashFragment">
+    android:background="@color/item_background"
+    app:layoutDescription="@xml/splash_fragment_scene">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -44,7 +45,7 @@
         android:layout_marginTop="@dimen/margin_large"
         android:fontFamily="@font/roboto_bold"
         android:text="Welcome!"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_xxxlarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/we_help_you_keep_your_shopping_list_in_mind"
         android:textAlignment="center"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +80,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/create_account"
         android:textAllCaps="false"
-        android:textColor="@color/app_background"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +94,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/have_an_account_already_log_in"
         android:textAlignment="center"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

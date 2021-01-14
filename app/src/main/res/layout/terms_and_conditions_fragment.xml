@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/item_background">
 
     <ImageView
         android:id="@+id/iv_backButton"
@@ -20,36 +20,42 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_xlarge"
         android:layout_marginEnd="@dimen/margin_xlarge"
-        android:textSize="@dimen/textSize_large"
-        android:textStyle="bold"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/terms_anp_conditions"
-        app:layout_constraintTop_toTopOf="@id/iv_backButton"
+        android:textColor="@color/main_text"
+        android:textSize="@dimen/textSize_large"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/iv_backButton" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/iv_backButton"
+        android:layout_margin="@dimen/margin_medium"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="@dimen/margin_medium">
+        app:layout_constraintTop_toBottomOf="@id/iv_backButton">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_termsAndConditions_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium"
+                android:textColor="@color/main_text"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_termsAndConditions_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium"
+                android:textColor="@color/main_text"
                 app:layout_constraintTop_toBottomOf="@+id/tv_termsAndConditions_1" />
         </LinearLayout>
 

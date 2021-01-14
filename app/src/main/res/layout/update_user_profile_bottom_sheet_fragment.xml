@@ -14,14 +14,14 @@
         android:fontFamily="@font/roboto_bold"
         android:text="@string/change_password"
         android:textAlignment="center"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_xlarge"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/ic_lock_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:drawableTint="@color/secondary_text" />
+        app:drawableTint="@color/inv_fab_icon" />
 
     <View
         android:id="@+id/horizontalLine"
@@ -40,13 +40,18 @@
         android:layout_marginEnd="@dimen/margin_4xlarge"
         android:layout_marginBottom="@dimen/margin_medium"
         android:elevation="12dp"
-        app:boxBackgroundColor="@color/gray"
+        android:textColorHint="@color/inv_action_button_text"
+        app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalLine"
-        app:layout_constraintVertical_bias="0.15">
+        app:layout_constraintVertical_bias="0.15"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/inv_fab_icon"
+        app:startIconDrawable="@drawable/ic_lock_blue"
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_newValue"
@@ -70,7 +75,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/cancel"
         android:textAllCaps="false"
-        android:textColor="@color/secondary_text"
+        android:textColor="@color/inv_action_button_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_change"
@@ -90,7 +95,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/change"
         android:textAllCaps="false"
-        android:textColor="@color/app_background"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"

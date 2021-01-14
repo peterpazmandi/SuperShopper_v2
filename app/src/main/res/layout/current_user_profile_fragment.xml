@@ -63,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="@id/iv_profilePhoto" />
 
             <View
-                android:id="@+id/whiteBackground"
+                android:id="@+id/background"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="100dp"
@@ -185,7 +185,7 @@
                 android:layout_height="0dp"
                 android:background="@color/screen_background"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+                app:layout_constraintTop_toBottomOf="@id/background" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_logOut"
@@ -206,7 +206,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/whiteBackground" />
+                app:layout_constraintTop_toBottomOf="@id/background" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

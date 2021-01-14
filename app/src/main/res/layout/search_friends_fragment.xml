@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background">
+    android:background="@color/app_background">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_backButton"
@@ -25,10 +25,13 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
         android:hint="@string/search_friends"
+        android:textColorHint="@color/inv_action_button_text"
+        app:boxBackgroundColor="@color/dark_gray_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_search">
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconTint="@color/inv_fab_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_searchField"
@@ -40,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
-        android:id="@+id/whiteBackground"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_medium"
@@ -64,7 +67,7 @@
             android:layout_height="40dp"
             android:layout_margin="@dimen/margin_medium"
             android:src="@drawable/ic_arrow_up"
-            app:tint="@color/screen_background" />
+            app:tint="@color/main_text" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -72,6 +75,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/enter_at_least_5_characters_to_search"
             android:textAlignment="center"
+            android:textColor="@color/main_text"
             android:textSize="@dimen/textSize_regular"
             android:textStyle="bold" />
 

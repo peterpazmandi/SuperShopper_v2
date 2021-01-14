@@ -3,36 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/item_background">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_shoppingCart"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_app_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toStartOf="@id/tv_title"
-        app:layout_constraintTop_toTopOf="@+id/tv_title"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"/>
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/change_title"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginStart="@dimen/margin_medium"
         android:textAlignment="center"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_xlarge"
         android:textStyle="bold"
         app:drawableTint="@color/secondary_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/iv_shoppingCart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/horizontalLine"
@@ -51,7 +52,8 @@
         android:layout_marginEnd="@dimen/margin_4xlarge"
         android:layout_marginBottom="@dimen/margin_medium"
         android:elevation="12dp"
-        app:boxBackgroundColor="@color/gray"
+        android:textColorHint="@color/inv_action_button_text"
+        app:boxBackgroundColor="@color/dark_gray_1"
         app:hintEnabled="true"
         app:layout_constraintBottom_toTopOf="@id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +83,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/cancel"
         android:textAllCaps="false"
-        android:textColor="@color/secondary_text"
+        android:textColor="@color/inv_action_button_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_change"
@@ -101,7 +103,7 @@
         android:paddingEnd="@dimen/margin_large"
         android:text="@string/change"
         android:textAllCaps="false"
-        android:textColor="@color/app_background"
+        android:textColor="@color/action_button_text"
         android:textSize="@dimen/textSize_medium"
         app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"

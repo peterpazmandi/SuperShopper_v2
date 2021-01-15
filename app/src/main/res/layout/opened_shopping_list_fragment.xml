@@ -21,10 +21,10 @@
         android:id="@+id/tv_shoppingListName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_medium"
-        android:paddingBottom="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium"
         android:textColor="@color/title_text"
         app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
@@ -47,7 +47,7 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/app_background"
+        app:tabSelectedTextColor="@color/main_text"
         app:tabTextAppearance="@style/TabTextAppearance"
         app:tabTextColor="@color/dark_gray_2" />
 

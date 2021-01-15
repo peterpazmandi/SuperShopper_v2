@@ -107,6 +107,7 @@ class OpenedShoppingListItemsViewModel @ViewModelInject constructor(
                 { it.listItem.item }
             )).toMutableList()
 
+            println("listOfListItemsItem -> $listOfListItemsItem")
             _listOfItems.postValue(listOfListItemsItem)
         }
     }

@@ -8,7 +8,7 @@ data class ListItem(
     var id: String = "",
     var item: String = "",
     var unit: String = "",
-    var qunatity: Float = 0f,
+    var qunatity: Float? = null,
     var isBought: Boolean = false,
     var priority: String = "",
     var icon: String = "",

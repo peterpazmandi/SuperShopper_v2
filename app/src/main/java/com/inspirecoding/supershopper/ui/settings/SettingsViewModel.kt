@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.settings
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
@@ -32,6 +33,11 @@ class SettingsViewModel @ViewModelInject constructor(
     val nightModeSettingsFromDataStore = dataStoreRepository.readNightModeSettingFromDataStore.asLiveData()
     fun saveNightModeSettingsToDataStore(isTurnedOn: Boolean) = viewModelScope.launch {
         dataStoreRepository.saveNightModeSettingToDataStore(isTurnedOn = isTurnedOn)
+        if(isTurnedOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
 

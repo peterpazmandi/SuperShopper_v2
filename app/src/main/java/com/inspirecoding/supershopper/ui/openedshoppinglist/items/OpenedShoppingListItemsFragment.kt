@@ -37,23 +37,10 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
     private lateinit var binding: OpenedShoppingListItemsFragmentBinding
     private lateinit var adapter: BaseListAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = OpenedShoppingListItemsFragmentBinding.inflate(inflater)
-
-        initRecyclerView()
-        setupShoppingListObserver()
-        setupEventHandler()
-        setupListItemsItemsObserver()
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = OpenedShoppingListItemsFragmentBinding.bind(view)
 
         initRecyclerView()
         setupShoppingListObserver()
@@ -69,7 +56,6 @@ class OpenedShoppingListItemsFragment : Fragment(R.layout.opened_shopping_list_i
     private fun setupListItemsItemsObserver() {
         viewModel.listOfItems.observe(viewLifecycleOwner, { listOfSortedItems ->
             adapter.submitList(listOfSortedItems as List<BaseItem<*>>?)
-            adapter.notifyDataSetChanged()
             binding.rvListOfItems.scrollToPosition(0)
         })
     }

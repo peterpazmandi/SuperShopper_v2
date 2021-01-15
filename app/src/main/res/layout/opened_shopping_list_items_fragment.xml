@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/item_background"
+    android:background="@color/screen_background"
     tools:context=".ui.openedshoppinglist.items.OpenedShoppingListItemsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -49,7 +49,7 @@
         android:layout_marginStart="@dimen/margin_5xlarge"
         android:layout_marginEnd="@dimen/margin_5xlarge"
         android:src="@drawable/ic_empty_shopping_list"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_emptyCartIllustration" />
@@ -83,7 +83,7 @@
         android:textAlignment="center"
         android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_medium"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/fab_addItem"
         app:layout_constraintEnd_toStartOf="@id/fab_addItem"
         app:layout_constraintTop_toTopOf="@+id/fab_addItem" />

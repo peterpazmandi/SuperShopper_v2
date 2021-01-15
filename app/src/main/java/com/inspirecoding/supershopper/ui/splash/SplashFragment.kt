@@ -2,9 +2,12 @@ package com.inspirecoding.supershopper.ui.splash
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.data.Resource
@@ -15,6 +18,8 @@ import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.makeItInVisible
 import com.inspirecoding.supershopper.utils.makeItVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -26,13 +31,10 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = SplashFragmentBinding.bind(view)
-        binding.apply {
-            tvWelcome
-        }
 
         setupSplashEvents()
-        checkUserLoggedIn()
         processUserLoggedInResult()
+        checkUserLoggedIn()
 
         binding.btnCreateAccount.setOnClickListener {
             viewModel.onRegistrationSelected()
@@ -89,6 +91,8 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
                     is SplashViewModel.SplashEvent.NavigateToShoppingListsFragment ->  {
                         navigateToShoppingListsFragment(event.user)
                     }
+                    is SplashViewModel.SplashEvent.TurnNightMode -> {
+                    }
                     is SplashViewModel.SplashEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
@@ -105,8 +109,11 @@ class SplashFragment : Fragment(R.layout.splash_fragment) {
         findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
     }
     private fun navigateToShoppingListsFragment(user: User) {
-        val action = SplashFragmentDirections.actionSplashFragmentToShoppingListsFragment(user)
-        findNavController().navigate(action)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            delay(500)
+            val action = SplashFragmentDirections.actionSplashFragmentToShoppingListsFragment(user)
+            findNavController().navigate(action)
+        }
     }
     private fun navigateToErrorBottomDialogFragment(errorMessage: String) {
         val action = SplashFragmentDirections.actionSplashFragmentToErrorBottomDialogFragment(errorMessage)

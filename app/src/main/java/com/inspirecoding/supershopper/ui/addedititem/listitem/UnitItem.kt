@@ -28,10 +28,10 @@ data class UnitItem(@StringRes val unit: Int): BaseItem<LayoutUnitItemBinding> {
 
         if (isSelected) {
             binding.tvUnit.background = ContextCompat.getDrawable(context, R.drawable.shape_roundedallcorners_blue)
-            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.app_background))
+            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.title_text))
         } else {
             binding.tvUnit.background = ContextCompat.getDrawable(context, R.drawable.shape_roundedallcorners_gray)
-            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.dark_gray_2))
+            binding.tvUnit.setTextColor(ContextCompat.getColor(context, R.color.main_text))
         }
 
         binding.tvUnit.setOnClickListener {

@@ -65,6 +65,7 @@ class DataStoreRepositoryImpl @Inject constructor(
                 }
             }
             .map { preferences ->
+                println("preferences -> ${preferences[PreferenceKeys.nightModeSetting]}")
                 preferences[PreferenceKeys.nightModeSetting]
             }
 

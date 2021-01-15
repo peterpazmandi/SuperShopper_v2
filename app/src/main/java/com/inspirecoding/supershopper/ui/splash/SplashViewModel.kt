@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.splash
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -25,30 +26,14 @@ class SplashViewModel @ViewModelInject constructor(
 
     val userResource = userRepository.userResource
 
-    private val notificationsSettingsFromDataStore = dataStoreRepository.readNotificationsSettingFromDataStore
-    private val nightModeSettingsFromDataStore = dataStoreRepository.readNightModeSettingFromDataStore
+    val notificationsSettingsFromDataStore = dataStoreRepository.readNotificationsSettingFromDataStore.asLiveData()
+    val nightModeSettingsFromDataStore = dataStoreRepository.readNightModeSettingFromDataStore.asLiveData()
 
-    init {
-        getListOfCategories()
 
-        /** At the first run init the preferences DataStore **/
-        viewModelScope.launch {
-            notificationsSettingsFromDataStore.collect { areTurnedOn ->
-                if(areTurnedOn == null) {
-                    saveNotificationsSettingsToDataStore(true)
-                }
-            }
-            nightModeSettingsFromDataStore.collect { isTurnedON ->
-                if(isTurnedON == null) {
-                    saveNightModeSettingsToDataStore(false)
-                }
-            }
-        }
-    }
-    private fun saveNotificationsSettingsToDataStore(areTurnedOn: Boolean) = viewModelScope.launch {
+    fun saveNotificationsSettingsToDataStore(areTurnedOn: Boolean) = viewModelScope.launch {
         dataStoreRepository.saveNotificationsSettingToDataStore(areTurnedOn = areTurnedOn)
     }
-    private fun saveNightModeSettingsToDataStore(isTurnedOn: Boolean) = viewModelScope.launch {
+    fun saveNightModeSettingsToDataStore(isTurnedOn: Boolean) = viewModelScope.launch {
         dataStoreRepository.saveNightModeSettingToDataStore(isTurnedOn = isTurnedOn)
     }
 
@@ -96,6 +81,12 @@ class SplashViewModel @ViewModelInject constructor(
             _splashEventChannel.send(SplashEvent.NavigateToShoppingListsFragment(user))
         }
     }
+    fun onTurnNightMode(isTurnedOn: Boolean) {
+        viewModelScope.launch {
+            println("onTurnNightMode -> $isTurnedOn")
+            _splashEventChannel.send(SplashEvent.TurnNightMode(isTurnedOn))
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _splashEventChannel.send(SplashEvent.ShowErrorMessage(message))
@@ -105,6 +96,7 @@ class SplashViewModel @ViewModelInject constructor(
     sealed class SplashEvent {
         object NavigateToLoginFragment : SplashEvent()
         object NavigateToRegisterFragment : SplashEvent()
+        data class TurnNightMode(val isTurnedOn: Boolean) : SplashEvent()
         data class ShowErrorMessage(val message: String) : SplashEvent()
         data class NavigateToShoppingListsFragment(val user: User) : SplashEvent()
     }

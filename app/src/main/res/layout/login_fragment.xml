@@ -5,7 +5,7 @@
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/item_background"
+    android:background="@color/login_reg_screen_background"
     app:layoutDescription="@xml/login_fragment_scene"
     tools:context=".ui.login.LoginFragment">
 
@@ -24,13 +24,13 @@
         android:layout_width="600dp"
         android:layout_height="600dp"
         android:src="@drawable/ic_app_logo_darkblue"
-        app:tint="@color/screen_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0"
+        app:tint="@color/login_reg_screen_icon" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_logInText"
@@ -71,6 +71,7 @@
             android:layout_height="match_parent"
             android:hint="@string/email_address"
             android:inputType="textEmailAddress"
+            android:textColor="@color/black"
             android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,6 +98,7 @@
             android:layout_height="match_parent"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:textColor="@color/black"
             android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 

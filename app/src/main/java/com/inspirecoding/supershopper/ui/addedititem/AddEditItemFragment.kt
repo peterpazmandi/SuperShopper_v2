@@ -90,7 +90,6 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
                     AddEditItemViewModel.AddEditItemEvent.NavigateBack -> {
-                        println("NavigateBack")
                         findNavController().popBackStack()
                     }
                 }
@@ -184,7 +183,9 @@ class AddEditItemFragment : Fragment(R.layout.add_edit_item_fragment) {
         }
         adapter.notifyDataSetChanged()
 
-        binding.etQuantity.setText(listItem.qunatity.toString())
+        listItem.qunatity?.let { _qunatity ->
+            binding.etQuantity.setText(_qunatity.toString())
+        }
 
         listItem.categoryId?.let {
             viewModel.getCategoryById(it)

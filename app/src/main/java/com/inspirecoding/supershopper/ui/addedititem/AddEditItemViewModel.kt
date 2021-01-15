@@ -42,7 +42,7 @@ class AddEditItemViewModel @ViewModelInject constructor(
 
     var item = ""
     var unit = ""
-    var qunatity = 0f
+    var qunatity: Float? = null
     var comment = ""
 
     private val _category = MutableLiveData<Category?>()
@@ -99,15 +99,16 @@ class AddEditItemViewModel @ViewModelInject constructor(
 
                 shoppingList.listOfItems.forEach { _listItem ->
                     if(_listItem.id == (listItem.value as ListItem).id) {
+                        _listItem.let {
+                            it.item = item
+                            it.unit = unit
+                            it.qunatity = qunatity
+                            it.comment = comment
+                            it.priority = LOW
+                        }
+
                         category.value?.let { _category ->
-                            _listItem.let {
-                                it.item = item
-                                it.unit = unit
-                                it.qunatity = qunatity
-                                it.categoryId = _category.id
-                                it.comment = comment
-                                it.priority = LOW
-                            }
+                            _listItem.categoryId = _category.id
                         }
                     }
                 }
@@ -143,12 +144,11 @@ class AddEditItemViewModel @ViewModelInject constructor(
                 ).collect { result ->
                     when(result.status)
                     {
+                        Status.SUCCESS ->  {
+                            onItemSavedSuccessfully()
+                        }
                         Status.LOADING -> {
 
-                        }
-                        Status.SUCCESS ->  {
-                            println("SUCCESS")
-                            onItemSavedSuccessfully()
                         }
                         Status.ERROR ->  {
                             result.message?.let {
@@ -165,15 +165,16 @@ class AddEditItemViewModel @ViewModelInject constructor(
     private fun createNewShoppingListItem(): ListItem {
         val listItem = ListItem()
 
-        category.value?.let { _category ->
-            listItem.let {
-                it.id = UUID.randomUUID().toString()
-                it.item = item
-                it.unit = unit
-                it.qunatity = qunatity
-                it.categoryId = _category.id
-                it.comment = comment
-                it.priority = LOW
+        listItem.let { _listItem ->
+            _listItem.id = UUID.randomUUID().toString()
+            _listItem.item = item
+            _listItem.unit = unit
+            _listItem.qunatity = qunatity
+            _listItem.comment = comment
+            _listItem.priority = LOW
+
+            _category.value?.let { category ->
+                _listItem.categoryId = category.id
             }
         }
 

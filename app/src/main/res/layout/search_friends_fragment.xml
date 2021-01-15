@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_roundedallcorners_white"
+            android:textColor="@color/main_text"
             android:inputType="text"
             android:textSize="@dimen/textSize_regular" />
     </com.google.android.material.textfield.TextInputLayout>

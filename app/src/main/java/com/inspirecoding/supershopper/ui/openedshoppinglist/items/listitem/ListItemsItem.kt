@@ -34,7 +34,10 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
         val unit = listItem.unit.toIntOrNull()?.let {
             context.getString(listOfUnits[listItem.unit.toInt()])
         } ?: listItem.unit
-        binding.tvUnit.text = "${listItem.qunatity} $unit"
+
+        listItem.qunatity?.let { _qunatity ->
+            binding.tvUnit.text = "$_qunatity $unit"
+        }
 
         binding.chbDone.isChecked = listItem.isBought
         binding.chbDone.setOnClickListener {
@@ -63,7 +66,7 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
             binding.ivCategory.alpha = 0.4f
             binding.chbDone.alpha = 0.4f
 
-            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.gray)
+            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.screen_background)
 
         } else {
 
@@ -73,7 +76,7 @@ data class ListItemsItem(val listItem: ListItem): BaseItem<LayoutListitemItemBin
             binding.ivCategory.alpha = 1f
             binding.chbDone.alpha = 1f
 
-            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.app_background)
+            binding.root.background = ContextCompat.getDrawable(binding.root.context, R.color.item_background)
 
         }
     }

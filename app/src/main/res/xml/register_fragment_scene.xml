@@ -102,7 +102,7 @@
             app:layout_constraintVertical_bias="0.15" >
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/app_background"/>
+                app:customColorValue="@color/white"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_emailAddress"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_username">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/app_background"/>
+                app:customColorValue="@color/white"/>
         </Constraint>
         <Constraint
             android:id="@+id/til_password"
@@ -216,7 +216,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_emailAddress">
             <CustomAttribute
                 app:attributeName="boxBackgroundColor"
-                app:customColorValue="@color/app_background"/>
+                app:customColorValue="@color/white"/>
         </Constraint>
     </ConstraintSet>
 </MotionScene>

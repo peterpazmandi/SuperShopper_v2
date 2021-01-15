@@ -6,7 +6,7 @@
         android:state_selected="true" />
 
     <item
-        android:drawable="@drawable/tab_background"
+        android:drawable="@drawable/tab_background_notselected"
         android:state_selected="false" />
 
 </selector>

@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.settings
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -9,6 +10,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.inspirecoding.supershopper.repository.datastore.DataStoreRepository
 import com.inspirecoding.supershopper.ui.register.RegisterViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -47,11 +49,6 @@ class SettingsViewModel @ViewModelInject constructor(
             _settingsEvents.send(SettingsEvent.NavigateToCategoriesFragment)
         }
     }
-    fun onNotificationsSelected() {
-        viewModelScope.launch {
-            _settingsEvents.send(SettingsEvent.NavigateToNotificationsFragment)
-        }
-    }
     fun onTermsAndConditionSelected() {
         viewModelScope.launch {
             _settingsEvents.send(SettingsEvent.NavigateToTermsAndConditionsFragment)
@@ -81,7 +78,6 @@ class SettingsViewModel @ViewModelInject constructor(
 
     sealed class SettingsEvent {
         object NavigateToCategoriesFragment: SettingsEvent()
-        object NavigateToNotificationsFragment: SettingsEvent()
         object ShareTheAppClicked: SettingsEvent()
         object RateTheAppClicked: SettingsEvent()
         object NavigateToTermsAndConditionsFragment: SettingsEvent()

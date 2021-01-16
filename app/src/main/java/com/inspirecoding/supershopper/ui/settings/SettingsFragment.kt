@@ -2,11 +2,17 @@ package com.inspirecoding.supershopper.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.inspirecoding.supershopper.MainActivity
 import com.inspirecoding.supershopper.R
 import com.inspirecoding.supershopper.databinding.SettingsFragmentBinding
 import com.inspirecoding.supershopper.ui.register.RegisterFragmentDirections
@@ -16,8 +22,13 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
+    // CONST
+    private val TAG = this.javaClass.simpleName
+
     private val viewModel by viewModels<SettingsViewModel>()
     private lateinit var binding: SettingsFragmentBinding
+    private lateinit var manager: ReviewManager
+    private var reviewInfo: ReviewInfo? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +42,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         setupEvents()
         setupNotificationSettingsObserver()
         setupNightModeSettingsObserver()
+        initReviews()
 
         binding.tvCategories.setOnClickListener {
             viewModel.onCategoriesSelected()
@@ -42,6 +54,10 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
         binding.tvShareTheApp.setOnClickListener {
             viewModel.onShareTheAppSelected()
+        }
+
+        binding.tvRateTheApp.setOnClickListener {
+            viewModel.onRateTheAppSelected()
         }
 
         binding.tvTermsAndConditions.setOnClickListener {
@@ -81,9 +97,6 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                     SettingsViewModel.SettingsEvent.NavigateToCategoriesFragment -> {
                         navigateToCategoriesFragment()
                     }
-                    SettingsViewModel.SettingsEvent.NavigateToNotificationsFragment -> {
-                        navigateToNotificationsFragment()
-                    }
                     SettingsViewModel.SettingsEvent.ShareTheAppClicked -> {
                         shareTheApp()
                     }
@@ -105,12 +118,26 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     }
 
 
+    /** Google Play In-App Review **/
+    private fun initReviews() {
+        context?.let { _context ->
+            manager = ReviewManagerFactory.create(_context)
+            manager.requestReviewFlow().addOnCompleteListener { request ->
+                if(request.isSuccessful) {
+                    reviewInfo = request.result
+                } else {
+                    request.exception?.message?.let { errorMessage ->
+                        Log.e(TAG, errorMessage)
+                    }
+                }
+            }
+        }
+    }
+
+
     /** Navigation methods **/
     private fun navigateToCategoriesFragment() {
         findNavController().navigate(R.id.action_settingsFragment_to_categoriesFragment)
-    }
-    private fun navigateToNotificationsFragment() {
-
     }
     private fun shareTheApp() {
         val intent = Intent(Intent.ACTION_SEND)
@@ -120,8 +147,17 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
         startActivity(Intent.createChooser(intent, getString(R.string.share_the_app_via)))
     }
-    private fun rateTheApp() {
 
+    private fun rateTheApp() {
+        reviewInfo?.let { _reviewInfo ->
+            if(reviewInfo != null) {
+                manager.launchReviewFlow(requireActivity(), _reviewInfo).addOnFailureListener { exception ->
+                    exception?.message?.let { errorMessage ->
+                        Log.e(TAG, errorMessage)
+                    }
+                }
+            }
+        }
     }
     private fun navigateToTermsAndConditionFragment() {
         findNavController().navigate(R.id.action_settingsFragment_to_termsAndConditionsFragment)

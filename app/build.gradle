@@ -6,6 +6,7 @@ plugins {
     id "androidx.navigation.safeargs"
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
 }
 
 android {
@@ -75,14 +76,22 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:$firebase_firestore_version"
     /** Firebase Storage **/
     implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
-    /** Firebase Storage **/
+    /** Firebase Messaging **/
     implementation "com.google.firebase:firebase-messaging:$firebase_cloud_messaging_version"
+    /** Firebase Android BoM **/
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    /** Friebase Crashlythics **/
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation "com.google.firebase:firebase-analytics-ktx"
 
 
     /** Facebook auth **/
     implementation "com.facebook.android:facebook-android-sdk:$facebook_android_sdk"
     /** Google auth **/
     implementation "com.google.android.gms:play-services-auth:$google_auth"
+
+    /** Facebook auth **/
+    implementation "com.google.android.play:core:$google_play_core"
 
 
     /** Kotlin Coroutines **/

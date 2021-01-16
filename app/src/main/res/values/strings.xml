@@ -272,6 +272,8 @@
     <string name="user_has_deleted_the_shopping_list">%1$s has deleted the shopping list!</string>
     <string name="shopping_lists">Shopping Lists</string>
 
+    <string name="share_the_app_via">Share the app via</string>
+
 
 
 </resources>

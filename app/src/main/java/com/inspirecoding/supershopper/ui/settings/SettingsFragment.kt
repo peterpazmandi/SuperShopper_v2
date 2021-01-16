@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -35,16 +36,20 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             viewModel.onCategoriesSelected()
         }
 
+        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveNotificationsSettingsToDataStore(isChecked)
+        }
+
+        binding.tvShareTheApp.setOnClickListener {
+            viewModel.onShareTheAppSelected()
+        }
+
         binding.tvTermsAndConditions.setOnClickListener {
             viewModel.onTermsAndConditionSelected()
         }
 
         binding.tvPrivacyPolicy.setOnClickListener {
             viewModel.onPrivacyPolicySelected()
-        }
-
-        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveNotificationsSettingsToDataStore(isChecked)
         }
 
         binding.switchNightMode.setOnCheckedChangeListener { _, isChecked ->
@@ -108,7 +113,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     }
     private fun shareTheApp() {
-
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_the_app))
+        intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
+        startActivity(Intent.createChooser(intent, getString(R.string.share_the_app_via)))
     }
     private fun rateTheApp() {
 

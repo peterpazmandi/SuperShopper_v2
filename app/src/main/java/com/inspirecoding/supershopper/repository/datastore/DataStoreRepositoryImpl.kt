@@ -1,6 +1,5 @@
 package com.inspirecoding.supershopper.repository.datastore
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -21,12 +20,9 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override val PREFERENCES_NAME = "myPreferences"
 
-
     override val dataStore: DataStore<Preferences> = appContext.createDataStore(
         name = PREFERENCES_NAME
     )
-
-
 
     override suspend fun saveNotificationsSettingToDataStore(areTurnedOn: Boolean) {
         dataStore.edit { preferences ->
@@ -47,8 +43,6 @@ class DataStoreRepositoryImpl @Inject constructor(
             preferences[PreferenceKeys.notificationsSetting]
         }
 
-
-
     override suspend fun saveNightModeSettingToDataStore(isTurnedOn: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferenceKeys.nightModeSetting] = isTurnedOn
@@ -65,10 +59,7 @@ class DataStoreRepositoryImpl @Inject constructor(
                 }
             }
             .map { preferences ->
-                println("preferences -> ${preferences[PreferenceKeys.nightModeSetting]}")
                 preferences[PreferenceKeys.nightModeSetting]
             }
-
-
 
 }

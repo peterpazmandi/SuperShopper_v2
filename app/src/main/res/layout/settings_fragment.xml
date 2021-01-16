@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,6 +16,7 @@
         android:src="@drawable/ic_back_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_shoppingListName"
         android:layout_width="wrap_content"
@@ -36,12 +36,12 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_backButton" >
+        app:layout_constraintTop_toBottomOf="@id/iv_backButton">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shape_roundedtopcorners_white" >
+            android:background="@drawable/shape_roundedtopcorners_white">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_categories"
@@ -49,17 +49,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
-                android:text="@string/categories"
-                android:textAlignment="center"
                 android:drawableStart="@drawable/ic_category"
                 android:drawablePadding="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/categories"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <View
                 android:id="@+id/horizontalLine_categories"
                 android:layout_width="wrap_content"
@@ -73,17 +74,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
-                android:text="@string/notifications"
-                android:textAlignment="center"
                 android:drawableStart="@drawable/ic_notifications"
                 android:drawablePadding="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/notifications"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_categories" />
+
             <View
                 android:id="@+id/horizontalLine_notification"
                 android:layout_width="wrap_content"
@@ -91,33 +93,35 @@
                 android:background="#E5E5E5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_notification" />
+
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium"
                 android:paddingTop="@dimen/margin_small"
                 android:paddingBottom="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_medium"
-                app:layout_constraintTop_toTopOf="@id/tv_notification"
                 app:layout_constraintBottom_toBottomOf="@id/tv_notification"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_notification" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_shareTheApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
-                android:text="@string/share_the_app"
-                android:textAlignment="center"
                 android:drawableStart="@drawable/ic_share"
                 android:drawablePadding="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/share_the_app"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_notification" />
+
             <View
                 android:id="@+id/horizontalLine_shareTheApp"
                 android:layout_width="wrap_content"
@@ -131,17 +135,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
-                android:text="@string/rate_the_app"
-                android:textAlignment="center"
                 android:drawableStart="@drawable/ic_star"
                 android:drawablePadding="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/rate_the_app"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_shareTheApp" />
+
             <View
                 android:id="@+id/horizontalLine_rateTheApp"
                 android:layout_width="wrap_content"
@@ -151,7 +156,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_rateTheApp" />
 
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_themeText"
                 android:layout_width="wrap_content"
@@ -159,11 +163,11 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_xxxlarge"
                 android:fontFamily="@font/roboto_bold"
-                android:textStyle="bold"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
                 android:text="@string/theme"
                 android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_rateTheApp" />
 
@@ -172,17 +176,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
-                android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
-                android:text="@string/night_mode"
-                android:textAlignment="center"
                 android:drawableStart="@drawable/ic_night_mode"
                 android:drawablePadding="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/night_mode"
+                android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_themeText" />
+
             <View
                 android:id="@+id/horizontalLine_nightMode"
                 android:layout_width="wrap_content"
@@ -190,17 +195,17 @@
                 android:background="#E5E5E5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nightMode" />
+
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_nightMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium"
                 android:paddingTop="@dimen/margin_small"
                 android:paddingBottom="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_medium"
-                app:layout_constraintTop_toTopOf="@id/tv_nightMode"
                 app:layout_constraintBottom_toBottomOf="@id/tv_nightMode"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_nightMode" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -210,11 +215,11 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_xxxlarge"
                 android:fontFamily="@font/roboto_bold"
-                android:textStyle="bold"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
                 android:text="@string/documents"
                 android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_nightMode" />
 
@@ -223,15 +228,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingTop="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
                 android:text="@string/terms_anp_conditions"
                 android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_documentsText" />
+
             <View
                 android:id="@+id/horizontalLine_termsAndConditions"
                 android:layout_width="wrap_content"
@@ -245,22 +251,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingTop="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_medium"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/textSize_medium"
                 android:text="@string/privacy_policy"
                 android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="@dimen/textSize_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/horizontalLine_termsAndConditions" />
+
             <View
                 android:id="@+id/horizontalLine_privacyPolicy"
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_5xlarge"
                 android:background="#E5E5E5"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_privacyPolicy" />
+                app:layout_constraintTop_toBottomOf="@id/tv_privacyPolicy"
+                app:layout_constraintVertical_bias="0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

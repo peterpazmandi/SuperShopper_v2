@@ -5,7 +5,7 @@
     <string name="facebook_app_id">532612537445839</string>
     <string name="fb_login_protocol_scheme">fb532612537445839</string>
     <string name="facebook_application_id" translatable="false">532612537445839</string>
-    <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
+
     <string name="facebook_login_protocol_scheme" translatable="false">fb532612537445839</string>
 
 
@@ -14,7 +14,6 @@
     <string name="create_account">Create account</string>
     <string name="we_help_you_keep_your_shopping_list_in_mind">We help you keep \n your shopping list in mind!</string>
     <string name="log_in">Log in</string>
-    <string name="create_your_account">Create your account</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="forgot_password">Forgot password?</string>
@@ -128,7 +127,7 @@
 
     <string name="error_during_registration">Error during registration.</string>
     <string name="error_during_login">Error during login.</string>
-    <string name="oh_oh">Oh oh</string>
+    <string name="oh_oh">Oh oh…</string>
     <string name="error_during_registration_please_try_again_later">Error during registration. Please try again later.</string>
     <string name="error_during_login_please_try_again_later">Error during login. Please try again later.</string>
     <string name="you_have_no_shopping_lists">You have\nno shopping lists.</string>
@@ -141,7 +140,6 @@
     <string name="the_day_before_yesterday">The day before yesterday</string>
     <string name="settings">Settings</string>
     <string name="friends">Friends</string>
-    <string name="sort_list">Sort list</string>
 
     <string name="items">Items</string>
     <string name="details">Details</string>
@@ -177,23 +175,23 @@
     <string name="home_and_kitchen">Home and kitchen</string>
     <string name="home_baking">Home baking</string>
     <string name="house_cleaning_products">House cleaning products</string>
-    <string name="meat_pourly_and_sausages">Meat, pourly and sausages</string>
+    <string name="meats">Meats</string>
     <string name="newspapers">Newspapers</string>
     <string name="office_supplies">Office supplies</string>
     <string name="oils">Oils</string>
     <string name="other">Other</string>
     <string name="personal_hygiene">Personal hygiene</string>
     <string name="pet_care">Pet care</string>
-    <string name="pharmacy">Pharmacy</string>
+    <string name="medicines">Pharmacy</string>
     <string name="preserves">Preserves</string>
     <string name="ready_meals">Ready meals</string>
     <string name="snacks">Snacks</string>
     <string name="condiments">Condiments</string>
     <string name="sauces">Sauces</string>
     <string name="spices">Spices</string>
+    <string name="salami">Salami</string>
 
-    <string name="move_up">Move Up</string>
-    <string name="move_down">Move Down</string>
+
     <string name="delete">Delete</string>
     <string name="add_new_category">Add new category</string>
     <string name="name">Name</string>
@@ -227,12 +225,12 @@
     <string name="your_shopping_list_is_still_empty">Your shopping list is still empty.</string>
     <string name="add_items_using_this_plus_button">Add items using\nthis plus button.</string>
     <string name="select_a_due_date">Select a due date</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="find_your_friends">Find your friends</string>
     <string name="are_you_sure_you_want_to_delete_your_shopping_list">Are you sure you want\nto delete your shopping list?</string>
     <string name="are_you_sure_you_want_to_leave_your_shopping_list">Are you sure you want\nto leave your shopping list?</string>
     <string name="add_friends">Add friends</string>
-    <string name="yes_i_m_sure">Yes, I\'m sure</string>
+    <string name="yes_sure">Yes, sure</string>
     <string name="your_friends">Your friends</string>
     <string name="unfriend">Unfriend</string>
     <string name="search_friends">Search Friends</string>

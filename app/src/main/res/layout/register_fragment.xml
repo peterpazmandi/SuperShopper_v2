@@ -40,7 +40,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_xlarge"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/create_your_account"
+        android:text="@string/create_account"
         android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_large"
         android:textStyle="bold"

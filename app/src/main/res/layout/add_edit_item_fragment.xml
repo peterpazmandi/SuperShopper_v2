@@ -49,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_medium"
-        android:contentDescription="@string/sort_list"
         android:src="@drawable/ic_save"
         app:backgroundTint="@color/fab_back"
         app:fabSize="normal"

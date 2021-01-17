@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,12 +33,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_usersList"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
         android:layout_marginTop="@dimen/margin_medium"
         android:paddingStart="@dimen/margin_medium"
         android:paddingEnd="@dimen/margin_medium"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalLine"/>
+        app:layout_constraintTop_toBottomOf="@+id/horizontalLine" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -50,16 +49,16 @@
         android:elevation="1dp"
         android:progressBackgroundTint="@color/secondary_text"
         android:progressTint="@color/secondary_text"
-        app:layout_constraintTop_toBottomOf="@id/horizontalLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalLine" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_xxlarge"
         android:background="@drawable/shape_whiteback_blueborder_roundedcorners"
@@ -95,5 +94,96 @@
         app:layout_constraintStart_toEndOf="@+id/btn_cancel"
         app:layout_constraintTop_toTopOf="@id/btn_cancel"
         app:layout_constraintVertical_bias="0.01" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_noFriends"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontalLine">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_illNoFriends"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="@dimen/margin_5xlarge"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_5xlarge"
+            android:src="@drawable/ill_no_friends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_noFriendYetText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/you_don_t_have_any_friends_yet"
+            android:textAlignment="center"
+            android:textColor="@color/main_text"
+            android:textSize="@dimen/textSize_large"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_illNoFriends" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_findYourFriends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/shape_filled_blue_roundedcorners"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="@dimen/margin_large"
+            android:text="@string/find_your_friends"
+            android:textAllCaps="false"
+            android:textColor="@color/action_button_text"
+            android:textSize="@dimen/textSize_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_noFriendYetText" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_orText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/or"
+            android:textAlignment="center"
+            android:textColor="@color/main_text"
+            android:textSize="@dimen/textSize_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_findYourFriends" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_inviteFriends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/shape_whiteback_blueborder_roundedcorners"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="@dimen/margin_large"
+            android:text="@string/invite_friends"
+            android:textAllCaps="false"
+            android:textColor="@color/inv_action_button_text"
+            android:textSize="@dimen/textSize_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_orText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

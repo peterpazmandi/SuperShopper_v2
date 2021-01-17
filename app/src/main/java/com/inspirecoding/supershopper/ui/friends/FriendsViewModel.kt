@@ -145,6 +145,13 @@ class FriendsViewModel @ViewModelInject constructor(
             }
         }
     }
+    fun onShareTheAppSelected() {
+        viewModelScope.launch {
+            currentUser.value?.let {
+                _friendsEvents.send(FriendsFragmentsEvent.ShareTheApp(it))
+            }
+        }
+    }
     fun onShowErrorMessage(message: String) {
         viewModelScope.launch {
             _friendsEvents.send(FriendsFragmentsEvent.ShowErrorMessage(message))
@@ -160,6 +167,7 @@ class FriendsViewModel @ViewModelInject constructor(
         data class NavigateToSearchFriendsFragment(val user: User): FriendsFragmentsEvent()
         data class NavigateToUserProfileFragment(val user: User, val selectedUser: User): FriendsFragmentsEvent()
         data class NavigateToFriendRequestsFragment(val user: User): FriendsFragmentsEvent()
+        data class ShareTheApp(val user: User): FriendsFragmentsEvent()
         data class ShowErrorMessage(val message: String): FriendsFragmentsEvent()
     }
 

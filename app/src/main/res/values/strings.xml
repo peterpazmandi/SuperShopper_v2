@@ -273,7 +273,10 @@
     <string name="share_the_app_via">Share the app via</string>
 
     <string name="thanks_for_the_feedback">Thanks for the feedback!</string>
+    <string name="or">Or</string>
+    <string name="invite_friends">Invite your Friends</string>
 
-
+    <string name="user_has_shared_with_you_the_supershopper_app_you_can_download_it_via_the_link">%1$s has shared with you the SuperShopper app. You can download it via the link.</string>
+    <string name="user_would_like_to_invite_you_to_the_supershopper_app_you_can_download_it_via_the_link">%1$s would like to invite you to the application SuperShopper. You can download it via the link.</string>
 
 </resources>

@@ -14,6 +14,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.inspirecoding.supershopper.MainActivity
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.SettingsFragmentBinding
 import com.inspirecoding.supershopper.ui.register.RegisterFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -97,8 +98,8 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                     SettingsViewModel.SettingsEvent.NavigateToCategoriesFragment -> {
                         navigateToCategoriesFragment()
                     }
-                    SettingsViewModel.SettingsEvent.ShareTheAppClicked -> {
-                        shareTheApp()
+                    is SettingsViewModel.SettingsEvent.ShareTheAppClicked -> {
+                        shareTheApp(event.currentUser)
                     }
                     SettingsViewModel.SettingsEvent.RateTheAppClicked -> {
                         rateTheApp()
@@ -139,12 +140,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     private fun navigateToCategoriesFragment() {
         findNavController().navigate(R.id.action_settingsFragment_to_categoriesFragment)
     }
-    private fun shareTheApp() {
+    private fun shareTheApp(currentUser: User) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_the_app))
-        intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
+        intent.putExtra(Intent.EXTRA_TEXT, "${getString(R.string.user_has_shared_with_you_the_supershopper_app_you_can_download_it_via_the_link, currentUser.name)}\nhttps://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
         startActivity(Intent.createChooser(intent, getString(R.string.share_the_app_via)))
     }
 

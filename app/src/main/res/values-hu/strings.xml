@@ -265,6 +265,11 @@
 
     <string name="thanks_for_the_feedback">Köszönöm a visszajelzést!</string>
 
+    <string name="or">Or</string>
+    <string name="invite_friends">Hívd meg barátaid</string>
+
+    <string name="user_has_shared_with_you_the_supershopper_app_you_can_download_it_via_the_link">%1$s megosztotta veled a SuperShopper appot. A linken keresztül le tudod tölteni.</string>
+    <string name="user_would_like_to_invite_you_to_the_supershopper_app_you_can_download_it_via_the_link">%1$s szeretne meghívni téged a SuperShopper alkalmazásba. You can download it via the link.</string>
 
 
 </resources>

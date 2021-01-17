@@ -2,6 +2,7 @@ package com.inspirecoding.supershopper.ui.findfriends
 
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.inspirecoding.supershopper.R
+import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.databinding.FindFriendsBottomSheetFragmentBinding
 import com.inspirecoding.supershopper.ui.categories.listitems.UserItem
+import com.inspirecoding.supershopper.ui.friends.FriendsFragmentDirections
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel.Companion.ARG_KEY_FRIENDSSHAREDWITH
 import com.inspirecoding.supershopper.utils.Status
 import com.inspirecoding.supershopper.utils.baseclasses.BaseListAdapter
@@ -55,9 +58,19 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
         binding.btnCancel.setOnClickListener {
             findNavController().popBackStack()
         }
+
         binding.btnAddFriends.setOnClickListener {
             viewModel.onNavigateBackWithResult()
         }
+
+        binding.btnFindYourFriends.setOnClickListener {
+            viewModel.onSearchFriendSelected()
+        }
+
+        binding.btnInviteFriends.setOnClickListener {
+            viewModel.onShareTheAppSelected()
+        }
+
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -75,6 +88,13 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
                 Status.SUCCESS -> {
                     result.data?.let { listOfFriends ->
                         val listOfUserItems = viewModel.createListOfUserItems(listOfFriends)
+
+                        if(listOfFriends.isEmpty()) {
+                            binding.clNoFriends.makeItVisible()
+                            binding.btnAddFriends.makeItInVisible()
+                            binding.btnCancel.makeItInVisible()
+                        }
+
                         adapter.submitList(listOfUserItems)
                     }
                     binding.progressBar.makeItInVisible()
@@ -120,6 +140,12 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
                     is FindFriendsBottomSheetViewModel.FindFriendsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
                     }
+                    is FindFriendsBottomSheetViewModel.FindFriendsEvent.NavigateToSearchFriendsFragment -> {
+                        navigateToSearchFriendsFragment(event.user)
+                    }
+                    is FindFriendsBottomSheetViewModel.FindFriendsEvent.ShareTheApp -> {
+                        shareTheApp(event.user)
+                    }
                     is FindFriendsBottomSheetViewModel.FindFriendsEvent.NavigateBackWithResult -> {
                         navigateBackWithResult(event.listOfFriends)
                     }
@@ -128,9 +154,22 @@ class FindFriendsBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun shareTheApp(currentUser: User) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_the_app))
+        intent.putExtra(Intent.EXTRA_TEXT, "${getString(R.string.user_would_like_to_invite_you_to_the_supershopper_app_you_can_download_it_via_the_link, currentUser.name)}\nhttps://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
+        startActivity(Intent.createChooser(intent, getString(R.string.share_the_app_via)))
+    }
+
 
 
     /** Navigation methods **/
+    private fun navigateToSearchFriendsFragment(user: User) {
+        val action = FindFriendsBottomSheetFragmentDirections.actionFindFriendsBottomSheetFragmentToSearchFriendsFragment(user)
+        findNavController().navigate(action)
+    }
     private fun navigateBackWithResult(listOfFriends: ArrayList<String>) {
         setFragmentResult(
             ARG_KEY_FRIENDSSHAREDWITH,

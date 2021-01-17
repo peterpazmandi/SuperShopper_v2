@@ -63,7 +63,7 @@
         android:alpha="0"
         android:background="@drawable/shape_roundedallcorners_blue"
         android:gravity="center"
-        android:textColor="@color/app_background"
+        android:textColor="@color/white"
         android:textSize="@dimen/textSize_small"
         app:layout_constraintEnd_toEndOf="@id/iv_friendRequests"
         app:layout_constraintTop_toTopOf="@id/iv_friendRequests"
@@ -104,43 +104,27 @@
                 app:layout_constraintStart_toStartOf="@id/rv_friends"
                 app:layout_constraintTop_toTopOf="@id/rv_friends">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_upArrow"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="@dimen/margin_5xlarge"
-                    android:padding="@dimen/margin_medium"
-                    android:src="@drawable/ic_arrow_up"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/main_text" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="@string/find_your_friends"
-                    android:textAlignment="center"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/textSize_regular"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_upArrow"
-                    app:layout_constraintTop_toTopOf="@id/iv_upArrow"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_upArrow" />
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_illNoFriends"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="@dimen/margin_5xlarge"
                     android:layout_marginEnd="@dimen/margin_5xlarge"
                     android:src="@drawable/ill_no_friends"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/guideline" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_noFriendYetText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
@@ -151,7 +135,59 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_illNoFriends" />
+                    app:layout_constraintTop_toTopOf="@id/guideline" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_findYourFriends"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xxxlarge"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:background="@drawable/shape_filled_blue_roundedcorners"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingStart="@dimen/margin_large"
+                    android:paddingEnd="@dimen/margin_large"
+                    android:text="@string/find_your_friends"
+                    android:textAllCaps="false"
+                    android:textColor="@color/action_button_text"
+                    android:textSize="@dimen/textSize_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_noFriendYetText" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_orText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/or"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:textAlignment="center"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/textSize_large"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_findYourFriends" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_inviteFriends"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:background="@drawable/shape_whiteback_blueborder_roundedcorners"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingStart="@dimen/margin_large"
+                    android:paddingEnd="@dimen/margin_large"
+                    android:text="@string/invite_friends"
+                    android:textAllCaps="false"
+                    android:textColor="@color/inv_action_button_text"
+                    android:textSize="@dimen/textSize_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_orText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package com.inspirecoding.supershopper.ui.friends
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -44,6 +45,14 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
             viewModel.onSearchFriendSelected()
         }
 
+        binding.btnFindYourFriends.setOnClickListener {
+            viewModel.onSearchFriendSelected()
+        }
+
+        binding.btnInviteFriends.setOnClickListener {
+            viewModel.onShareTheAppSelected()
+        }
+
         binding.ivFriendRequests.setOnClickListener {
             viewModel.onFriendRequestsSelected()
         }
@@ -66,6 +75,9 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.NavigateToFriendRequestsFragment -> {
                         navigateToFriendRequestsFragment(event.user)
+                    }
+                    is FriendsViewModel.FriendsFragmentsEvent.ShareTheApp -> {
+                        shareTheApp(event.user)
                     }
                     is FriendsViewModel.FriendsFragmentsEvent.ShowErrorMessage -> {
                         navigateToErrorBottomDialogFragment(event.message)
@@ -135,6 +147,15 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                 binding.tvPendingRequestsCount.makeItInVisible()
             }
         })
+    }
+
+    private fun shareTheApp(currentUser: User) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_the_app))
+        intent.putExtra(Intent.EXTRA_TEXT, "${getString(R.string.user_would_like_to_invite_you_to_the_supershopper_app_you_can_download_it_via_the_link, currentUser.name)}\nhttps://play.google.com/store/apps/details?id=com.inspirecoding.supershopper")
+        startActivity(Intent.createChooser(intent, getString(R.string.share_the_app_via)))
     }
 
 

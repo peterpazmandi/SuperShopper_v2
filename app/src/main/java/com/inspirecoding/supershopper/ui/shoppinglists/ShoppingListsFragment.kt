@@ -179,8 +179,8 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
             viewModel.shoppingListsFragmentsEventChannel.collect { event ->
                 when(event)
                 {
-                    ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSettingsFragment -> {
-                        navigateToSettingsFragment()
+                    is ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToSettingsFragment -> {
+                        navigateToSettingsFragment(event.currentUser)
                     }
                     is ShoppingListsViewModel.ShoppingListsFragmentsEvent.NavigateToFriendsFragment -> {
                         navigateToFriendsListFragment(event.currentUser)
@@ -256,8 +256,9 @@ class ShoppingListsFragment : Fragment(R.layout.shopping_lists_fragment) {
         val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToCurrentUserProfileFragment(currentUser)
         findNavController().navigate(action)
     }
-    private fun navigateToSettingsFragment() {
-        findNavController().navigate(R.id.action_shoppingListsFragment_to_settingsFragment)
+    private fun navigateToSettingsFragment(currentUser: User) {
+        val action = ShoppingListsFragmentDirections.actionShoppingListsFragmentToSettingsFragment(currentUser)
+        findNavController().navigate(action)
     }
     private fun navigateToOpenShoppingListsFragment(shoppingList: ShoppingList) {
         viewModel.currentUser.value?.let { currentUser ->

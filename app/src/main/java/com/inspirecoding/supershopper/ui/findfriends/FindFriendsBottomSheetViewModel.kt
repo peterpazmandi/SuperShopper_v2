@@ -9,6 +9,7 @@ import com.inspirecoding.supershopper.data.User
 import com.inspirecoding.supershopper.repository.shoppinglist.ShoppingListRepository
 import com.inspirecoding.supershopper.repository.user.UserRepository
 import com.inspirecoding.supershopper.ui.categories.listitems.UserItem
+import com.inspirecoding.supershopper.ui.friends.FriendsViewModel
 import com.inspirecoding.supershopper.ui.openedshoppinglist.OpenedShoppingListViewModel
 import com.inspirecoding.supershopper.ui.shoppinglists.ShoppingListsViewModel
 import com.inspirecoding.supershopper.utils.Status
@@ -136,6 +137,13 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
     fun addToListOfFriends(user: User) {
         listOfSelectedUsers.add(user)
     }
+    fun onShareTheAppSelected() {
+        viewModelScope.launch {
+            currentUser.value?.let {
+                _findFriendsEventChannel.send(FindFriendsEvent.ShareTheApp(it))
+            }
+        }
+    }
     fun removeFromListOfFriends(user: User) {
         listOfSelectedUsers.remove(user)
     }
@@ -143,6 +151,13 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
 
 
     /** Events **/
+    fun onSearchFriendSelected() {
+        viewModelScope.launch {
+            currentUser.value?.let { user ->
+                _findFriendsEventChannel.send(FindFriendsEvent.NavigateToSearchFriendsFragment(user))
+            }
+        }
+    }
     fun onNavigateBackWithResult() {
         viewModelScope.launch {
             val friendsIds = listOfSelectedUsers.map {
@@ -160,7 +175,9 @@ class FindFriendsBottomSheetViewModel @ViewModelInject constructor(
 
 
     sealed class FindFriendsEvent {
+        data class NavigateToSearchFriendsFragment(val user: User): FindFriendsEvent()
         data class NavigateBackWithResult(val listOfFriends: ArrayList<String>) : FindFriendsEvent()
+        data class ShareTheApp(val user: User): FindFriendsEvent()
         data class ShowErrorMessage(val message: String) : FindFriendsEvent()
     }
 

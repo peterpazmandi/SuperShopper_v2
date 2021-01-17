@@ -153,7 +153,9 @@ class ShoppingListsViewModel @ViewModelInject constructor(
     /** Events **/
     fun onOpenSettings() {
         viewModelScope.launch {
-            _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSettingsFragment)
+            currentUser.value?.let {
+                _shoppingListsFragmentsEventChannel.send(ShoppingListsFragmentsEvent.NavigateToSettingsFragment(it))
+            }
         }
     }
     fun onOpenFriends() {
@@ -187,7 +189,7 @@ class ShoppingListsViewModel @ViewModelInject constructor(
 
 
     sealed class ShoppingListsFragmentsEvent {
-        object NavigateToSettingsFragment : ShoppingListsFragmentsEvent()
+        data class NavigateToSettingsFragment(val currentUser: User) : ShoppingListsFragmentsEvent()
         data class NavigateToFriendsFragment(val currentUser: User) : ShoppingListsFragmentsEvent()
         data class NavigateToCurrentUserProfileFragment(val currentUser: User) : ShoppingListsFragmentsEvent()
         data class OpenSelectedShoppingList(val shoppingList: ShoppingList) : ShoppingListsFragmentsEvent()

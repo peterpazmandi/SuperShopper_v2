@@ -98,7 +98,7 @@
                 android:id="@+id/cl_noFriends"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/rv_friends"
                 app:layout_constraintEnd_toEndOf="@id/rv_friends"
                 app:layout_constraintStart_toStartOf="@id/rv_friends"

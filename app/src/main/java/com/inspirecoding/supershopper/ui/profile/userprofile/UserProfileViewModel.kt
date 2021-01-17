@@ -205,7 +205,7 @@ class UserProfileViewModel @ViewModelInject constructor(
                                                     PushNotification(
                                                         data = NotificationData(
                                                             title = appContext.getString(R.string.new_friend_request),
-                                                            message = appContext.getString(R.string.user_has_sent_you_a_friend_request, _selectedUser.name)),
+                                                            message = appContext.getString(R.string.user_has_sent_you_a_friend_request, _currentUser.name)),
                                                         to = token)
                                                 )
                                             }

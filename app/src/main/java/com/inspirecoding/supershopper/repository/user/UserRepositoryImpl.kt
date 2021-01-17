@@ -91,8 +91,21 @@ class UserRepositoryImpl @Inject constructor(
 
             if (firebaseUser != null) {
                 val user = createUserObject(firebaseUser, username)
-                createUserInFirestore(user).collect { _user ->
-                    _userResource.send(_user)
+                createUserInFirestore(user).collect { result ->
+                    when(result.status)
+                    {
+                        SUCCESS -> {
+                            result.data?.let { _user ->
+                                firebaseUser.email?.let { _email ->
+                                    println("email -> $_email")
+                                    _user.emailAddress = _email
+                                    _userResource.send(Resource.Success(_user))
+                                }
+                            }
+                        }
+                        LOADING -> _userResource.send(result)
+                        ERROR -> _userResource.send(result)
+                    }
                 }
             } else {
                 _userResource.send(Resource.Error(applicationContext.getString(R.string.error_during_registration_please_try_again_later)))
@@ -116,8 +129,21 @@ class UserRepositoryImpl @Inject constructor(
             val firebaseUser = resultDocumentSnapshot.user
 
             if (firebaseUser != null) {
-                getUserFromFirestore(firebaseUser.uid).collect { _user ->
-                    _userResource.send(_user)
+                getUserFromFirestore(firebaseUser.uid).collect  { result ->
+                    when(result.status)
+                    {
+                        SUCCESS -> {
+                            result.data?.let { _user ->
+                                firebaseUser.email?.let { _email ->
+                                    println("email -> $_email")
+                                    _user.emailAddress = _email
+                                    _userResource.send(Resource.Success(_user))
+                                }
+                            }
+                        }
+                        LOADING -> _userResource.send(result)
+                        ERROR -> _userResource.send(result)
+                    }
                 }
             } else {
                 _userResource.send(Resource.Error(applicationContext.getString(R.string.error_during_login_please_try_again_later)))
@@ -138,8 +164,21 @@ class UserRepositoryImpl @Inject constructor(
                 val firebaseUser = firebaseAuth.currentUser
 
                 if (firebaseUser != null) {
-                    getUserFromFirestore(firebaseUser.uid).collect { _user ->
-                        _userResource.send(_user)
+                    getUserFromFirestore(firebaseUser.uid).collect { result ->
+                        when(result.status)
+                        {
+                            SUCCESS -> {
+                                result.data?.let { _user ->
+                                    firebaseUser.email?.let { _email ->
+                                        println("email -> $_email")
+                                        _user.emailAddress = _email
+                                        _userResource.send(Resource.Success(_user))
+                                    }
+                                }
+                            }
+                            LOADING -> _userResource.send(result)
+                            ERROR -> _userResource.send(result)
+                        }
                     }
                 } else {
                     _userResource.send(Resource.Success(null))
@@ -469,6 +508,7 @@ class UserRepositoryImpl @Inject constructor(
             .await()
 
         val user = documentSnapshot.toObject(User::class.java)
+
         firebaseAuth.currentUser?.email?.let { _email ->
             user?.emailAddress = _email
         }

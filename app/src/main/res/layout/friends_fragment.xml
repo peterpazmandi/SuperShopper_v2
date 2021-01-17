@@ -98,7 +98,7 @@
                 android:id="@+id/cl_noFriends"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/rv_friends"
                 app:layout_constraintEnd_toEndOf="@id/rv_friends"
                 app:layout_constraintStart_toStartOf="@id/rv_friends"
@@ -113,7 +113,7 @@
                     android:src="@drawable/ic_arrow_up"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/screen_background" />
+                    app:tint="@color/main_text" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/find_your_friends"
                     android:textAlignment="center"
-                    android:textColor="@color/screen_background"
+                    android:textColor="@color/main_text"
                     android:textSize="@dimen/textSize_regular"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/iv_upArrow"
@@ -146,7 +146,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/you_don_t_have_any_friends_yet"
                     android:textAlignment="center"
-                    android:textColor="@color/screen_background"
+                    android:textColor="@color/main_text"
                     android:textSize="@dimen/textSize_large"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"

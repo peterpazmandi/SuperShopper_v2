@@ -9,9 +9,18 @@ object ObjectFactory {
         firebaseUser: FirebaseUser,
         username: String,
         profilePicture: String = ""
-    ) = User(
-        id =  firebaseUser.uid,
-        name = username,
-        profilePicture = profilePicture
-    )
+    ): User {
+
+        val user = User(
+            id =  firebaseUser.uid,
+            name = username,
+            profilePicture = profilePicture
+        )
+
+        firebaseUser.email?.let { _email ->
+            user.emailAddress = _email
+        }
+
+        return user
+    }
 }

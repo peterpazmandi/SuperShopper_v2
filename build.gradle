@@ -9,7 +9,7 @@ buildscript {
         compileSdk_version = 30
 
         // App versioning
-        versionCode = 7
+        versionCode = 8
         versionName = "4.0.0"
 
         // App dependencies

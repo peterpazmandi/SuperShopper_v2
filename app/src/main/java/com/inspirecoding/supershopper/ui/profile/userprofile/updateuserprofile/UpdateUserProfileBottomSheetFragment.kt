@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
@@ -105,14 +106,22 @@ class UpdateUserProfileBottomSheetFragment : BottomSheetDialogFragment() {
         binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_person_blue, 0, 0, 0)
         binding.tvTitle.text = getString(R.string.change_name)
 
+        binding.tilNewValue.endIconMode = TextInputLayout.END_ICON_NONE
         binding.tietNewValue.inputType = InputType.TYPE_CLASS_TEXT
+        context?.let { _context ->
+            binding.tilNewValue.startIconDrawable = ContextCompat.getDrawable(_context, R.drawable.ic_person_blue)
+        }
     }
 
     private fun setUiToChangeEmail() {
         binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_blue, 0, 0, 0)
         binding.tvTitle.text = getString(R.string.change_email)
 
+        binding.tilNewValue.endIconMode = TextInputLayout.END_ICON_NONE
         binding.tietNewValue.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        context?.let { _context ->
+            binding.tilNewValue.startIconDrawable = ContextCompat.getDrawable(_context, R.drawable.ic_email_blue)
+        }
     }
 
     private fun setUiToChangePassword() {
@@ -121,6 +130,9 @@ class UpdateUserProfileBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.tietNewValue.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         binding.tilNewValue.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+        context?.let { _context ->
+            binding.tilNewValue.startIconDrawable = ContextCompat.getDrawable(_context, R.drawable.ic_lock_blue)
+        }
     }
 
 

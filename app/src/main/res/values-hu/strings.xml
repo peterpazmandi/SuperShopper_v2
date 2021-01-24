@@ -162,6 +162,7 @@
     <string name="electronics_devices">Elektronikai eszközök</string>
     <string name="fish_and_seafood">Hal és tenger gyümölcsei</string>
     <string name="frozen">Fagyasztott</string>
+    <string name="fruits">Zöldségek</string>
     <string name="grains_and_pasta">Gabona és tészta</string>
     <string name="home_and_kitchen">Otthon és konyha</string>
     <string name="home_baking">Házi sütés</string>
@@ -180,6 +181,7 @@
     <string name="condiments">Fűszerek</string>
     <string name="sauces">Szószok</string>
     <string name="spices">Csípős</string>
+    <string name="vegetables">Zöldségek</string>
     <string name="salami">Szalámik</string>
 
 
@@ -214,7 +216,7 @@
     <string name="comment">Komment</string>
     <string name="write_some_comment_if_you_want">Írj megjegyzést, ha szeretnél</string>
     <string name="your_shopping_list_is_still_empty">A bevásárlólistád még üres.</string>
-    <string name="add_items_using_this_plus_button">Adj hozzá tételeket a plusz gomb használatával.</string>
+    <string name="add_items_using_this_plus_button">Hozz létre\ntételeket a plusz gomb\nhasználatával.</string>
     <string name="select_a_due_date">Adj meg határidőt</string>
     <string name="ok">Ok</string>
     <string name="find_your_friends">Találd meg a barátaidat</string>
@@ -225,7 +227,7 @@
     <string name="your_friends">A barataid</string>
     <string name="unfriend">Barát törlése</string>
     <string name="search_friends">Barátok keresése</string>
-    <string name="view_profile">Profil megtekintése</string>
+    <string name="view_profile">Profil</string>
     <string name="add_friend">Barát hozzáadása</string>
     <string name="enter_at_least_5_characters_to_search">Írj be legalább\n5 karaktert a kereséshez.</string>
     <string name="no_user_was_found">Nem található felhasználó.</string>

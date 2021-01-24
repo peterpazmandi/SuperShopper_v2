@@ -18,6 +18,7 @@ val listOfDefaultCategories = listOf(
     Pair(25, R.string.electronics_devices),
     Pair(57, R.string.fish_and_seafood),
     Pair(26, R.string.frozen),
+    Pair(27, R.string.fruits),
     Pair(46, R.string.grains_and_pasta),
     Pair(39, R.string.home_and_kitchen),
     Pair(3, R.string.home_baking),
@@ -35,4 +36,5 @@ val listOfDefaultCategories = listOf(
     Pair(54, R.string.salami),
     Pair(59, R.string.snacks),
     Pair(60, R.string.spices),
+    Pair(69, R.string.vegetables)
 )

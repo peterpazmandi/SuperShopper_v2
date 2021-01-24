@@ -135,7 +135,6 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         }
     }
 
-
     /** Navigation methods **/
     private fun navigateToCategoriesFragment() {
         findNavController().navigate(R.id.action_settingsFragment_to_categoriesFragment)
@@ -152,7 +151,11 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     private fun rateTheApp() {
         reviewInfo?.let { _reviewInfo ->
             if(reviewInfo != null) {
-                manager.launchReviewFlow(requireActivity(), _reviewInfo).addOnFailureListener { exception ->
+                manager.launchReviewFlow(requireActivity(), _reviewInfo)
+                    .addOnSuccessListener {
+                        println("Success!")
+                    }
+                    .addOnFailureListener { exception ->
                     exception?.message?.let { errorMessage ->
                         Log.e(TAG, errorMessage)
                     }

@@ -30,18 +30,18 @@
         app:layout_constraintStart_toEndOf="@id/iv_backButton"
         app:layout_constraintTop_toTopOf="@id/iv_backButton" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_createNew"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:src="@drawable/ic_plus_blue"
-        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/nav_icon" />
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/iv_createNew"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:layout_marginStart="@dimen/margin_medium"-->
+<!--        android:layout_marginTop="@dimen/margin_medium"-->
+<!--        android:layout_marginEnd="@dimen/margin_medium"-->
+<!--        android:src="@drawable/ic_plus_blue"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/iv_backButton"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:tint="@color/nav_icon" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_categories"
@@ -56,6 +56,6 @@
         android:paddingBottom="100dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_createNew" />
+        app:layout_constraintTop_toBottomOf="@id/iv_backButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

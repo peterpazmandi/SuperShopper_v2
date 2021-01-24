@@ -77,13 +77,16 @@
         app:drawableTint="@color/main_text"
         android:drawablePadding="@dimen/margin_medium"
         android:fontFamily="@font/roboto_regular"
+        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
         android:text="@string/add_items_using_this_plus_button"
         android:textAlignment="center"
         android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_medium"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/fab_addItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintEnd_toStartOf="@id/fab_addItem"
         app:layout_constraintTop_toTopOf="@+id/fab_addItem" />
 

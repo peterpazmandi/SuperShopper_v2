@@ -9,10 +9,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_backButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="@dimen/margin_medium"
         android:src="@drawable/ic_back_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_medium"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_backButton">

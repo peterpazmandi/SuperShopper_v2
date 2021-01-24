@@ -90,10 +90,10 @@ class CategoriesFragment : Fragment(R.layout.categories_fragment) {
         setupEvents()
 
 
-        binding.ivCreateNew.setOnClickListener {
-            viewModel.onAddCategorySelected()
-            viewModel.printLog()
-        }
+//        binding.ivCreateNew.setOnClickListener {
+//            viewModel.onAddCategorySelected()
+//            viewModel.printLog()
+//        }
 
 
         itemTouchHelper_reOrder.attachToRecyclerView(binding.rvCategories)

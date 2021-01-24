@@ -33,7 +33,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_usersList"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:layout_marginTop="@dimen/margin_medium"
         android:paddingStart="@dimen/margin_medium"
         android:paddingEnd="@dimen/margin_medium"
@@ -100,7 +100,7 @@
         android:id="@+id/cl_noFriends"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontalLine">

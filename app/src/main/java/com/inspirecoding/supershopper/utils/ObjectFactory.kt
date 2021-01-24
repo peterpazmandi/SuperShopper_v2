@@ -20,7 +20,7 @@ object ObjectFactory {
         firebaseUser.email?.let { _email ->
             user.emailAddress = _email
         }
-
+        println("email -> $user")
         return user
     }
 }

@@ -73,7 +73,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:fontFamily="@font/roboto_bold"
         android:hint="@string/enter_a_name"
-        android:textColor="@color/screen_background"
+        android:textColor="@color/main_text"
         android:textSize="@dimen/textSize_medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
